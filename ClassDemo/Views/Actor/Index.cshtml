@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ClassDemo.Models.Actor>
+
+@{
+    ViewData["Title"] = "Actors Index";
+}
+
+<h1>Actors</h1>
+<a asp-action="Create" class="btn btn-primary mb-3">Add Actor</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>IMDB Link</th>
+            <th>Photo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var actor in Model)
+        {
+            <tr>
+                <td>@actor.Name</td>
+                <td>@actor.Gender</td>
+                <td>@actor.Age</td>
+                <td>
+                    <a href="@actor.IMDBLink" target="_blank">IMDB Profile</a>
+                </td>
+                <td>
+                    @if (actor.Photo != null)
+                    {
+                        <img src="@Url.Action("GetActorPhoto", "Actor", new { id = actor.Id })" alt="@actor.Name Photo" style="max-width:100px;" />
+                    }
+                    else
+                    {
+                        <span>No Photo Available</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@actor.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@actor.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@actor.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

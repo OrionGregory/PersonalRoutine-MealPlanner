@@ -1,0 +1,57 @@
+@model IEnumerable<ClassDemo.Models.MovieActor>
+
+@{
+    ViewData["Title"] = "Movie-Actor Links";
+}
+
+<h1>Movie-Actor Links</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Create New Link</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Actor</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var link in Model)
+        {
+            <tr>
+                <td>
+                    @if (link.Movie != null)
+                    {
+                        <a asp-action="Details" asp-controller="Movie" asp-route-id="@link.MovieId">
+                            @link.Movie.Title
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No Movie Assigned</span>
+                    }
+                </td>
+                <td>
+                    @if (link.Actor != null)
+                    {
+                        <a asp-action="Details" asp-controller="Actor" asp-route-id="@link.ActorId">
+                            @link.Actor.Name
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No Actor Assigned</span>
+                    }
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <!--<a asp-action="Edit" asp-route-movieId="@link.MovieId" asp-route-actorId="@link.ActorId" class="btn btn-sm btn-warning">Edit</a>-->
+                        <a asp-action="Delete" asp-route-movieId="@link.MovieId" asp-route-actorId="@link.ActorId" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -4,21 +4,19 @@ namespace Assignment3.Models
 {
     public class Exercise
     {
-        [Key]
-        public int ExerciseId { get; set; }
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "Exercise name is required.")]
-        public string Name { get; set; }
-
-        [Required(ErrorMessage = "Muscle group is required.")]
-        public string MuscleGroup { get; set; }
-
-        [Required(ErrorMessage = "Description is required.")]
+        [Required]
         public string Description { get; set; }
 
+        [Required]
+        public int Reps { get; set; }
+
+        [Required]
         public int Sets { get; set; }
 
-        public int Repetitions { get; set; }
+        // Foreign key to WorkoutPlan
+        public int RoutineId { get; set; }
+        public Routine Routine { get; set; }
     }
-
 }

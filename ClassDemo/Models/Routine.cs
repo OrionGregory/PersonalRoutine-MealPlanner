@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace Assignment3.Models
 {
     public class Routine
     {
-        [Key]
-        public int RoutineId { get; set; }
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "Routine name is required.")]
-        public string Name { get; set; }
+        // Foreign key to Person
+        public int PersonId { get; set; }
+        public Person Person { get; set; }
 
-
-        [Required(ErrorMessage = "Exercises are required.")]
+        // Collection of Exercises
         public List<Exercise> Exercises { get; set; }
-
-        [Required(ErrorMessage = "Frequency is required.")]
-        public int FrequencyPerWeek { get; set; }
-
     }
 }

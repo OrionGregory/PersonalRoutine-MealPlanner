@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ClassDemo.Data;
+using Assignment3.Data;
 
 namespace ClassDemo;
 
@@ -43,6 +44,7 @@ public class Program
         app.UseRouting();
 
         app.UseAuthorization();
+        app.UseAuthentication();
 
         app.MapControllerRoute(
             name: "default",

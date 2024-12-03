@@ -1,130 +1,36 @@
-﻿@model ClassDemo.Models.Models.HomeIndexViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to MovieDB!</h1>
-    <p class="lead">Discover your favorite movies and actors.</p>
+    <h1 class="display-4">Welcome to Your Workout Planner!</h1>
+    <p class="lead">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
 <hr />
 
-<!-- Random Movie Selection Section -->
-<div class="mt-5">
-    <h2>Random Movie</h2>
-    @if (Model.RandomMovie != null)
-
-    {
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    @if (!string.IsNullOrEmpty(Model.RandomMovie.Poster))
-                    {
-                        <img src="@Model.RandomMovie.Poster" class="img-fluid rounded-start" alt="Poster of @Model.RandomMovie.Title" />
-                    }
-                    else
-                    {
-                        <img src="~/images/no-image.png" class="img-fluid rounded-start" alt="No poster available" />
-                    }
-
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.RandomMovie.Title (@Model.RandomMovie.Year)</h5>
-                        <p class="card-text"><strong>Genre:</strong> @Model.RandomMovie.Genre</p>
-                        <p class="card-text">
-                            <strong>Cast:</strong>
-                            @if (Model.RandomMovie.MovieActors != null && Model.RandomMovie.MovieActors.Any())
-
-                            {
-                                @string.Join(", ", Model.RandomMovie.MovieActors.Select(ma => ma.Actor.Name))
-                            }
-
-                            else
-
-                            {
-                                <span>No cast information available.</span>
-                            }
-                        </p>
-                        <a asp-controller="Movie" asp-action="Details" asp-route-id="@Model.RandomMovie.Id" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+@if (SignInManager.IsSignedIn(User))
+{
+        <div class="mt-5">
+            <h2>Hello, @User.Identity.Name!</h2>
+            <p>
+                View or update your
+                <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
+            </p>
         </div>
-    }
-
-    else
-
-    {
-        <p>No movie available to display.</p>
-    }
-</div>
-
-<hr />
-
-<!-- Random Actor Selection Section -->
-<div class="mt-5">
-    <h2>Random Actor</h2>
-    @if (Model.RandomActor != null)
-
-    {
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    @if (Model.RandomActor.Photo != null && Model.RandomActor.Photo.Length > 0)
-                    {
-                        <img src="@Url.Action("GetActorPhoto", "Actor", new { id = Model.RandomActor.Id })" class="img-fluid rounded-start" alt="Photo of @Model.RandomActor.Name" />
-                    }
-                    else
-                    {
-                        <img src="~/images/no-image.png" class="img-fluid rounded-start" alt="No photo available" />
-                    }
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.RandomActor.Name</h5>
-                        <p class="card-text"><strong>Age:</strong> @Model.RandomActor.Age</p>
-                        <p class="card-text"><strong>Gender:</strong> @Model.RandomActor.Gender</p>
-                        <p class="card-text">
-                            <strong>IMDB:</strong>
-                            @if (!string.IsNullOrEmpty(Model.RandomActor.IMDBLink))
-
-                            {
-                                <a href="@Model.RandomActor.IMDBLink" target="_blank">View on IMDB</a>
-                            }
-
-                            else
-
-                            {
-                                <span>No IMDB link provided.</span>
-                            }
-                        </p>
-                        <p class="card-text">
-                            <strong>Movies:</strong>
-                            @if (Model.RandomActor.MovieActors != null && Model.RandomActor.MovieActors.Any())
-
-                            {
-                                @string.Join(", ", Model.RandomActor.MovieActors.Select(ma => ma.Movie.Title))
-                            }
-
-                            else
-
-                            {
-                                <span>No movies found for this actor.</span>
-                            }
-                        </p>
-                        <a asp-controller="Actor" asp-action="Details" asp-route-id="@Model.RandomActor.Id" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
+}
+else
+{
+        <div class="mt-5">
+            <h2>Get Started</h2>
+            <p>
+                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Log In</a>
+                or
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-secondary">Register</a>
+            </p>
         </div>
-    }
-
-    else
-
-    {
-        <p>No actor available to display.</p>
-    }
-</div>
+}

@@ -1,0 +1,45 @@
+﻿@model Assignment3.Models.Person
+
+@{
+    ViewData["Title"] = "Your Workout Plan";
+}
+
+<h1>Your Workout Plan</h1>
+
+<h2>Profile Details</h2>
+<ul>
+    <li><strong>Name:</strong> @Model.name</li>
+    <li><strong>Age:</strong> @Model.age</li>
+    <li><strong>Sex:</strong> @Model.sex</li>
+    <li><strong>Current Weight:</strong> @Model.weight kg</li>
+    <li><strong>Goal Weight:</strong> @Model.goalWeight kg</li>
+    <li><strong>Time Frame:</strong> @Model.time weeks</li>
+</ul>
+
+<h2>Workout Plan</h2>
+@if (Model.Routine != null && Model.Routine.Exercises.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Reps</th>
+                <th>Sets</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exercise in Model.Routine.Exercises)
+            {
+                <tr>
+                    <td>@exercise.Description</td>
+                    <td>@exercise.Reps</td>
+                    <td>@exercise.Sets</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No workout plan available.</p>
+}

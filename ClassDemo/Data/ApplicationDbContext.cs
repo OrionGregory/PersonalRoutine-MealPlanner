@@ -1,56 +1,39 @@
-using ClassDemo.Models;
+using Assignment3.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClassDemo.Data
+namespace Assignment3.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser> // Extend from IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Actor> Actors { get; set; }
-        public DbSet<MovieActor> MovieActors { get; set; }
-        public DbSet<AIReview> AIReviews { get; set; }
-        public DbSet<ActorTweet> ActorTweets { get; set; } // Added DbSet for ActorTweet
+        public DbSet<Person> People { get; set; }
+        public DbSet<Routine> Routines { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Identity key types for SQL Server compatibility
-            modelBuilder.Entity<IdentityRole>(entity => entity.Property(m => m.Id).HasColumnType("nvarchar(450)"));
-            modelBuilder.Entity<IdentityUser>(entity => entity.Property(m => m.Id).HasColumnType("nvarchar(450)"));
-            modelBuilder.Entity<IdentityUserRole<string>>(entity =>
-            {
-                entity.Property(m => m.UserId).HasColumnType("nvarchar(450)");
-                entity.Property(m => m.RoleId).HasColumnType("nvarchar(450)");
-            });
+            // Configure Identity key types if needed
+            // ...
 
-            // Configure composite primary key for MovieActor
-            modelBuilder.Entity<MovieActor>()
-                .HasKey(ma => new { ma.MovieId, ma.ActorId });
+            // Configure one-to-one relationship between Person and Routine
+            modelBuilder.Entity<Person>()
+                .HasOne(p => p.Routine)
+                .WithOne(r => r.Person)
+                .HasForeignKey<Routine>(r => r.PersonId);
 
-            // Configure relationships for MovieActor
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Movie)
-                .WithMany(m => m.MovieActors)
-                .HasForeignKey(ma => ma.MovieId);
-
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Actor)
-                .WithMany(a => a.MovieActors)
-                .HasForeignKey(ma => ma.ActorId);
-
-            // Configure relationship for ActorTweet
-            modelBuilder.Entity<ActorTweet>()
-                .HasOne(at => at.Actor)
-                .WithMany(a => a.ActorTweets)
-                .HasForeignKey(at => at.ActorId);
+            // Configure one-to-many relationship between Routine and Exercises
+            modelBuilder.Entity<Routine>()
+                .HasMany(r => r.Exercises)
+                .WithOne(e => e.Routine)
+                .HasForeignKey(e => e.RoutineId);
         }
     }
 }

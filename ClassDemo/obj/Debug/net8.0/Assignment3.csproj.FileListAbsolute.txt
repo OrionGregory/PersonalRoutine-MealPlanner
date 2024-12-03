@@ -609,9 +609,6 @@ C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignm
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.RazorAssemblyInfo.cache
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.RazorAssemblyInfo.cs
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.sourcelink.json
-C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.dll
-C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\refint\Assignment3.dll
-C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.pdb
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\bin\Debug\net8.0\appsettings.json
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\bin\Debug\net8.0\Assignment3.staticwebassets.runtime.json
@@ -898,5 +895,8 @@ C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\scopedc
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\scopedcss\bundle\Assignment3.styles.css
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\scopedcss\projectbundle\Assignment3.bundle.scp.css
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignme.63108F37.Up2Date
+C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.dll
+C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\refint\Assignment3.dll
+C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.pdb
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\Assignment3.genruntimeconfig.cache
 C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\obj\Debug\net8.0\ref\Assignment3.dll

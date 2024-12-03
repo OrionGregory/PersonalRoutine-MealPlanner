@@ -20,9 +20,6 @@ namespace Assignment3.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure Identity key types if needed
-            // ...
-
             // Configure one-to-one relationship between Person and Routine
             modelBuilder.Entity<Person>()
                 .HasOne(p => p.Routine)

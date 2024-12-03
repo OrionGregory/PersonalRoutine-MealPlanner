@@ -1,30 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Assignment3.Models
 {
     public class Person
     {
-        public int Id { get; set; } // Add this line for the primary key
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Age is required.")]
-        public int age { get; set; }
+        public int Age { get; set; }
 
         [Required(ErrorMessage = "Sex is required.")]
-        public string sex { get; set; }
+        public string Sex { get; set; }
 
         [Required(ErrorMessage = "Weight is required.")]
-        public float weight { get; set; }
+        public float Weight { get; set; }
 
         [Required(ErrorMessage = "Goal is required.")]
-        public float goalWeight { get; set; }
+        public float GoalWeight { get; set; }
 
         [Required(ErrorMessage = "Time is required.")]
-        public int time { get; set; }
+        public int Time { get; set; }
 
         // Navigation property to Routine
-        public Routine Routine { get; set; }
+        public Routine? Routine { get; set; }
+
+        // Associate with IdentityUser
+        public string? UserId { get; set; }
+        public IdentityUser? User { get; set; }
     }
 }

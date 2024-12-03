@@ -8781,11 +8781,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\orion\\Source\\Repos\\Fall2024-Assignment3-oagregory\\ClassDemo\\Assignment3.csproj",
+      "projectUniqueName": "C:\\Users\\orion\\source\\repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
       "projectName": "Assignment3",
-      "projectPath": "C:\\Users\\orion\\Source\\Repos\\Fall2024-Assignment3-oagregory\\ClassDemo\\Assignment3.csproj",
+      "projectPath": "C:\\Users\\orion\\source\\repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
       "packagesPath": "C:\\Users\\orion\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\orion\\Source\\Repos\\Fall2024-Assignment3-oagregory\\ClassDemo\\obj\\",
+      "outputPath": "C:\\Users\\orion\\source\\repos\\CS330FinalProject\\ClassDemo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\orion\\AppData\\Roaming\\NuGet\\NuGet.Config",

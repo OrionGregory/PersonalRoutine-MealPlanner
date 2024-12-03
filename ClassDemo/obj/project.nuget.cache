@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rWXFnL/DX8Q=",
+  "dgSpecHash": "glV22f9wsJY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\orion\\Source\\Repos\\Fall2024-Assignment3-oagregory\\ClassDemo\\Assignment3.csproj",
+  "projectFilePath": "C:\\Users\\orion\\source\\repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\orion\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\orion\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

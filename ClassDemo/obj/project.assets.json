@@ -8776,40 +8776,24 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\Eli\\.nuget\\packages\\": {}
-=======
     "C:\\Users\\orion\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
->>>>>>> 037f60bf457e0fd0083f7b4c54fcfc62e328e446
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
+      "projectUniqueName": "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
       "projectName": "Assignment3",
-      "projectPath": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
-      "packagesPath": "C:\\Users\\Eli\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
-      "projectName": "Assignment3",
-      "projectPath": "C:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
+      "projectPath": "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
       "packagesPath": "C:\\Users\\orion\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\obj\\",
->>>>>>> 037f60bf457e0fd0083f7b4c54fcfc62e328e446
+      "outputPath": "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-<<<<<<< HEAD
-        "C:\\Users\\Eli\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
         "C:\\Users\\orion\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
->>>>>>> 037f60bf457e0fd0083f7b4c54fcfc62e328e446
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

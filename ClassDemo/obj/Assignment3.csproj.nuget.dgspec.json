@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\Assignment3.csproj": {}
+    "C:\\Users\\orion\\Source\\Repos\\CS330FinalPrj\\ClassDemo\\Assignment3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\Assignment3.csproj": {
+    "C:\\Users\\orion\\Source\\Repos\\CS330FinalPrj\\ClassDemo\\Assignment3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\Assignment3.csproj",
+        "projectUniqueName": "C:\\Users\\orion\\Source\\Repos\\CS330FinalPrj\\ClassDemo\\Assignment3.csproj",
         "projectName": "Assignment3",
-        "projectPath": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\Assignment3.csproj",
+        "projectPath": "C:\\Users\\orion\\Source\\Repos\\CS330FinalPrj\\ClassDemo\\Assignment3.csproj",
         "packagesPath": "C:\\Users\\orion\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\obj\\",
+        "outputPath": "C:\\Users\\orion\\Source\\Repos\\CS330FinalPrj\\ClassDemo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\orion\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -100,7 +100,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

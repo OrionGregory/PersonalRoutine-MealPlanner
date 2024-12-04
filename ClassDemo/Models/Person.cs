@@ -31,5 +31,7 @@ namespace Assignment3.Models
         // Associate with IdentityUser
         public string? UserId { get; set; }
         public IdentityUser? User { get; set; }
+
+        public Nutrition? Nutrition { get; set; }
     }
 }

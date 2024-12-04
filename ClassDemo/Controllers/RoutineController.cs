@@ -370,6 +370,38 @@ namespace Assignment3.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegenerateRoutine(int id)
+        {
+            var routine = await _context.Routines
+                .Include(r => r.Exercises)
+                .FirstOrDefaultAsync(r => r.Id == id);
+
+            if (routine == null)
+            {
+                return NotFound();
+            }
+
+            // Remove existing exercises
+            if (routine.Exercises != null && routine.Exercises.Any())
+            {
+                _context.Exercises.RemoveRange(routine.Exercises);
+            }
+
+            // Generate new predefined exercises based on RoutineType
+            var newExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
+            if (newExercises != null && newExercises.Any())
+            {
+                _context.Exercises.AddRange(newExercises);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = routine.Id });
+        }
+
+
         public class SwapRoutineModel
         {
             public int RoutineId { get; set; }

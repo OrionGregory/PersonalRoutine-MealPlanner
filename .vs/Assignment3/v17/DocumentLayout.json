@@ -1,0 +1,227 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\views\\nutrution\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\views\\nutrution\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\models\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\models\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\models\\nutrition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\models\\nutrition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\controllers\\nutritioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\controllers\\nutritioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\views\\nutrution\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\views\\nutrution\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\views\\person\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\views\\person\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\views\\nutrution\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\views\\nutrution\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|c:\\users\\eli\\source\\repos\\cs330finalproject\\classdemo\\views\\nutrution\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7BD9FAFD-A7A6-4D2C-8980-5CF5AE8B4AE5}|ClassDemo\\Assignment3.csproj|solutionrelative:classdemo\\views\\nutrution\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Migrations\\20241204025853_fsfsdfas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ClassDemo\\Migrations\\20241204025853_fsfsdfas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Person.cs",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Models\\Person.cs",
+              "RelativeDocumentMoniker": "ClassDemo\\Models\\Person.cs",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Models\\Person.cs",
+              "RelativeToolTip": "ClassDemo\\Models\\Person.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T20:57:43.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "ClassDemo\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "ClassDemo\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAYwCEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T02:56:22.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ClassDemo\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ClassDemo\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABcAAAAAAAAAAAAkwCUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T03:05:13.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Create.cshtml",
+              "RelativeDocumentMoniker": "ClassDemo\\Views\\Nutrution\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Create.cshtml",
+              "RelativeToolTip": "ClassDemo\\Views\\Nutrution\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T03:13:47.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAAKwWAAAAAAAAAAAnwLQWAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-12-04T20:59:00.963Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Nutrition.cs",
+              "DocumentMoniker": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Models\\Nutrition.cs",
+              "RelativeDocumentMoniker": "ClassDemo\\Models\\Nutrition.cs",
+              "ToolTip": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Models\\Nutrition.cs",
+              "RelativeToolTip": "ClassDemo\\Models\\Nutrition.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAzwBsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T02:48:02.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "20241204025853_fsfsdfas.cs",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Migrations\\20241204025853_fsfsdfas.cs",
+              "RelativeDocumentMoniker": "ClassDemo\\Migrations\\20241204025853_fsfsdfas.cs",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Migrations\\20241204025853_fsfsdfas.cs",
+              "RelativeToolTip": "ClassDemo\\Migrations\\20241204025853_fsfsdfas.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T02:58:53.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Index.cshtml",
+              "RelativeDocumentMoniker": "ClassDemo\\Views\\Nutrution\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Index.cshtml",
+              "RelativeToolTip": "ClassDemo\\Views\\Nutrution\\Index.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAmwCkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T03:13:55.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NutritionController.cs",
+              "DocumentMoniker": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Controllers\\NutritionController.cs",
+              "RelativeDocumentMoniker": "ClassDemo\\Controllers\\NutritionController.cs",
+              "ToolTip": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Controllers\\NutritionController.cs",
+              "RelativeToolTip": "ClassDemo\\Controllers\\NutritionController.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAQwFIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T02:49:42.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Person\\Details.cshtml",
+              "RelativeDocumentMoniker": "ClassDemo\\Views\\Person\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Person\\Details.cshtml",
+              "RelativeToolTip": "ClassDemo\\Views\\Person\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T03:00:02.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Delete.cshtml",
+              "RelativeDocumentMoniker": "ClassDemo\\Views\\Nutrution\\Delete.cshtml",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Delete.cshtml",
+              "RelativeToolTip": "ClassDemo\\Views\\Nutrution\\Delete.cshtml",
+              "ViewState": "AgIAABAAAAAAAAAAAAAqwCYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T02:54:46.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Details.cshtml",
+              "RelativeDocumentMoniker": "ClassDemo\\Views\\Nutrution\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Eli\\source\\repos\\CS330FinalProject\\ClassDemo\\Views\\Nutrution\\Details.cshtml",
+              "RelativeToolTip": "ClassDemo\\Views\\Nutrution\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T02:54:04.196Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

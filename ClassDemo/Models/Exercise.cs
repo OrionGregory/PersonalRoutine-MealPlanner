@@ -14,6 +14,8 @@ namespace Assignment3.Models
 
         [Required]
         public int Sets { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
 
         // Foreign key to WorkoutPlan
         public int RoutineId { get; set; }

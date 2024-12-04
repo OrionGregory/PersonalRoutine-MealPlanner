@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Assignment3.Models.Nutrition>
+
+@{
+    ViewData["Title"] = "Nutrition Records";
+}
+
+<h1>Nutrition Records</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Person</th>
+            <th>BMR</th>
+            <th>Calorie Surplus/Deficit</th>
+            <th>Protein Percentage</th>
+            <th>Carb Percentage</th>
+            <th>Fat Percentage</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Person.Name</td>
+                <td>@item.BMR</td>
+                <td>@item.CalorieSurplusOrDeficit</td>
+                <td>@item.ProteinPercentage%</td>
+                <td>@item.CarbPercentage%</td>
+                <td>@item.FatPercentage%</td>
+                <td>
+                    <a href="@Url.Action("Details", "Nutrition", new { id = item.Id })" class="btn btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "Nutrition", new { id = item.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", "Nutrition", new { id = item.Id })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Nutrition")" class="btn btn-success">Add New Nutrition Record</a>

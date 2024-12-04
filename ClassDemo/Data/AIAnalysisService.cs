@@ -56,20 +56,37 @@ namespace ClassDemo.Data
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var jsonResponse = JsonDocument.Parse(responseContent);
 
-                    var aiMessageContent = jsonResponse.RootElement
+                    var aiMessageContentProperty = jsonResponse.RootElement
                         .GetProperty("choices")[0]
                         .GetProperty("message")
-                        .GetProperty("content")
-                        .GetString();
+                        .GetProperty("content");
+
+                    if (aiMessageContentProperty.ValueKind == JsonValueKind.Null)
+                    {
+                        throw new Exception("AI response content is null.");
+                    }
+
+                    var aiMessageContent = aiMessageContentProperty.GetString();
 
                     // Extract JSON array from AI's response
+                    if (string.IsNullOrEmpty(aiMessageContent))
+                    {
+                        throw new Exception("AI message content is null or empty.");
+                    }
                     string jsonArrayString = ExtractJsonArray(aiMessageContent);
 
                     // Deserialize the JSON array into objects of type T
-                    return JsonSerializer.Deserialize<List<T>>(jsonArrayString, new JsonSerializerOptions
+                    var result = JsonSerializer.Deserialize<List<T>>(jsonArrayString, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
+
+                    if (result == null)
+                    {
+                        throw new Exception("Deserialized result is null.");
+                    }
+
+                    return result;
                 }
                 else if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
@@ -94,8 +111,8 @@ namespace ClassDemo.Data
                 Generate a workout routine for a '{routineType}' day. 
                 The person's current weight is {currentWeight} lbs, and their goal weight is {goalWeight} lbs. 
                 They want to achieve this goal in {timeFrame} weeks.
-                Provide 4-5 exercises unless it is a rest or cardio day, in which only two exercises will be necessary, with different sets and reps.
-                Format the response as a JSON array with each exercise having 'Name', 'Description', 'Sets', and 'Reps'.
+                Provide 4-5 exercises unless it is a rest or cardio day in that case only do 1-2 exercises, in which only two exercises will be necessary, with different sets and reps.
+                Format the response as a JSON array with each exercise having 'Name(String)', 'Description(String)', 'Sets(Int)', and 'Reps(Int)'.
             ";
 
             try

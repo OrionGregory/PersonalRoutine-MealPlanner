@@ -8,13 +8,13 @@ namespace Assignment3.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required(ErrorMessage = "Age is required.")]
         public int Age { get; set; }
 
         [Required(ErrorMessage = "Sex is required.")]
-        public string Sex { get; set; }
+        public string? Sex { get; set; }
 
         [Required(ErrorMessage = "Weight is required.")]
         public float? Weight { get; set; }
@@ -26,7 +26,7 @@ namespace Assignment3.Models
         public int Time { get; set; }
 
         // Navigation property to Routine
-        public List<Routine>? Routines { get; set; }
+        public ICollection<Routine>? Routines { get; set; }
 
         // Associate with IdentityUser
         public string? UserId { get; set; }

@@ -124,8 +124,8 @@ namespace Assignment3.Controllers
             var userId = _userManager.GetUserId(User);
 
             var person = await _context.People
-                .Include(p => p.Routines)
-                    .ThenInclude(r => r.Exercises)
+                .Include(p => p.Routines!)
+                    .ThenInclude(r => r.Exercises!)
                 .FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (person == null)
@@ -202,6 +202,11 @@ namespace Assignment3.Controllers
 
             // Retrieve the dragged routine
             var draggedRoutine = await _context.Routines.FirstOrDefaultAsync(r => r.Id == request.RoutineId);
+            if (draggedRoutine == null || request.TargetDay == null)
+            {
+                return BadRequest(new { message = "Invalid request data." });
+            }
+
             if (draggedRoutine == null)
             {
                 return NotFound(new { message = "Dragged routine not found." });
@@ -209,7 +214,8 @@ namespace Assignment3.Controllers
 
             // Retrieve the routine on the target day (if it exists)
             var targetRoutine = await _context.Routines
-                .FirstOrDefaultAsync(r => r.DayOfWeek.ToLower() == request.TargetDay.ToLower() && r.PersonId == draggedRoutine.PersonId);
+                .FirstOrDefaultAsync(r => r.DayOfWeek != null && request.TargetDay != null && 
+                    r.DayOfWeek.ToLower() == request.TargetDay.ToLower() && r.PersonId == draggedRoutine.PersonId);
 
             if (targetRoutine != null)
             {
@@ -242,7 +248,7 @@ namespace Assignment3.Controllers
         public class RoutineSwapRequest
         {
             public int RoutineId { get; set; }
-            public string TargetDay { get; set; }
+            public string? TargetDay { get; set; }
         }
 
 

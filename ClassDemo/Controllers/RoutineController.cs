@@ -74,11 +74,14 @@ namespace Assignment3.Controllers
                 await _context.SaveChangesAsync();
 
                 // Pre-populate exercises based on RoutineType
-                var predefinedExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
-                if (predefinedExercises != null && predefinedExercises.Any())
+                if (!string.IsNullOrEmpty(routine.RoutineType))
                 {
-                    _context.Exercises.AddRange(predefinedExercises);
-                    await _context.SaveChangesAsync();
+                    var predefinedExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
+                    if (predefinedExercises != null && predefinedExercises.Any())
+                    {
+                        _context.Exercises.AddRange(predefinedExercises);
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -411,6 +414,11 @@ namespace Assignment3.Controllers
                                       $"CurrentWeight: {currentWeight}, GoalWeight: {goalWeight}, TimeFrame: {timeFrame}.");
 
                     // Attempt to generate exercises using AI
+                    if (string.IsNullOrEmpty(routine.RoutineType))
+                    {
+                        throw new Exception("RoutineType is null or empty.");
+                    }
+
                     newExercises = await _aiService.GenerateExercisesFromAI(
                         routine.RoutineType,
                         currentWeight,
@@ -427,6 +435,10 @@ namespace Assignment3.Controllers
                 {
                     // Log AI error and use predefined exercises
                     Console.WriteLine($"RegenerateRoutine POST: AI error or no response for Routine ID {id}: {ex.Message}");
+                    if (string.IsNullOrEmpty(routine.RoutineType))
+                    {
+                        throw new Exception("RoutineType is null or empty.");
+                    }
                     newExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
 
                     if (newExercises == null || !newExercises.Any())
@@ -464,7 +476,7 @@ namespace Assignment3.Controllers
         public class SwapRoutineModel
         {
             public int RoutineId { get; set; }
-            public string TargetDay { get; set; }
+            public string? TargetDay { get; set; }
         }
 
     }

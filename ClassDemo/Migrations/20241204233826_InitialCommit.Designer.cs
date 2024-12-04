@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241203224221_AddUserIdToPerson")]
-    partial class AddUserIdToPerson
+    [Migration("20241204233826_InitialCommit")]
+    partial class InitialCommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,10 +37,14 @@ namespace Assignment3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Reps")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoutineId")
+                    b.Property<int?>("RoutineId")
                         .HasColumnType("int");
 
                     b.Property<int>("Sets")
@@ -53,6 +57,34 @@ namespace Assignment3.Migrations
                     b.ToTable("Exercises");
                 });
 
+            modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BMR")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CalorieSurplusOrDeficit")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarbPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FatPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProteinPercentage")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nutrition");
+                });
+
             modelBuilder.Entity("Assignment3.Models.Person", b =>
                 {
                     b.Property<int>("Id")
@@ -61,28 +93,29 @@ namespace Assignment3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("age")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<float>("goalWeight")
+                    b.Property<float?>("GoalWeight")
+                        .IsRequired()
                         .HasColumnType("real");
 
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("sex")
+                    b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("time")
+                    b.Property<int>("Time")
                         .HasColumnType("int");
 
-                    b.Property<float>("weight")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<float?>("Weight")
+                        .IsRequired()
                         .HasColumnType("real");
 
                     b.HasKey("Id");
@@ -100,13 +133,18 @@ namespace Assignment3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("DayOfWeek")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RoutineType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId")
-                        .IsUnique();
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Routines");
                 });
@@ -317,20 +355,27 @@ namespace Assignment3.Migrations
                 {
                     b.HasOne("Assignment3.Models.Routine", "Routine")
                         .WithMany("Exercises")
-                        .HasForeignKey("RoutineId")
+                        .HasForeignKey("RoutineId");
+
+                    b.Navigation("Routine");
+                });
+
+            modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
+                {
+                    b.HasOne("Assignment3.Models.Person", "Person")
+                        .WithOne("Nutrition")
+                        .HasForeignKey("Assignment3.Models.Nutrition", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Routine");
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Person", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -338,8 +383,8 @@ namespace Assignment3.Migrations
             modelBuilder.Entity("Assignment3.Models.Routine", b =>
                 {
                     b.HasOne("Assignment3.Models.Person", "Person")
-                        .WithOne("Routine")
-                        .HasForeignKey("Assignment3.Models.Routine", "PersonId")
+                        .WithMany("Routines")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -399,8 +444,9 @@ namespace Assignment3.Migrations
 
             modelBuilder.Entity("Assignment3.Models.Person", b =>
                 {
-                    b.Navigation("Routine")
-                        .IsRequired();
+                    b.Navigation("Nutrition");
+
+                    b.Navigation("Routines");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Routine", b =>

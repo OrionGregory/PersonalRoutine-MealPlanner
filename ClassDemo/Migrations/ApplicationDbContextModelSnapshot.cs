@@ -57,10 +57,7 @@ namespace Assignment3.Migrations
             modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BMR")
                         .HasColumnType("int");
@@ -81,9 +78,6 @@ namespace Assignment3.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique();
 
                     b.ToTable("Nutrition");
                 });
@@ -367,7 +361,7 @@ namespace Assignment3.Migrations
                 {
                     b.HasOne("Assignment3.Models.Person", "Person")
                         .WithOne("Nutrition")
-                        .HasForeignKey("Assignment3.Models.Nutrition", "PersonId")
+                        .HasForeignKey("Assignment3.Models.Nutrition", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Assignment3.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIdProperties : Migration
+    public partial class InitialCommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,24 +48,6 @@ namespace Assignment3.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "People",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    age = table.Column<int>(type: "int", nullable: false),
-                    sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    weight = table.Column<float>(type: "real", nullable: false),
-                    goalWeight = table.Column<float>(type: "real", nullable: false),
-                    time = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_People", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,12 +157,61 @@ namespace Assignment3.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "People",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: false),
+                    GoalWeight = table.Column<float>(type: "real", nullable: false),
+                    Time = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_People", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_People_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Nutrition",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    BMR = table.Column<int>(type: "int", nullable: false),
+                    CalorieSurplusOrDeficit = table.Column<int>(type: "int", nullable: false),
+                    ProteinPercentage = table.Column<int>(type: "int", nullable: false),
+                    CarbPercentage = table.Column<int>(type: "int", nullable: false),
+                    FatPercentage = table.Column<int>(type: "int", nullable: false),
+                    PersonId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nutrition", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Nutrition_People_Id",
+                        column: x => x.Id,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Routines",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    RoutineType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DayOfWeek = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,7 +233,8 @@ namespace Assignment3.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Reps = table.Column<int>(type: "int", nullable: false),
                     Sets = table.Column<int>(type: "int", nullable: false),
-                    RoutineId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoutineId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -211,8 +243,7 @@ namespace Assignment3.Migrations
                         name: "FK_Exercises_Routines_RoutineId",
                         column: x => x.RoutineId,
                         principalTable: "Routines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -260,10 +291,14 @@ namespace Assignment3.Migrations
                 column: "RoutineId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_People_UserId",
+                table: "People",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Routines_PersonId",
                 table: "Routines",
-                column: "PersonId",
-                unique: true);
+                column: "PersonId");
         }
 
         /// <inheritdoc />
@@ -288,16 +323,19 @@ namespace Assignment3.Migrations
                 name: "Exercises");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Nutrition");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Routines");
 
             migrationBuilder.DropTable(
                 name: "People");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

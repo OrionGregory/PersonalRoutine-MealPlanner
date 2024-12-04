@@ -18,7 +18,7 @@
         @foreach (var day in Enum.GetNames(typeof(DayOfWeek)))
         {
             var routinesForDay = Model.Routines?
-            .Where(r => r.DayOfWeek.Equals(day, StringComparison.OrdinalIgnoreCase))
+            .Where(r => r.DayOfWeek != null && r.DayOfWeek.Equals(day, StringComparison.OrdinalIgnoreCase))
             .ToList() ?? new List<Assignment3.Models.Routine>();
 
             <tr data-day="@day" class="droppable">

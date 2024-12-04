@@ -7,10 +7,12 @@
     draggables.forEach(draggable => {
         draggable.addEventListener('dragstart', function (e) {
             draggedElement = e.target;
+            e.target.classList.add('dragging'); // Optional: Add visual feedback
         });
 
         draggable.addEventListener('dragend', function () {
             draggedElement = null;
+            draggables.forEach(d => d.classList.remove('dragging')); // Remove visual feedback
         });
     });
 

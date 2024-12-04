@@ -19,6 +19,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Routine
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var routines = _context.Routines
@@ -28,6 +29,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Routine/Details/5
+        [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,19 +38,21 @@ namespace Assignment3.Controllers
             }
 
             var routine = await _context.Routines
-                                        .Include(r => r.Person)
-                                        .Include(r => r.Exercises)
-                                        .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(r => r.Person)
+                .Include(r => r.Exercises)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (routine == null)
             {
                 return NotFound();
             }
 
-            return View(routine); // Ensure this matches the Details.cshtml view
+            return View(routine);
         }
 
+
         // GET: Routine/Create
+        [HttpGet]
         public IActionResult Create()
         {
             // Optionally, pass any necessary data to the view, e.g., list of persons
@@ -81,6 +85,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Routine/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -132,6 +137,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Routine/Delete/5
+        [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -165,6 +171,7 @@ namespace Assignment3.Controllers
             return RedirectToAction(nameof(Index));
         }
         // GET: Routine/EditExercises/5
+        [HttpGet]
         public async Task<IActionResult> EditExercises(int? id)
         {
             if (id == null)
@@ -187,6 +194,7 @@ namespace Assignment3.Controllers
 
 
         // GET: Routine/CreateExercise/5
+        [HttpGet]
         public IActionResult CreateExercise(int? routineId)
         {
             if (routineId == null)
@@ -213,6 +221,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Routine/EditExercise/5
+        [HttpGet]
         public async Task<IActionResult> EditExercise(int? id)
         {
             if (id == null)
@@ -338,5 +347,34 @@ namespace Assignment3.Controllers
 
             return exercises;
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SwapRoutines([FromBody] SwapRoutineModel model)
+        {
+            if (model == null || model.RoutineId <= 0 || string.IsNullOrEmpty(model.TargetDay))
+            {
+                return BadRequest(new { message = "Invalid data provided." });
+            }
+
+            var routine = await _context.Routines.FindAsync(model.RoutineId);
+
+            if (routine == null)
+            {
+                return NotFound(new { message = "Routine not found." });
+            }
+
+            routine.DayOfWeek = model.TargetDay;
+            _context.Update(routine);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        public class SwapRoutineModel
+        {
+            public int RoutineId { get; set; }
+            public string TargetDay { get; set; }
+        }
+
     }
 }

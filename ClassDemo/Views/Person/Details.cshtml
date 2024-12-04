@@ -26,14 +26,17 @@
                 <td>
                     @if (routinesForDay.Any())
                     {
-                        <ul>
-                            @foreach (var routine in routinesForDay)
-                            {
-                                <li draggable="true" class="draggable" data-routine-id="@routine.Id">
-                                    @routine.RoutineType
-                                </li>
-                            }
-                        </ul>
+                        @foreach (var routine in routinesForDay)
+                        {
+                            <div class="d-flex justify-content-between align-items-center mb-2 draggable"
+                                 draggable="true"
+                                 data-routine-id="@routine.Id">
+                                <span>@routine.RoutineType</span>
+                                <a asp-controller="Routine" asp-action="Details" asp-route-id="@routine.Id" class="btn btn-sm btn-primary">
+                                    Details
+                                </a>
+                            </div>
+                        }
                     }
                     else
                     {

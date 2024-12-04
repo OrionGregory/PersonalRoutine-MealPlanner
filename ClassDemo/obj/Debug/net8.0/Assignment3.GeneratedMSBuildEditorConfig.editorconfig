@@ -17,139 +17,159 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Assignment3
 build_property.RootNamespace = Assignment3
-build_property.ProjectDir = C:\Users\orion\source\repos\CS330FinalProject\ClassDemo\
+build_property.ProjectDir = C:\Users\Eli\Source\Repos\CS330FinalProject\ClassDemo\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\orion\source\repos\CS330FinalProject\ClassDemo
+build_property.MSBuildProjectDirectory = C:\Users\Eli\Source\Repos\CS330FinalProject\ClassDemo
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Actor/Create.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Actor/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0b3JcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Actor/Delete.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Actor/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0b3JcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Actor/Details.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Actor/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0b3JcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Actor/Edit.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Actor/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0b3JcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Actor/Index.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Actor/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0b3JcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Home/error.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Home/error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxlcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Home/Index.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Home/Privacy.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/MovieActor/Create.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/MovieActor/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVBY3RvclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/MovieActor/Delete.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/MovieActor/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVBY3RvclxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/MovieActor/Edit.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/MovieActor/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVBY3RvclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/MovieActor/Index.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/MovieActor/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVBY3RvclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Movie/Create.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Movie/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Movie/Delete.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Movie/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Movie/Details.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Movie/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Movie/Edit.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Movie/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Movie/Index.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Movie/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Person/Create.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Nutrution/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnV0cnV0aW9uXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Nutrution/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnV0cnV0aW9uXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Nutrution/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnV0cnV0aW9uXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Nutrution/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnV0cnV0aW9uXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Nutrution/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTnV0cnV0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Person/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Person/Details.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Person/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Person/Edit.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Person/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Routine/Create.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Routine/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Routine/Delete.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Routine/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Routine/Details.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Routine/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Routine/Edit.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Routine/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Routine/EditExercises.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Routine/EditExercises.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxFZGl0RXhlcmNpc2VzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Routine/Index.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Routine/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Shared/Error.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/_ViewImports.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/_ViewStart.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/orion/source/repos/CS330FinalProject/ClassDemo/Views/Shared/_Layout.cshtml]
+[C:/Users/Eli/Source/Repos/CS330FinalProject/ClassDemo/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-etyolqog59

@@ -1,0 +1,38 @@
+﻿@model Assignment3.Models.Nutrition
+
+<h2>Delete Nutrition Plan</h2>
+
+<div>
+    <h3>Are you sure you want to delete this nutrition plan?</h3>
+
+    <table class="table">
+        <tr>
+            <th>BMR</th>
+            <td>@Model.BMR</td>
+        </tr>
+        <tr>
+            <th>Calorie Surplus/Deficit</th>
+            <td>@Model.CalorieSurplusOrDeficit</td>
+        </tr>
+        <tr>
+            <th>Protein Percentage</th>
+            <td>@Model.ProteinPercentage%</td>
+        </tr>
+        <tr>
+            <th>Carb Percentage</th>
+            <td>@Model.CarbPercentage%</td>
+        </tr>
+        <tr>
+            <th>Fat Percentage</th>
+            <td>@Model.FatPercentage%</td>
+        </tr>
+    </table>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="PersonId" />
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Details" asp-route-personId="@Model.PersonId" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

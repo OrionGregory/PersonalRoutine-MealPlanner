@@ -15,6 +15,7 @@ namespace Assignment3.Data
         public DbSet<Person> People { get; set; }
         public DbSet<Routine> Routines { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<Nutrition> Nutrition { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,8 +31,13 @@ namespace Assignment3.Data
                 .WithOne(e => e.Routine)   // Each Exercise belongs to one Routine
                 .HasForeignKey(e => e.RoutineId); // Foreign key in Exercise pointing to Routine
 
+            // Configure Person -> Nutrition relationship
+            modelBuilder.Entity<Nutrition>()
+                .HasOne(n => n.Person)   // Each Nutrition belongs to one Person
+                .WithOne(p => p.Nutrition) // A Person can have one Nutrition
+                .HasForeignKey<Nutrition>(n => n.PersonId); // Foreign key in Nutrition pointing to Person
+
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

@@ -22,3 +22,5 @@
 *.opendb
 *.VC.db
 
+ClassDemo/obj/
+ClassDemo/bin/

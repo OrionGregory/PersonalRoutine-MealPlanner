@@ -15,7 +15,7 @@
 
 <div>
     <h3>@Model.RoutineType for @Model.DayOfWeek</h3>
-    <p><strong>Person:</strong> @Model.Person.Name</p>
+    <p><strong>Person:</strong> @(Model.Person != null ? Model.Person.Name : "N/A")</p>
 
     <h4>Exercises</h4>
     <ul>

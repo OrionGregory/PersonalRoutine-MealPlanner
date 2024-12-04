@@ -14,7 +14,7 @@ namespace Assignment3.Models
 
         // Foreign key to Person
         public int PersonId { get; set; }
-        public Person? Person { get; set; }
+        public ICollection<Person>? Person { get; set; }
     }
 
 }

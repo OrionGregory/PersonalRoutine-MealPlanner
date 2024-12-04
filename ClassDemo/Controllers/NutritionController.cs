@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Assignment3.Controllers
 {
@@ -10,10 +11,12 @@ namespace Assignment3.Controllers
     public class NutritionController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public NutritionController(ApplicationDbContext context)
+        public NutritionController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Nutrition
@@ -46,6 +49,14 @@ namespace Assignment3.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Ensure the PersonId exists
+                var person = await _context.People.FindAsync(nutrition.PersonId);
+                if (person == null)
+                {
+                    ModelState.AddModelError("", "Invalid PersonId.");
+                    return View(nutrition);
+                }
+
                 _context.Nutrition.Add(nutrition);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

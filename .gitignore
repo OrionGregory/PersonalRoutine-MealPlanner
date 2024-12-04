@@ -3,24 +3,24 @@
 **/obj/
 
 # Optional: Ignore Visual Studio specific files (if applicable)
-*.user
-*.suo
-*.log
-*.cache
-*.pdb
-*.dll
-*.exe
-*.tmp
-*.bak
-*.swp
-*.obj
-*.idb
-*.ipch
-*.tlog
-*.lastbuildstate
-*.sdf
-*.opendb
-*.VC.db
+ClassDemo/*.user
+ClassDemo/*.suo
+ClassDemo/*.log
+ClassDemo/*.cache
+ClassDemo/*.pdb
+ClassDemo/*.dll
+ClassDemo/*.exe
+ClassDemo/*.tmp
+ClassDemo/*.bak
+ClassDemo/*.swp
+ClassDemo/*.obj
+ClassDemo/*.idb
+ClassDemo/*.ipch
+ClassDemo/*.tlog
+ClassDemo/*.lastbuildstate
+ClassDemo/*.sdf
+ClassDemo/*.opendb
+ClassDemo/*.VC.db
 
 ClassDemo/obj/
 ClassDemo/bin/

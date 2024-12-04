@@ -6,62 +6,41 @@
 
 <h1>Your Workout Plan</h1>
 
-<h2>Profile Details</h2>
-<ul>
-    <li><strong>Name:</strong> @Model.Name</li>
-    <li><strong>Age:</strong> @Model.Age</li>
-    <li><strong>Sex:</strong> @Model.Sex</li>
-    <li><strong>Current Weight:</strong> @Model.Weight kg</li>
-    <li><strong>Goal Weight:</strong> @Model.GoalWeight kg</li>
-    <li><strong>Time Frame:</strong> @Model.Time weeks</li>
-</ul>
-
 <h2>Weekly Workout Routine</h2>
-<table class="table table-bordered table-striped">
-    <thead class="thead-dark">
+<table id="routineTable" class="table table-bordered table-striped">
+    <thead>
         <tr>
             <th>Day</th>
-            <th>Routine</th>
+            <th>Routines</th>
         </tr>
     </thead>
     <tbody>
-        @{
-            // Define all days of the week
-            var daysOfWeek = new List<string>
+        @foreach (var day in Enum.GetNames(typeof(DayOfWeek)))
         {
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-        };
+            var routinesForDay = Model.Routines?
+            .Where(r => r.DayOfWeek.Equals(day, StringComparison.OrdinalIgnoreCase))
+            .ToList() ?? new List<Assignment3.Models.Routine>();
 
-            // Optionally, get the current day for highlighting
-            var currentDay = DateTime.Now.DayOfWeek.ToString();
-        }
-
-        @foreach (var day in daysOfWeek)
-        {
-            // Find the routine for the current day
-            var routine = Model.Routines.FirstOrDefault(r => string.Equals(r.DayOfWeek, day, StringComparison.OrdinalIgnoreCase));
-
-            // Check if the current day matches today
-            var isToday = string.Equals(day, currentDay, StringComparison.OrdinalIgnoreCase);
-
-            <tr class="@(isToday ? "table-primary" : "")">
+            <tr data-day="@day" class="droppable">
                 <td>@day</td>
                 <td>
-                    @if (routine != null)
+                    @if (routinesForDay.Any())
                     {
-                        <a asp-controller="Routine" asp-action="Details" asp-route-id="@routine.Id">
-                            @routine.RoutineType
-                        </a>
+                        @foreach (var routine in routinesForDay)
+                        {
+                            <div class="d-flex justify-content-between align-items-center mb-2 draggable"
+                                 draggable="true"
+                                 data-routine-id="@routine.Id">
+                                <span>@routine.RoutineType</span>
+                                <a asp-controller="Routine" asp-action="Details" asp-route-id="@routine.Id" class="btn btn-sm btn-primary">
+                                    Details
+                                </a>
+                            </div>
+                        }
                     }
                     else
                     {
-                        <span class="text-muted">No routine available.</span>
+                        <span class="text-muted">No routines available.</span>
                     }
                 </td>
             </tr>
@@ -79,3 +58,5 @@
 <a asp-action="Edit" class="btn btn-secondary mt-3">Edit Profile</a>
 
 
+<!-- Include the JavaScript file -->
+<script src="~/js/routineSwap.js"></script>

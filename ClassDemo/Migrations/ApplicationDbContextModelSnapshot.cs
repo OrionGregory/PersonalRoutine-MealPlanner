@@ -34,10 +34,14 @@ namespace Assignment3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Reps")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoutineId")
+                    b.Property<int?>("RoutineId")
                         .HasColumnType("int");
 
                     b.Property<int>("Sets")
@@ -354,8 +358,7 @@ namespace Assignment3.Migrations
                     b.HasOne("Assignment3.Models.Routine", "Routine")
                         .WithMany("Exercises")
                         .HasForeignKey("RoutineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Routine");
                 });

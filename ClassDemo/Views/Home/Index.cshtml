@@ -16,7 +16,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
         <div class="mt-5">
-            <h2>Hello, @User.Identity.Name!</h2>
+            <h2>Hello, @(User.Identity?.Name ?? "User")!</h2>
             <p>
                 View or update your
                 <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>

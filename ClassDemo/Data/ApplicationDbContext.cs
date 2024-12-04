@@ -1,7 +1,7 @@
-using Assignment3.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Assignment3.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Assignment3.Data
 {
@@ -19,17 +19,14 @@ namespace Assignment3.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure Person -> Routines relationship
-            modelBuilder.Entity<Person>()
-                .HasMany(p => p.Routines) // A Person has many Routines
-                .WithOne(r => r.Person)   // Each Routine belongs to one Person
-                .HasForeignKey(r => r.PersonId); // Foreign key in Routine pointing to Person
+            base.OnModelCreating(modelBuilder);
 
-            // Configure Routine -> Exercises relationship
+            // Configure relationships if not using conventions
             modelBuilder.Entity<Routine>()
-                .HasMany(r => r.Exercises) // A Routine has many Exercises
-                .WithOne(e => e.Routine)   // Each Exercise belongs to one Routine
-                .HasForeignKey(e => e.RoutineId); // Foreign key in Exercise pointing to Routine
+                .HasOne(r => r.Person)
+                .WithMany(p => p.Routines)
+                .HasForeignKey(r => r.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Configure Person -> Nutrition relationship
             modelBuilder.Entity<Nutrition>()

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj": {}
   },
   "projects": {
@@ -12,9 +13,30 @@
         "projectPath": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
         "packagesPath": "C:\\Users\\Eli\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Eli\\Source\\Repos\\CS330FinalProject\\ClassDemo\\obj\\",
+=======
+    "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj": {}
+  },
+  "projects": {
+    "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
+        "projectName": "Assignment3",
+        "projectPath": "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\Assignment3.csproj",
+        "packagesPath": "C:\\Users\\orion\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\orion\\Documents\\CS330\\CS330FinalProject\\ClassDemo\\obj\\",
+>>>>>>> 037f60bf457e0fd0083f7b4c54fcfc62e328e446
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\Eli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\orion\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+>>>>>>> 037f60bf457e0fd0083f7b4c54fcfc62e328e446
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +44,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,7 +61,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -100,7 +122,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

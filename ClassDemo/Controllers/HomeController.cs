@@ -1,10 +1,7 @@
 ﻿// Controllers/HomeController.cs
 using System.Diagnostics;
-using Assignment3.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
-using ClassDemo.Models;
 
 namespace Assignment3.Controllers
 {
@@ -31,12 +28,12 @@ namespace Assignment3.Controllers
             return View();
         }
 
-        // GET: Home/Error
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            var errorModel = new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier };
-            return View(errorModel);
-        }
+        //// GET: Home/Error
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    var errorModel = new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier };
+        //    return View(errorModel);
+        //}
     }
 }

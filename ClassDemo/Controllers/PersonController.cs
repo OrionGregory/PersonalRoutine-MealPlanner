@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Assignment3.Data;
-using Assignment3.Models;
+﻿using Assignment3.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using ClassDemo.Data;
+using Assignment3.Data;
 
 namespace Assignment3.Controllers
 {
-    [Authorize] // Ensure only authenticated users can access these actions
+    [Authorize]
     public class PersonController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -30,7 +28,7 @@ namespace Assignment3.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var person = await _context.People
-                .Include(p => p.Routine)
+                .Include(p => p.Routines)
                 .FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (person == null)
@@ -42,13 +40,14 @@ namespace Assignment3.Controllers
             return View(person);
         }
 
-        // POST: Person/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Person person)
         {
             var userId = _userManager.GetUserId(User);
-            var existingPerson = await _context.People.FirstOrDefaultAsync(p => p.Id == person.Id && p.UserId == userId);
+            var existingPerson = await _context.People
+                .Include(p => p.Routines)
+                .FirstOrDefaultAsync(p => p.Id == person.Id && p.UserId == userId);
 
             if (existingPerson == null)
             {
@@ -85,7 +84,6 @@ namespace Assignment3.Controllers
             return View(person);
         }
 
-
         // GET: Person/Create
         [HttpGet]
         public IActionResult Create()
@@ -93,7 +91,6 @@ namespace Assignment3.Controllers
             return View();
         }
 
-        // POST: Person/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Person person)
@@ -104,18 +101,22 @@ namespace Assignment3.Controllers
 
             if (ModelState.IsValid)
             {
-                _logger.LogInformation("ModelState is valid. Adding Person to context.");
                 _context.Add(person);
                 try
                 {
                     await _context.SaveChangesAsync();
                     _logger.LogInformation($"Successfully saved Person with ID {person.Id}");
 
-                    // Generate and save Routine
-                    var routine = GenerateRoutine(person);
-                    _context.Routines.Add(routine);
+                    // Generate and save Routines
+                    var routines = GenerateRoutine(person);
+                    foreach (var routine in routines)
+                    {
+                        routine.PersonId = person.Id;
+                        _context.Routines.Add(routine);
+                    }
+
                     await _context.SaveChangesAsync();
-                    _logger.LogInformation($"Successfully saved Routine with ID {routine.Id}");
+                    _logger.LogInformation("Successfully saved all generated routines.");
 
                     return RedirectToAction(nameof(Details));
                 }
@@ -125,15 +126,9 @@ namespace Assignment3.Controllers
                     ModelState.AddModelError("", "An error occurred while saving your profile. Please try again.");
                 }
             }
-            else
-            {
-                _logger.LogWarning("ModelState is invalid. Returning to Create view.");
-            }
 
             return View(person);
         }
-
-
 
         // GET: Person/Details
         [HttpGet]
@@ -145,11 +140,11 @@ namespace Assignment3.Controllers
             if (string.IsNullOrEmpty(userId))
             {
                 _logger.LogWarning("Details GET: User is not authenticated.");
-                return RedirectToAction("Login", "Account"); // Adjust the redirect as needed
+                return RedirectToAction("Login", "Account");
             }
 
             var person = await _context.People
-                .Include(p => p.Routine)
+                .Include(p => p.Routines)
                     .ThenInclude(r => r.Exercises)
                 .FirstOrDefaultAsync(p => p.UserId == userId);
 
@@ -163,49 +158,231 @@ namespace Assignment3.Controllers
             return View(person);
         }
 
-
-        // Helper method to generate a routine based on person details
-        private Routine GenerateRoutine(Person person)
+        private List<Routine> GenerateRoutine(Person person)
         {
-            var exercises = new List<Exercise>();
+            var routines = new List<Routine>();
 
-            // Simple logic: if goal is to lose weight, add cardio exercises
-            if (person.GoalWeight < person.Weight)
+            if (person.GoalWeight > person.Weight) // Gaining Weight
             {
-                exercises.Add(new Exercise
+                // Push Day
+                routines.Add(new Routine
                 {
-                    Description = "Running",
-                    Reps = 0,
-                    Sets = 0
+                    DayOfWeek = "Monday",
+                    RoutineType = "Push",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Bench Press", Reps = 10, Sets = 3 },
+                new Exercise { Description = "Shoulder Press", Reps = 12, Sets = 3 },
+                new Exercise { Description = "Tricep Dips", Reps = 15, Sets = 3 }
+            }
                 });
-                exercises.Add(new Exercise
+
+                // Pull Day
+                routines.Add(new Routine
                 {
-                    Description = "Cycling",
-                    Reps = 0,
-                    Sets = 0
+                    DayOfWeek = "Tuesday",
+                    RoutineType = "Pull",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Pull-Ups", Reps = 8, Sets = 3 },
+                new Exercise { Description = "Barbell Rows", Reps = 10, Sets = 3 },
+                new Exercise { Description = "Bicep Curls", Reps = 15, Sets = 3 }
+            }
+                });
+
+                // Leg Day
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Wednesday",
+                    RoutineType = "Legs",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Squats", Reps = 12, Sets = 3 },
+                new Exercise { Description = "Lunges", Reps = 10, Sets = 3 },
+                new Exercise { Description = "Calf Raises", Reps = 20, Sets = 3 }
+            }
+                });
+
+                // Rest Day
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Thursday",
+                    RoutineType = "Rest",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Light Stretching", Reps = 0, Sets = 15 }
+            }
+                });
+
+                // Full Body Day
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Friday",
+                    RoutineType = "Full Body",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Deadlifts", Reps = 10, Sets = 3 },
+                new Exercise { Description = "Push-Ups", Reps = 15, Sets = 3 },
+                new Exercise { Description = "Plank", Reps = 1, Sets = 3 } // Hold for 1 minute
+            }
+                });
+
+                // Cardio and Core
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Saturday",
+                    RoutineType = "Cardio and Core",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Jogging", Reps = 0, Sets = 30 }, // 30 minutes
+                new Exercise { Description = "Ab Rollouts", Reps = 15, Sets = 3 }
+            }
+                });
+
+                // Rest Day
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Sunday",
+                    RoutineType = "Rest",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Foam Rolling", Reps = 0, Sets = 15 }
+            }
                 });
             }
-            else // Goal is to gain weight or maintain
+            else // Losing Weight or Maintenance
             {
-                exercises.Add(new Exercise
+                // Cardio
+                routines.Add(new Routine
                 {
-                    Description = "Bench Press",
-                    Reps = 10,
-                    Sets = 3
+                    DayOfWeek = "Monday",
+                    RoutineType = "Cardio",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Running", Reps = 0, Sets = 30 } // 30 minutes
+            }
                 });
-                exercises.Add(new Exercise
+
+                // Strength Training
+                routines.Add(new Routine
                 {
-                    Description = "Squats",
-                    Reps = 12,
-                    Sets = 3
+                    DayOfWeek = "Tuesday",
+                    RoutineType = "Strength",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Push-Ups", Reps = 20, Sets = 3 },
+                new Exercise { Description = "Squats", Reps = 15, Sets = 3 },
+                new Exercise { Description = "Plank", Reps = 1, Sets = 3 } // Hold for 1 minute
+            }
+                });
+
+                // Cardio and Core
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Wednesday",
+                    RoutineType = "Cardio and Core",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Cycling", Reps = 0, Sets = 30 }, // 30 minutes
+                new Exercise { Description = "Sit-Ups", Reps = 15, Sets = 3 }
+            }
+                });
+
+                // Rest Day
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Thursday",
+                    RoutineType = "Rest",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Yoga", Reps = 0, Sets = 30 } // 30 minutes
+            }
+                });
+
+                // Full Body Strength
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Friday",
+                    RoutineType = "Full Body Strength",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Burpees", Reps = 15, Sets = 3 },
+                new Exercise { Description = "Lunges", Reps = 12, Sets = 3 },
+                new Exercise { Description = "Plank", Reps = 1, Sets = 3 }
+            }
+                });
+
+                // Cardio
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Saturday",
+                    RoutineType = "Cardio",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Swimming", Reps = 0, Sets = 30 } // 30 minutes
+            }
+                });
+
+                // Rest Day
+                routines.Add(new Routine
+                {
+                    DayOfWeek = "Sunday",
+                    RoutineType = "Rest",
+                    Exercises = new List<Exercise>
+            {
+                new Exercise { Description = "Stretching", Reps = 0, Sets = 15 }
+            }
                 });
             }
 
-            return new Routine
+            return routines;
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegenerateRoutine(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People
+                .Include(p => p.Routines)
+                .FirstOrDefaultAsync(p => p.Id == id && p.UserId == userId);
+
+            if (person == null)
             {
-                PersonId = person.Id,
-                Exercises = exercises
-            };
+                _logger.LogWarning($"RegenerateRoutine POST: No Person found with ID {id} for UserId {userId}.");
+                return NotFound();
+            }
+
+            try
+            {
+                // Remove existing routines
+                if (person.Routines != null)
+                {
+                    _context.Routines.RemoveRange(person.Routines);
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation($"Deleted existing routines for Person with ID {id}.");
+                }
+
+                // Generate and save new routines
+                var newRoutines = GenerateRoutine(person);
+                foreach (var routine in newRoutines)
+                {
+                    routine.PersonId = person.Id;
+                    _context.Routines.Add(routine);
+                }
+
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"Successfully regenerated routines for Person with ID {id}.");
+
+                return RedirectToAction(nameof(Details));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error regenerating routines for Person with ID {id}: {ex.Message}");
+                ModelState.AddModelError("", "An error occurred while regenerating your workout plan. Please try again.");
+                return RedirectToAction(nameof(Details), new { id = person.Id });
+            }
         }
     }
 }

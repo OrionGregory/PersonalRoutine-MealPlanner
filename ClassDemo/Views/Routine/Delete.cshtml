@@ -1,0 +1,20 @@
+﻿@model Assignment3.Models.Routine
+
+@{
+    ViewData["Title"] = "Delete Routine";
+}
+
+<h1>Delete Routine</h1>
+
+<div>
+    <h3>Are you sure you want to delete this routine?</h3>
+    <p><strong>Day:</strong> @Model.DayOfWeek</p>
+    <p><strong>Type:</strong> @Model.RoutineType</p>
+    <p><strong>Person:</strong> @Model.Person.Name</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

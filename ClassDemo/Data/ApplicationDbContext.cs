@@ -18,19 +18,20 @@ namespace Assignment3.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            // Configure one-to-one relationship between Person and Routine
+            // Configure Person -> Routines relationship
             modelBuilder.Entity<Person>()
-                .HasOne(p => p.Routine)
-                .WithOne(r => r.Person)
-                .HasForeignKey<Routine>(r => r.PersonId);
+                .HasMany(p => p.Routines) // A Person has many Routines
+                .WithOne(r => r.Person)   // Each Routine belongs to one Person
+                .HasForeignKey(r => r.PersonId); // Foreign key in Routine pointing to Person
 
-            // Configure one-to-many relationship between Routine and Exercises
+            // Configure Routine -> Exercises relationship
             modelBuilder.Entity<Routine>()
-                .HasMany(r => r.Exercises)
-                .WithOne(e => e.Routine)
-                .HasForeignKey(e => e.RoutineId);
+                .HasMany(r => r.Exercises) // A Routine has many Exercises
+                .WithOne(e => e.Routine)   // Each Exercise belongs to one Routine
+                .HasForeignKey(e => e.RoutineId); // Foreign key in Exercise pointing to Routine
+
+            base.OnModelCreating(modelBuilder);
         }
+
     }
 }

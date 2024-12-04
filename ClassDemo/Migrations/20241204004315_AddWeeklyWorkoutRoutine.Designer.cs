@@ -4,6 +4,7 @@ using Assignment3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241204004315_AddWeeklyWorkoutRoutine")]
+    partial class AddWeeklyWorkoutRoutine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +112,8 @@ namespace Assignment3.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("Routines");
                 });
@@ -339,8 +343,8 @@ namespace Assignment3.Migrations
             modelBuilder.Entity("Assignment3.Models.Routine", b =>
                 {
                     b.HasOne("Assignment3.Models.Person", "Person")
-                        .WithMany("Routines")
-                        .HasForeignKey("PersonId")
+                        .WithOne("Routine")
+                        .HasForeignKey("Assignment3.Models.Routine", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -400,7 +404,7 @@ namespace Assignment3.Migrations
 
             modelBuilder.Entity("Assignment3.Models.Person", b =>
                 {
-                    b.Navigation("Routines");
+                    b.Navigation("Routine");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Routine", b =>

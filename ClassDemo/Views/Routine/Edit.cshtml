@@ -1,0 +1,33 @@
+﻿@model Assignment3.Models.Routine
+
+@{
+    ViewData["Title"] = "Edit Routine";
+}
+
+<h1>Edit Routine</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="DayOfWeek" class="control-label"></label>
+        <select asp-for="DayOfWeek" class="form-control">
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+            <option>Sunday</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="RoutineType" class="control-label"></label>
+        <input asp-for="RoutineType" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PersonId" class="control-label">Person</label>
+        <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonList"></select>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

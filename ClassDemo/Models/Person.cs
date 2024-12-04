@@ -17,10 +17,10 @@ namespace Assignment3.Models
         public string Sex { get; set; }
 
         [Required(ErrorMessage = "Weight is required.")]
-        public float Weight { get; set; }
+        public float? Weight { get; set; }
 
         [Required(ErrorMessage = "Goal is required.")]
-        public float GoalWeight { get; set; }
+        public float? GoalWeight { get; set; }
 
         [Required(ErrorMessage = "Time is required.")]
         public int Time { get; set; }

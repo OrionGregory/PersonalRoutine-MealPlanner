@@ -4,6 +4,13 @@
     ViewData["Title"] = "Routine Details";
 }
 
+@if (ViewData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["ErrorMessage"]
+    </div>
+}
+
 <h1>Routine Details</h1>
 
 <div>

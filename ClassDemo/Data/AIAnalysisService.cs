@@ -1,7 +1,13 @@
 ﻿// Data/AIAnalysisService.cs
+using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Assignment3.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ClassDemo.Data
 {
@@ -26,7 +32,7 @@ namespace ClassDemo.Data
             var requestBody = new
             {
                 messages = new[] { new { role = "user", content = prompt } },
-                max_tokens = 1000,
+                max_tokens = 500,
                 temperature = 0.7,
                 n = 1
             };
@@ -60,12 +66,10 @@ namespace ClassDemo.Data
                     string jsonArrayString = ExtractJsonArray(aiMessageContent);
 
                     // Deserialize the JSON array into objects of type T
-                    var items = JsonSerializer.Deserialize<List<T>>(jsonArrayString, new JsonSerializerOptions
+                    return JsonSerializer.Deserialize<List<T>>(jsonArrayString, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
-
-                    return items;
                 }
                 else if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
@@ -81,6 +85,28 @@ namespace ClassDemo.Data
             }
 
             throw new Exception("Exceeded maximum retry attempts due to rate limiting.");
+        }
+
+        // Generate exercises for a specific routine using AI
+        public async Task<List<Exercise>> GenerateExercisesFromAI(string routineType, float currentWeight, float goalWeight, int timeFrame)
+        {
+            string prompt = $@"
+                Generate a workout routine for a '{routineType}' day. 
+                The person's current weight is {currentWeight} lbs, and their goal weight is {goalWeight} lbs. 
+                They want to achieve this goal in {timeFrame} weeks.
+                Provide 4-5 exercises unless it is a rest or cardio day, in which only two exercises will be necessary, with different sets and reps.
+                Format the response as a JSON array with each exercise having 'Name', 'Description', 'Sets', and 'Reps'.
+            ";
+
+            try
+            {
+                return await GetChatGPTResponseAsync<Exercise>(prompt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error generating exercises: {ex.Message}");
+                throw;
+            }
         }
 
         private string ExtractJsonArray(string responseContent)

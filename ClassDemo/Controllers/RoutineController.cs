@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
 using Assignment3.Models;
 using Microsoft.AspNetCore.Authorization;
+using ClassDemo.Data;
 
 namespace Assignment3.Controllers
 {
@@ -12,10 +13,12 @@ namespace Assignment3.Controllers
     public class RoutineController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly AIAnalysisService _aiService;
 
-        public RoutineController(ApplicationDbContext context)
+        public RoutineController(ApplicationDbContext context, AIAnalysisService aiService)
         {
             _context = context;
+            _aiService = aiService;
         }
 
         // GET: Routine
@@ -374,32 +377,88 @@ namespace Assignment3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegenerateRoutine(int id)
         {
+            // Fetch routine with related data
             var routine = await _context.Routines
                 .Include(r => r.Exercises)
+                .Include(r => r.Person)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (routine == null)
             {
+                Console.WriteLine($"RegenerateRoutine POST: Routine with ID {id} not found.");
                 return NotFound();
             }
 
-            // Remove existing exercises
-            if (routine.Exercises != null && routine.Exercises.Any())
+            try
             {
-                _context.Exercises.RemoveRange(routine.Exercises);
-            }
+                // Remove existing exercises if any
+                if (routine.Exercises != null && routine.Exercises.Any())
+                {
+                    Console.WriteLine($"RegenerateRoutine POST: Removing existing exercises for Routine ID {id}.");
+                    _context.Exercises.RemoveRange(routine.Exercises);
+                }
 
-            // Generate new predefined exercises based on RoutineType
-            var newExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
-            if (newExercises != null && newExercises.Any())
-            {
+                List<Exercise> newExercises;
+
+                try
+                {
+                    // Prepare data for AI request
+                    var currentWeight = routine.Person?.Weight ?? 0;
+                    var goalWeight = routine.Person?.GoalWeight ?? 0;
+                    var timeFrame = 12; // Example default timeframe in weeks
+
+                    Console.WriteLine($"RegenerateRoutine POST: Generating exercises with RoutineType: {routine.RoutineType}, " +
+                                      $"CurrentWeight: {currentWeight}, GoalWeight: {goalWeight}, TimeFrame: {timeFrame}.");
+
+                    // Attempt to generate exercises using AI
+                    newExercises = await _aiService.GenerateExercisesFromAI(
+                        routine.RoutineType,
+                        currentWeight,
+                        goalWeight,
+                        timeFrame
+                    );
+
+                    if (newExercises == null || !newExercises.Any())
+                    {
+                        throw new Exception("AI returned no exercises.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log AI error and use predefined exercises
+                    Console.WriteLine($"RegenerateRoutine POST: AI error or no response for Routine ID {id}: {ex.Message}");
+                    newExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
+
+                    if (newExercises == null || !newExercises.Any())
+                    {
+                        Console.WriteLine($"RegenerateRoutine POST: No predefined exercises available for RoutineType: {routine.RoutineType}");
+                        TempData["AIError"] = "Error generating exercises. Please try again.";
+                        return RedirectToAction(nameof(Details), new { id = routine.Id });
+                    }
+                }
+
+                // Associate exercises with the routine and save to database
+                foreach (var exercise in newExercises)
+                {
+                    exercise.RoutineId = routine.Id;
+                }
+
                 _context.Exercises.AddRange(newExercises);
+                await _context.SaveChangesAsync();
+                Console.WriteLine($"RegenerateRoutine POST: Successfully regenerated exercises for Routine ID {id}.");
+            }
+            catch (Exception ex)
+            {
+                // Log error details and notify the user
+                Console.WriteLine($"RegenerateRoutine POST: Unexpected error for Routine ID {id}: {ex.Message}");
+                TempData["AIError"] = "Unexpected error while regenerating exercises.";
+                return RedirectToAction(nameof(Details), new { id = routine.Id });
             }
 
-            await _context.SaveChangesAsync();
-
+            // Redirect to the details view of the routine
             return RedirectToAction(nameof(Details), new { id = routine.Id });
         }
+
 
 
         public class SwapRoutineModel

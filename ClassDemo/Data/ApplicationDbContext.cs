@@ -32,7 +32,7 @@ namespace Assignment3.Data
             modelBuilder.Entity<Nutrition>()
                 .HasOne(n => n.Person)   // Each Nutrition belongs to one Person
                 .WithOne(p => p.Nutrition) // A Person can have one Nutrition
-                .HasForeignKey<Nutrition>(n => n.PersonId); // Foreign key in Nutrition pointing to Person
+                .HasForeignKey<Nutrition>(n => n.Id); // Foreign key in Nutrition pointing to Person
 
             base.OnModelCreating(modelBuilder);
         }

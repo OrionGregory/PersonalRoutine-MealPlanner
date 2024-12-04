@@ -16,13 +16,14 @@ namespace Assignment3.Controllers
             _context = context;
         }
 
+        // GET: Nutrition
         public async Task<IActionResult> Index()
         {
-            // Get all nutrition records along with associated person data
             var nutritionList = await _context.Nutrition.Include(n => n.Person).ToListAsync();
             return View(nutritionList);
         }
 
+        // GET: Nutrition/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var nutrition = await _context.Nutrition.Include(n => n.Person)
@@ -31,12 +32,14 @@ namespace Assignment3.Controllers
             return View(nutrition);
         }
 
+        // GET: Nutrition/Create
         public IActionResult Create(int personId)
         {
             var nutrition = new Nutrition { PersonId = personId };
             return View(nutrition);
         }
 
+        // POST: Nutrition/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Nutrition nutrition)
@@ -45,11 +48,12 @@ namespace Assignment3.Controllers
             {
                 _context.Nutrition.Add(nutrition);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", new { id = nutrition.Id });
+                return RedirectToAction(nameof(Index));
             }
             return View(nutrition);
         }
 
+        // GET: Nutrition/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var nutrition = await _context.Nutrition.FindAsync(id);
@@ -57,6 +61,7 @@ namespace Assignment3.Controllers
             return View(nutrition);
         }
 
+        // POST: Nutrition/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Nutrition nutrition)
@@ -65,18 +70,31 @@ namespace Assignment3.Controllers
             {
                 _context.Update(nutrition);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", new { id = nutrition.Id });
+                return RedirectToAction(nameof(Index));
             }
             return View(nutrition);
         }
 
+        // GET: Nutrition/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var nutrition = await _context.Nutrition.FindAsync(id);
             if (nutrition == null) return NotFound();
-            _context.Nutrition.Remove(nutrition);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Person", new { id = nutrition.PersonId });
+            return View(nutrition);
+        }
+
+        // POST: Nutrition/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var nutrition = await _context.Nutrition.FindAsync(id);
+            if (nutrition != null)
+            {
+                _context.Nutrition.Remove(nutrition);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -6,6 +6,7 @@ using Assignment3.Data;
 using Assignment3.Models;
 using Microsoft.AspNetCore.Authorization;
 using ClassDemo.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Assignment3.Controllers
 {
@@ -14,20 +15,24 @@ namespace Assignment3.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly AIAnalysisService _aiService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public RoutineController(ApplicationDbContext context, AIAnalysisService aiService)
+        public RoutineController(ApplicationDbContext context, AIAnalysisService aiService, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _aiService = aiService;
+            _userManager = userManager;
         }
 
         // GET: Routine
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var userId = _userManager.GetUserId(User);
             var routines = _context.Routines
-                                    .Include(r => r.Person)
-                                    .Include(r => r.Exercises); // Include exercises for display
+                                   .Include(r => r.Person)
+                                   .Include(r => r.Exercises)
+                                   .Where(r => r.Person.UserId == userId); // Filter by logged-in user
             return View(await routines.ToListAsync());
         }
 
@@ -40,10 +45,11 @@ namespace Assignment3.Controllers
                 return NotFound();
             }
 
+            var userId = _userManager.GetUserId(User);
             var routine = await _context.Routines
-                .Include(r => r.Person)
-                .Include(r => r.Exercises)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                                        .Include(r => r.Person)
+                                        .Include(r => r.Exercises)
+                                        .FirstOrDefaultAsync(m => m.Id == id && m.Person.UserId == userId); // Filter by logged-in user
 
             if (routine == null)
             {

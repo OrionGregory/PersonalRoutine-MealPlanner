@@ -1,0 +1,40 @@
+﻿@model Assignment3.Models.Nutrition
+
+<h2>Create Nutrition Plan</h2>
+
+<form asp-action="Create">
+    <input type="hidden" asp-for="PersonId" />
+
+    <div class="form-group">
+        <label asp-for="BMR"></label>
+        <input asp-for="BMR" class="form-control" />
+        <span asp-validation-for="BMR" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CalorieSurplusOrDeficit"></label>
+        <input asp-for="CalorieSurplusOrDeficit" class="form-control" />
+        <span asp-validation-for="CalorieSurplusOrDeficit" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ProteinPercentage"></label>
+        <input asp-for="ProteinPercentage" class="form-control" />
+        <span asp-validation-for="ProteinPercentage" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CarbPercentage"></label>
+        <input asp-for="CarbPercentage" class="form-control" />
+        <span asp-validation-for="CarbPercentage" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FatPercentage"></label>
+        <input asp-for="FatPercentage" class="form-control" />
+        <span asp-validation-for="FatPercentage" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

@@ -1,0 +1,30 @@
+﻿@model Assignment3.Models.Nutrition
+
+<h2>Nutrition Details</h2>
+
+<table class="table">
+    <tr>
+        <th>BMR</th>
+        <td>@Model.BMR</td>
+    </tr>
+    <tr>
+        <th>Calorie Surplus/Deficit</th>
+        <td>@Model.CalorieSurplusOrDeficit</td>
+    </tr>
+    <tr>
+        <th>Protein Percentage</th>
+        <td>@Model.ProteinPercentage%</td>
+    </tr>
+    <tr>
+        <th>Carb Percentage</th>
+        <td>@Model.CarbPercentage%</td>
+    </tr>
+    <tr>
+        <th>Fat Percentage</th>
+        <td>@Model.FatPercentage%</td>
+    </tr>
+</table>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+<a asp-action="Details" controller="Person" asp-route-id="@Model.PersonId" class="btn btn-secondary">Back to Person</a>

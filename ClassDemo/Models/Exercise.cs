@@ -18,7 +18,7 @@ namespace Assignment3.Models
         public string Name { get; set; }
 
         // Foreign key to WorkoutPlan
-        public int RoutineId { get; set; }
-        public Routine Routine { get; set; }
+        public int? RoutineId { get; set; }
+        public Routine? Routine { get; set; }
     }
 }

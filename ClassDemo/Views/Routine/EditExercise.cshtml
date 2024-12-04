@@ -1,0 +1,43 @@
+﻿@model Assignment3.Models.Exercise
+
+@{
+    ViewData["Title"] = "Edit Exercise";
+}
+
+<h1>Edit Exercise</h1>
+
+<form asp-action="EditExercise" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Sets" class="control-label"></label>
+        <input asp-for="Sets" class="form-control" />
+        <span asp-validation-for="Sets" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Reps" class="control-label"></label>
+        <input asp-for="Reps" class="form-control" />
+        <span asp-validation-for="Reps" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="RoutineId" />
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="EditExercises" asp-route-id="@Model.RoutineId" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

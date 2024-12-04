@@ -114,6 +114,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/orion/Source/Repos/CS330Final/ClassDemo/Views/Routine/CreateExercise.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxDcmVhdGVFeGVyY2lzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/orion/Source/Repos/CS330Final/ClassDemo/Views/Routine/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -124,6 +128,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/orion/Source/Repos/CS330Final/ClassDemo/Views/Routine/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/orion/Source/Repos/CS330Final/ClassDemo/Views/Routine/EditExercise.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91dGluZVxFZGl0RXhlcmNpc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/orion/Source/Repos/CS330Final/ClassDemo/Views/Routine/EditExercises.cshtml]

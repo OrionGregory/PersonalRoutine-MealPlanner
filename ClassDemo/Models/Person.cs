@@ -26,7 +26,7 @@ namespace Assignment3.Models
         public int Time { get; set; }
 
         // Navigation property to Routine
-        public ICollection<Routine>? Routines { get; set; }
+        public List<Routine>? Routines { get; set; }
 
         // Associate with IdentityUser
         public string? UserId { get; set; }

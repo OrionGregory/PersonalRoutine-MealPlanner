@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\wwwroot\\js\\routineSwap.js",
+      "PackagePath": "staticwebassets\\js\\routineSwap.js"
+    },
+    {
       "Id": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

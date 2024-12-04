@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jsg2zhoNE6hovDMYhquvVm9LUM25A+V983TA2sUmeNE=",
+  "Hash": "LjRtJ4XrxS6wHqKSzY24SIqcAadNzLfVMBSR+QM7Pbg=",
   "Source": "Assignment3",
   "BasePath": "_content/Assignment3",
   "Mode": "Default",
@@ -1269,6 +1269,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\wwwroot\\js\\routineSwap.js",
+      "SourceId": "Assignment3",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\wwwroot\\",
+      "BasePath": "_content/Assignment3",
+      "RelativePath": "js/routineSwap.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\routineSwap.js"
     },
     {
       "Identity": "C:\\Users\\orion\\Source\\Repos\\CS330Final\\ClassDemo\\wwwroot\\js\\site.js",

@@ -11,7 +11,7 @@ namespace Assignment3.Models
         public Person Person { get; set; }
 
         // Collection of Exercises
-        public List<Exercise> Exercises { get; set; }
+        public List<Exercise>? Exercises { get; set; }
 
         // Routine type for categorization (e.g., Push, Pull, Legs)
         public string RoutineType { get; set; }

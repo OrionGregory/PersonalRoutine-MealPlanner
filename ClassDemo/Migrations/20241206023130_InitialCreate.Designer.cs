@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241206005918_isAdmin")]
-    partial class isAdmin
+    [Migration("20241206023130_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,7 +60,10 @@ namespace Assignment3.Migrations
             modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BMR")
                         .HasColumnType("int");
@@ -81,6 +84,9 @@ namespace Assignment3.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
 
                     b.ToTable("Nutrition");
                 });
@@ -367,7 +373,7 @@ namespace Assignment3.Migrations
                 {
                     b.HasOne("Assignment3.Models.Person", "Person")
                         .WithOne("Nutrition")
-                        .HasForeignKey("Assignment3.Models.Nutrition", "Id")
+                        .HasForeignKey("Assignment3.Models.Nutrition", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

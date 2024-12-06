@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Assignment3.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCommit : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -162,6 +162,7 @@ namespace Assignment3.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    isAdmin = table.Column<bool>(type: "bit", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -184,7 +185,8 @@ namespace Assignment3.Migrations
                 name: "Nutrition",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BMR = table.Column<int>(type: "int", nullable: false),
                     CalorieSurplusOrDeficit = table.Column<int>(type: "int", nullable: false),
                     ProteinPercentage = table.Column<int>(type: "int", nullable: false),
@@ -196,8 +198,8 @@ namespace Assignment3.Migrations
                 {
                     table.PrimaryKey("PK_Nutrition", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Nutrition_People_Id",
-                        column: x => x.Id,
+                        name: "FK_Nutrition_People_PersonId",
+                        column: x => x.PersonId,
                         principalTable: "People",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -289,6 +291,12 @@ namespace Assignment3.Migrations
                 name: "IX_Exercises_RoutineId",
                 table: "Exercises",
                 column: "RoutineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Nutrition_PersonId",
+                table: "Nutrition",
+                column: "PersonId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_UserId",

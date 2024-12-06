@@ -33,7 +33,7 @@
                             <td>@Html.DisplayFor(model => model.Weight) lbs</td>
                         </tr>
                         <tr>
-                            @if (Model.Weight <= Model.GoalWeight)
+                            @if (Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) <= 5)
                             {
                                 <td style="background-color: palegreen" colspan="2">
                                     <span style="color: darkgreen;">GOAL ACHIEVED!</span>
@@ -42,7 +42,7 @@
                             else
                             {
                                 <td style="background-color: palevioletred" colspan="2">
-                                    <span style="color: darkred;">@decimal.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
+                                    <span style="color: darkred;">@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
                                 </td>
                             }
                         </tr>

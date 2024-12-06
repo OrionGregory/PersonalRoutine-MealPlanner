@@ -1,8 +1,8 @@
 ﻿using Assignment3.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 namespace Assignment3.Controllers
@@ -106,6 +106,68 @@ namespace Assignment3.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Nutrition/GenerateNutritionPlan
+        public async Task<IActionResult> GenerateNutritionPlan()
+        {
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People
+                .Include(p => p.Routines)
+                    .ThenInclude(r => r.Exercises)
+                .FirstOrDefaultAsync(p => p.UserId == userId);
+
+            if (person == null)
+            {
+                return RedirectToAction("Create", "Person");
+            }
+
+            // Calculate nutrition values
+            var bmr = NutritionCalculator.CalculateBMR(person);
+            var averageRoutineCaloriesBurned = NutritionCalculator.CalculateAverageRoutineCaloriesBurned(person);
+            var dailyCalorieAdjustment = NutritionCalculator.CalculateDailyCalorieAdjustment(person);
+            var totalDailyCalories = NutritionCalculator.GetTotalDailyCalories(person);
+            var (proteinPct, carbsPct, fatPct) = NutritionCalculator.CalculateMacroPercentages(person);
+
+            // Check if a nutrition plan already exists
+            var existingNutrition = await _context.Nutrition.FirstOrDefaultAsync(n => n.PersonId == person.Id);
+
+            if (existingNutrition != null)
+            {
+                // Update existing nutrition plan
+                existingNutrition.BMR = bmr;
+                existingNutrition.CalorieSurplusOrDeficit = dailyCalorieAdjustment;
+                existingNutrition.RoutineCaloriesBurned = averageRoutineCaloriesBurned;
+                existingNutrition.TotalDailyCalories = totalDailyCalories;
+                existingNutrition.ProteinPercentage = proteinPct;
+                existingNutrition.CarbPercentage = carbsPct;
+                existingNutrition.FatPercentage = fatPct;
+
+                _context.Nutrition.Update(existingNutrition);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Details), new { id = existingNutrition.Id });
+            }
+            else
+            {
+                // Create new nutrition plan
+                var nutrition = new Nutrition
+                {
+                    PersonId = person.Id,
+                    BMR = bmr,
+                    CalorieSurplusOrDeficit = dailyCalorieAdjustment,
+                    RoutineCaloriesBurned = averageRoutineCaloriesBurned,
+                    TotalDailyCalories = totalDailyCalories,
+                    ProteinPercentage = proteinPct,
+                    CarbPercentage = carbsPct,
+                    FatPercentage = fatPct
+                };
+
+                _context.Nutrition.Add(nutrition);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Details), new { id = nutrition.Id });
+            }
         }
     }
 }

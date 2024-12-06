@@ -1,6 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+
+@model Assignment3.Models.Person
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,26 +14,56 @@
     <p class="lead">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
-<hr />
-
 @if (SignInManager.IsSignedIn(User))
 {
-        <div class="mt-5">
-            <h2>Hello, @(User.Identity?.Name ?? "User")!</h2>
-            <p>
-                View or update your
-                <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
-            </p>
+    <div class="text-center">
+
+        <h2>Hello, @Html.DisplayFor(model => model.Name)</h2>
+        <div class="text-center">
+            <table class="table table-striped table-bordered table-hover mx-auto">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Goal Weight</th>
+                        <th>Current Weight</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-light">
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.GoalWeight) lbs</td>
+                        <td>@Html.DisplayFor(model => model.Weight) lbs</td>
+                    </tr>
+                    <tr>
+                        @if (Model.Weight <= Model.GoalWeight)
+                        {
+                            <td style="background-color: palegreen" colspan="2">
+                                <span style="color: darkgreen;">GOAL ACHIEVED!</span> <!-- Green if the goal is reached -->
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="background-color: palevioletred" colspan="2">
+                                <span style="color: darkred;">@decimal.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go lbs to go</span> <!-- Red if the goal is not reached -->
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <p>
+            <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
+            <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
+            <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
+        </p>
+    </div>
 }
 else
 {
-        <div class="mt-5">
-            <h2>Get Started</h2>
-            <p>
-                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Log In</a>
-                or
-                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-secondary">Register</a>
-            </p>
-        </div>
+    <div class="mt-5">
+        <h2>Get Started</h2>
+        <p>
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Log In</a>
+            or
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-secondary">Register</a>
+        </p>
+    </div>
 }

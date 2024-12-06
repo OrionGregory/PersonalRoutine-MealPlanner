@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Assignment3.Models.Person>
+
+@{
+    ViewData["Title"] = "Your Workout Plan";
+}
+
+<h1>Admin Menu</h1>
+
+<h2>Weekly Workout Routine</h2>
+<table id="UserList" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="AdminEdit" asp-route-id="@person.Id">
+                        <p>@person.Name</p>
+                    </a>
+                </td>
+                <td>
+                    @if(person.User != null)
+                    {
+                       
+                    }
+                    else
+                    {
+                        <p>Email not Found</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

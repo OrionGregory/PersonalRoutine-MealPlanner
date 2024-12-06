@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClassDemo.Data;
 using Assignment3.Data;
+using System;
 
 namespace Assignment3.Controllers
 {
@@ -34,6 +35,63 @@ namespace Assignment3.Controllers
             {
                 _logger.LogWarning($"Edit GET: No Person found for UserId {userId}. Redirecting to Create.");
                 return RedirectToAction(nameof(Create));
+            }
+
+            return View(person);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AdminMenu()
+        {
+            return View(await _context.People.ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AdminEdit(Person person)
+        {
+            var userId = _userManager.GetUserId(User);
+            var existingPerson = await _context.People
+                .Include(p => p.Routines)
+                .FirstOrDefaultAsync(p => p.Id == person.Id && p.UserId == userId);
+
+            if (existingPerson == null)
+            {
+                _logger.LogWarning($"Edit POST: No Person found with ID {person.Id} for UserId {userId}.");
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    existingPerson.Name = person.Name;
+                    existingPerson.Age = person.Age;
+                    existingPerson.Sex = person.Sex;
+                    existingPerson.Weight = person.Weight;
+                    existingPerson.GoalWeight = person.GoalWeight;
+                    existingPerson.Time = person.Time;
+
+                    if(person.isAdmin == null) {
+                        existingPerson.isAdmin = false;
+                    }
+                    if(person.isAdmin == true)
+                    {
+                        existingPerson.isAdmin = true;
+                    }
+                    if(person.isAdmin == false)
+                    {
+                        existingPerson.isAdmin = false;
+                    }
+
+                    _context.Update(existingPerson);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details));
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    _logger.LogError($"Edit POST: Concurrency error while updating Person with ID {person.Id}: {ex.Message}");
+                    return StatusCode(500, "Internal server error");
+                }
             }
 
             return View(person);

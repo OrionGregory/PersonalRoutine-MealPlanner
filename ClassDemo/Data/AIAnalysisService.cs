@@ -112,7 +112,7 @@ namespace ClassDemo.Data
                 The person's current weight is {currentWeight} lbs, and their goal weight is {goalWeight} lbs. 
                 They want to achieve this goal in {timeFrame} weeks.
                 Provide 4-5 exercises unless it is a rest or cardio day in that case only do 1-2 exercises, in which only two exercises will be necessary, with different sets and reps.
-                Format the response as a JSON array with each exercise having 'Name(String)', 'Description(String)', 'Sets(Int)', and 'Reps(Int)'.
+                Format the response as a JSON array with each exercise having 'Name(String)', 'Description(String)', 'Sets(Int)', and 'Reps(Int) The types for each variable is extremely important and must not be anything other'.
             ";
 
             try

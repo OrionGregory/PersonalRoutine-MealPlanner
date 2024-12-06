@@ -219,18 +219,18 @@ namespace Assignment3.Controllers
         }
 
         // POST: Routine/CreateExercise
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateExercise([Bind("Id,Description,Reps,Sets,Name,RoutineId")] Exercise exercise)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(exercise);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(EditExercises), new { id = exercise.RoutineId });
-            }
-            return View(exercise);
-        }
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> CreateExercise([Bind("Id,Description,Reps,Sets,Name,RoutineId")] Exercise exercise)
+{
+    if (ModelState.IsValid)
+    {
+        _context.Add(exercise);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Details), new { id = exercise.RoutineId });
+    }
+    return View(exercise);
+}
 
         // GET: Routine/EditExercise/5
         [HttpGet]
@@ -251,37 +251,37 @@ namespace Assignment3.Controllers
         }
 
         // POST: Routine/EditExercise/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditExercise(int id, [Bind("Id,Description,Reps,Sets,Name,RoutineId")] Exercise exercise)
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> EditExercise(int id, [Bind("Id,Description,Reps,Sets,Name,RoutineId")] Exercise exercise)
+{
+    if (id != exercise.Id)
+    {
+        return NotFound();
+    }
+
+    if (ModelState.IsValid)
+    {
+        try
         {
-            if (id != exercise.Id)
+            _context.Update(exercise);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!ExerciseExists(exercise.Id))
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            else
             {
-                try
-                {
-                    _context.Update(exercise);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ExerciseExists(exercise.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(EditExercises), new { id = exercise.RoutineId });
+                throw;
             }
-            return View(exercise);
         }
+        return RedirectToAction(nameof(Details), new { id = exercise.RoutineId });
+    }
+    return View(exercise);
+}
 
         // POST: Routine/DeleteExercise/5
         [HttpPost]
@@ -299,7 +299,7 @@ namespace Assignment3.Controllers
             _context.Exercises.Remove(exercise);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(EditExercises), new { id = routineId });
+            return RedirectToAction(nameof(Details), new { id = routineId });
         }
 
         // Helper Methods

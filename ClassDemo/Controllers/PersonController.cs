@@ -300,7 +300,25 @@ namespace Assignment3.Controllers
                 return StatusCode(500, new { message = "An error occurred while saving routine swaps." });
             }
         }
+    [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> UpdateWeight(int id, float newWeight)
+{
+    var userId = _userManager.GetUserId(User);
+    var person = await _context.People
+        .FirstOrDefaultAsync(p => p.Id == id && p.UserId == userId);
 
+    if (person == null)
+    {
+        return NotFound();
+    }
+
+    person.Weight = newWeight;
+    _context.Update(person);
+    await _context.SaveChangesAsync();
+
+    return RedirectToAction("Index", "Home");
+}
 
 
         public class RoutineSwapRequest

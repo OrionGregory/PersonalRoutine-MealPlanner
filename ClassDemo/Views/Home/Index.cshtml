@@ -65,6 +65,61 @@
                         </form>
                     </div>
                 </div>
+
+                <!-- Today's Workouts Section -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h4>Today's Workouts - @DateTime.Now.ToString("dddd")</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))
+                        {
+                            var todaysRoutines = Model.Routines.Where(r => r.DayOfWeek == DateTime.Now.ToString("dddd"));
+                            
+                            @foreach (var routine in todaysRoutines)
+                            {
+                                <h5>@routine.RoutineType</h5>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Exercise</th>
+                                            <th>Sets</th>
+                                            <th>Reps</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var exercise in routine.Exercises ?? Enumerable.Empty<Exercise>())
+                                        {
+                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")">
+                                                <td>@exercise.Name</td>
+                                                <td>@exercise.Sets</td>
+                                                <td>@exercise.Reps</td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" 
+                                                               class="custom-control-input exercise-checkbox" 
+                                                               id="check-@exercise.Id" 
+                                                               data-exercise-id="@exercise.Id"
+                                                               @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "checked" : "")
+                                                               onchange="toggleExerciseCompletion(this)" />
+                                                        <label class="custom-control-label" for="check-@exercise.Id">
+                                                            Complete
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted">No workouts scheduled for today.</p>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -73,4 +128,35 @@
             <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
         </p>
     </div>
+}
+
+@section Scripts {
+    <script>
+        function toggleExerciseCompletion(checkbox) {
+            const exerciseId = checkbox.dataset.exerciseId;
+            const row = document.getElementById(`exercise-${exerciseId}`);
+            
+            fetch('/Person/ToggleExerciseCompletion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({
+                    exerciseId: exerciseId,
+                    completed: checkbox.checked
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (checkbox.checked) {
+                        row.classList.add('bg-success', 'text-white');
+                    } else {
+                        row.classList.remove('bg-success', 'text-white');
+                    }
+                }
+            });
+        }
+    </script>
 }

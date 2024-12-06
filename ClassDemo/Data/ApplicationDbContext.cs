@@ -17,6 +17,8 @@ namespace Assignment3.Data
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Nutrition> Nutrition { get; set; }
 
+        public DbSet<CompletedExercise> CompletedExercises { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

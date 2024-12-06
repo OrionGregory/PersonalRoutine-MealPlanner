@@ -320,6 +320,43 @@ public async Task<IActionResult> UpdateWeight(int id, float newWeight)
     return RedirectToAction("Index", "Home");
 }
 
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> ToggleExerciseCompletion([FromBody] ExerciseCompletionModel model)
+{
+    var userId = _userManager.GetUserId(User);
+    
+    if (model.completed)
+    {
+        var completedExercise = new CompletedExercise
+        {
+            ExerciseId = model.exerciseId,
+            UserId = userId,
+            CompletedDate = DateTime.Today
+        };
+        _context.CompletedExercises.Add(completedExercise);
+    }
+    else
+    {
+        var completedExercise = await _context.CompletedExercises
+            .FirstOrDefaultAsync(ce => ce.ExerciseId == model.exerciseId && 
+                                     ce.UserId == userId && 
+                                     ce.CompletedDate.Date == DateTime.Today);
+        if (completedExercise != null)
+        {
+            _context.CompletedExercises.Remove(completedExercise);
+        }
+    }
+    
+    await _context.SaveChangesAsync();
+    return Json(new { success = true });
+}
+
+public class ExerciseCompletionModel
+{
+    public int exerciseId { get; set; }
+    public bool completed { get; set; }
+}
 
         public class RoutineSwapRequest
         {

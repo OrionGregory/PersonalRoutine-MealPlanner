@@ -20,73 +20,49 @@ namespace Assignment3.Controllers
         }
 
         // GET: Nutrition
-// GET: Nutrition
-[HttpGet]
-public async Task<IActionResult> Index()
-{
-    var userId = _userManager.GetUserId(User);
-    var person = await _context.People.FirstOrDefaultAsync(p => p.UserId == userId);
-    if (person == null)
-    {
-        return RedirectToAction("Create", "Person");
-    }
-
-    var nutritionList = await _context.Nutrition
-        .Include(n => n.Person)
-        .Where(n => n.Person.UserId == userId)
-        .ToListAsync();
-    return View(nutritionList);
-}
+        public async Task<IActionResult> Index()
+        {
+            var nutritionList = await _context.Nutrition.Include(n => n.Person).ToListAsync();
+            return View(nutritionList);
+        }
 
         // GET: Nutrition/Details/5
-[HttpGet]
-public async Task<IActionResult> Details(int id)
-{
-    var nutrition = await _context.Nutrition.Include(n => n.Person)
-        .FirstOrDefaultAsync(n => n.Id == id);
-    if (nutrition == null) return NotFound();
-    return View(nutrition);
-}
-
-// GET: Nutrition/Create
-[HttpGet]
-public async Task<IActionResult> Create()
-{
-    var userId = _userManager.GetUserId(User);
-    var person = await _context.People.FirstOrDefaultAsync(p => p.UserId == userId);
-    
-    if (person == null)
-    {
-        return RedirectToAction("Create", "Person");
-    }
-
-    var nutrition = new Nutrition { PersonId = person.Id };
-    return View(nutrition);
-}
-
-    // POST: Nutrition/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Nutrition nutrition)
-    {
-        var userId = _userManager.GetUserId(User);
-        var person = await _context.People
-            .FirstOrDefaultAsync(p => p.Id == nutrition.PersonId && p.UserId == userId);
-
-        if (person == null)
+        public async Task<IActionResult> Details(int id)
         {
-            ModelState.AddModelError("", "Invalid PersonId or unauthorized access.");
+            var nutrition = await _context.Nutrition.Include(n => n.Person)
+                .FirstOrDefaultAsync(n => n.Id == id);
+            if (nutrition == null) return NotFound();
             return View(nutrition);
         }
 
-        if (ModelState.IsValid)
+        // GET: Nutrition/Create
+        public IActionResult Create(int personId)
         {
-            _context.Nutrition.Add(nutrition);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var nutrition = new Nutrition { PersonId = personId };
+            return View(nutrition);
         }
-        return View(nutrition);
-    }
+
+        // POST: Nutrition/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Nutrition nutrition)
+        {
+            if (ModelState.IsValid)
+            {
+                // Ensure the PersonId exists
+                var person = await _context.People.FindAsync(nutrition.PersonId);
+                if (person == null)
+                {
+                    ModelState.AddModelError("", "Invalid PersonId.");
+                    return View(nutrition);
+                }
+
+                _context.Nutrition.Add(nutrition);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(nutrition);
+        }
 
         // GET: Nutrition/Edit/5
         public async Task<IActionResult> Edit(int id)

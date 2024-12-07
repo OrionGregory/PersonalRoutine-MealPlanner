@@ -21,13 +21,13 @@ namespace Assignment3.Controllers
         }
 
         // GET: Home/Index
-public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
           {
               var userId = _userManager.GetUserId(User);
               var person = await _context.People
-                  .Include(p => p.Routines)
+                      .Include(p => p.Routines)
                       .ThenInclude(r => r.Exercises)
-                  .FirstOrDefaultAsync(p => p.UserId == userId);
+                      .FirstOrDefaultAsync(p => p.UserId == userId);
 
               if (person == null)
               {

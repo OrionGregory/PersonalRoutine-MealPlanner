@@ -10,6 +10,11 @@
 <table id="UserList" class="table table-bordered table-striped">
     <thead>
         <tr>
+            <td colspan="2">
+                <a asp-action="Create">Create New Profile</a>
+            </td>
+        </tr>
+        <tr>
             <th>Username</th>
             <th>Action</th>
         </tr>
@@ -20,6 +25,14 @@
             <tr>
                 <td>
                    <p>@person.Name</p>
+                </td>
+                <td>
+                    @if(@person.User != null)
+                    {
+                        <p>@person.User.UserName</p>
+                    } else {
+                        <p>Nada</p>
+                    }
                 </td>
                 <td>
                     <a asp-action="AdminEdit" asp-route-id=@person.Id>Edit</a>

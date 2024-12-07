@@ -11,7 +11,7 @@
     <thead>
         <tr>
             <th>Username</th>
-            <th>Email</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -19,19 +19,12 @@
         {
             <tr>
                 <td>
-                    <a asp-action="AdminEdit" asp-route-id="@person.Id">
-                        <p>@person.Name</p>
-                    </a>
+                   <p>@person.Name</p>
                 </td>
                 <td>
-                    @if(person.User != null)
-                    {
-                       
-                    }
-                    else
-                    {
-                        <p>Email not Found</p>
-                    }
+                    <a asp-action="AdminEdit" asp-route-id=@person.Id>Edit</a>
+                    <a asp-action="Delete" asp-route-id=@person.Id>Delete</a>
+                    <a asp-action="Details" asp-route-id=@person.Id>Details</a>
                 </td>
             </tr>
         }

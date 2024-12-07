@@ -163,7 +163,6 @@ namespace Assignment3.Controllers
                         routine.PersonId = person.Id;
                         _context.Routines.Add(routine);
                     }
-
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Details));
                 }

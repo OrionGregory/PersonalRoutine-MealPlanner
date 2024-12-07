@@ -8,8 +8,16 @@
         <td>@Model.BMR</td>
     </tr>
     <tr>
-        <th>Calorie Surplus/Deficit</th>
+        <th>Average Routine Calories Burned</th>
+        <td>@Model.RoutineCaloriesBurned</td>
+    </tr>
+    <tr>
+        <th>Daily Calorie Adjustment</th>
         <td>@Model.CalorieSurplusOrDeficit</td>
+    </tr>
+    <tr>
+        <th>Total Daily Calories</th>
+        <td>@Model.TotalDailyCalories</td>
     </tr>
     <tr>
         <th>Protein Percentage</th>
@@ -24,7 +32,3 @@
         <td>@Model.FatPercentage%</td>
     </tr>
 </table>
-
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
-<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
-<a asp-action="Details" controller="Person" asp-route-id="@Model.PersonId" class="btn btn-secondary">Back to Person</a>

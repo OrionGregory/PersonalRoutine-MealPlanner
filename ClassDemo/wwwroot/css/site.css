@@ -28,11 +28,20 @@ html {
 }
 
 body {
-
-}
-
-body {
   background: url('path/to/your/video.mp4') no-repeat center center fixed;
   background-size: cover;
   margin-bottom: 60px;
+}
+
+.exercise-row {
+  transition: background-color 0.3s ease;
+}
+
+.exercise-row.bg-success {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
 }

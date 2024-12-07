@@ -22,6 +22,30 @@ namespace Assignment3.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Assignment3.Models.CompletedExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("CompletedExercises");
+                });
+
             modelBuilder.Entity("Assignment3.Models.Exercise", b =>
                 {
                     b.Property<int>("Id")
@@ -78,6 +102,12 @@ namespace Assignment3.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProteinPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoutineCaloriesBurned")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalDailyCalories")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -356,6 +386,17 @@ namespace Assignment3.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Assignment3.Models.CompletedExercise", b =>
+                {
+                    b.HasOne("Assignment3.Models.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Exercise", b =>

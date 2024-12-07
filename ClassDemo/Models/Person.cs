@@ -30,8 +30,6 @@ namespace Assignment3.Models
         // Navigation property to Routine
         public ICollection<Routine>? Routines { get; set; }
 
-        //is the user allowed admin menu access?
-
         // Associate with IdentityUser
         public string? UserId { get; set; }
         public IdentityUser? User { get; set; }

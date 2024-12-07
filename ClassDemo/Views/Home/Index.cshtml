@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @model Assignment3.Models.Person
@@ -8,7 +8,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Your Workout Planner!</h1>
+    <h1 class="display-8">Welcome to Your Workout Planner!</h1>
     <p class="lead">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
@@ -116,6 +116,10 @@
                         }
                         else
                         {
+
+                            <td style="background-color: palevioletred" colspan="2">
+                                <span style="color: darkred;">@decimal.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span> <!-- Red if the goal is not reached -->
+                            </td>
                             <p class="text-muted">No workouts scheduled for today.</p>
                         }
                     </div>
@@ -126,6 +130,21 @@
         <p>
             <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
             <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
+            @if(@Model.isAdmin == true)
+            {
+                <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
+            }
+        </p>
+    </div>
+}
+else
+{
+    <div class="mt-5">
+        <h2>Get Started</h2>
+        <p>
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Log In</a>
+            or
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-secondary">Register</a>
         </p>
     </div>
 }

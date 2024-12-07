@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
 using Assignment3.Models;
 using Microsoft.AspNetCore.Authorization;
-using ClassDemo.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace Assignment3.Controllers
@@ -32,7 +29,7 @@ namespace Assignment3.Controllers
             var routines = _context.Routines
                                    .Include(r => r.Person)
                                    .Include(r => r.Exercises)
-                                   .Where(r => r.Person.UserId == userId); // Filter by logged-in user
+                                   .Where(r => r.Person != null && r.Person.UserId == userId); // Filter by logged-in user
             return View(await routines.ToListAsync());
         }
 
@@ -49,8 +46,7 @@ namespace Assignment3.Controllers
             var routine = await _context.Routines
                                         .Include(r => r.Person)
                                         .Include(r => r.Exercises)
-                                        .FirstOrDefaultAsync(m => m.Id == id && m.Person.UserId == userId); // Filter by logged-in user
-
+                                        .FirstOrDefaultAsync(m => m.Id == id && m.Person != null && m.Person.UserId == userId); // Filter by logged-in user
             if (routine == null)
             {
                 return NotFound();

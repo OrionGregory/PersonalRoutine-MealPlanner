@@ -1,15 +1,15 @@
 ﻿// Data/AIAnalysisService.cs
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Assignment3.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace ClassDemo.Data
+namespace Assignment3.Data
 {
     public class AIAnalysisService
     {
@@ -21,9 +21,9 @@ namespace ClassDemo.Data
         public AIAnalysisService(IConfiguration configuration, HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _apiKey = "9a33d791af754494aca3eaa0268011a4";
-            _endpoint = "https://fall2024-oagregory-openai.openai.azure.com/";
-            _model = "gpt-35-turbo";
+            _apiKey = configuration["OpenAI:ApiKey"];
+            _endpoint = configuration["OpenAI:Endpoint"];
+            _model = configuration["OpenAI:Model"]; // Ensure this matches your deployment name
         }
 
         // Generic method to handle different types of AI responses
@@ -34,85 +34,101 @@ namespace ClassDemo.Data
                 messages = new[] { new { role = "user", content = prompt } },
                 max_tokens = 500,
                 temperature = 0.7,
-                n = 1
+                n = 1,
+                stream = false,
+                stop = (string)null
             };
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("api-key", _apiKey);
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var apiVersion = "2023-05-15";
-            var requestUri = $"{_endpoint}openai/deployments/{_model}/chat/completions?api-version={apiVersion}";
+            var requestUri = $"{_endpoint}/openai/deployments/{_model}/chat/completions?api-version=2023-05-15";
 
-            int retryCount = 0;
-            int maxRetries = 3;
+            var response = await _httpClient.PostAsync(requestUri, jsonContent);
 
-            while (retryCount < maxRetries)
+            if (response.IsSuccessStatusCode)
             {
-                var response = await _httpClient.PostAsync(requestUri, jsonContent);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                using var jsonDoc = JsonDocument.Parse(responseContent);
+                var aiMessageContent = jsonDoc.RootElement
+                    .GetProperty("choices")[0]
+                    .GetProperty("message")
+                    .GetProperty("content")
+                    .GetString();
 
-                if (response.IsSuccessStatusCode)
+                // Extract JSON array from AI's response
+                string jsonArrayString = ExtractJsonArray(aiMessageContent);
+
+                // Deserialize the JSON array into objects of type T
+                var result = JsonSerializer.Deserialize<List<T>>(jsonArrayString, new JsonSerializerOptions
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    var jsonResponse = JsonDocument.Parse(responseContent);
+                    PropertyNameCaseInsensitive = true
+                });
 
-                    var aiMessageContentProperty = jsonResponse.RootElement
-                        .GetProperty("choices")[0]
-                        .GetProperty("message")
-                        .GetProperty("content");
-
-                    if (aiMessageContentProperty.ValueKind == JsonValueKind.Null)
-                    {
-                        throw new Exception("AI response content is null.");
-                    }
-
-                    var aiMessageContent = aiMessageContentProperty.GetString();
-
-                    // Extract JSON array from AI's response
-                    if (string.IsNullOrEmpty(aiMessageContent))
-                    {
-                        throw new Exception("AI message content is null or empty.");
-                    }
-                    string jsonArrayString = ExtractJsonArray(aiMessageContent);
-
-                    // Deserialize the JSON array into objects of type T
-                    var result = JsonSerializer.Deserialize<List<T>>(jsonArrayString, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-
-                    if (result == null)
-                    {
-                        throw new Exception("Deserialized result is null.");
-                    }
-
-                    return result;
-                }
-                else if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                if (result == null)
                 {
-                    retryCount++;
-                    var retryAfter = response.Headers.RetryAfter?.Delta ?? TimeSpan.FromSeconds(10);
-                    await Task.Delay(retryAfter);
+                    throw new Exception("Deserialized result is null.");
                 }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    throw new HttpRequestException($"Error from OpenAI: {response.ReasonPhrase}. Details: {errorContent}");
-                }
+
+                return result;
             }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"Error from OpenAI: {response.ReasonPhrase}. Details: {errorContent}");
+            }
+        }
 
-            throw new Exception("Exceeded maximum retry attempts due to rate limiting.");
+        // Generate meals for a specific nutrition plan using AI
+        public async Task<List<Meal>> GenerateMealsFromAI(int totalDailyCalories, int proteinPercentage, int carbPercentage, int fatPercentage)
+        {
+            string prompt = $@"
+                Generate a list of 3 balanced meals for a day based on the following nutritional requirements. Categorize each meal as breakfast, lunch, or dinner:
+                - Total Daily Calories: {totalDailyCalories} kcal
+                - Protein: {proteinPercentage}%
+                - Carbohydrates: {carbPercentage}%
+                - Fat: {fatPercentage}%
+
+                Ensure that the types for each property are strictly as follows:
+                - Name (String)
+                - Description (String)
+                - Calories (Int)
+                - Protein (Int)
+                - Carbs (Int)
+                - Fat (Int)
+
+                Format the response as a JSON array with each meal having the specified properties.
+            ";
+
+            try
+            {
+                return await GetChatGPTResponseAsync<Meal>(prompt);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error generating meals: {ex.Message}");
+                throw;
+            }
         }
 
         // Generate exercises for a specific routine using AI
         public async Task<List<Exercise>> GenerateExercisesFromAI(string routineType, float currentWeight, float goalWeight, int timeFrame)
         {
             string prompt = $@"
-                Generate a workout routine for a '{routineType}' day. 
-                The person's current weight is {currentWeight} lbs, and their goal weight is {goalWeight} lbs. 
-                They want to achieve this goal in {timeFrame} weeks.
-                Provide 4-5 exercises unless it is a rest or cardio day in that case only do 1-2 exercises, in which only two exercises will be necessary, with different sets and reps.
-                Format the response as a JSON array with each exercise having 'Name(String)', 'Description(String)', 'Sets(Int)', and 'Reps(Int) The types for each variable is extremely important and must not be anything other'.
+                Generate a list of exercises for a {routineType} routine based on the following parameters:
+                - Current Weight: {currentWeight} lbs
+                - Goal Weight: {goalWeight} lbs
+                - Time Frame: {timeFrame} weeks
+
+                Ensure each exercise includes:
+                - Name (String)
+                - Description (String)
+                - Sets (Int)
+                - Reps (Int)
+
+                Format the response as a JSON array with each exercise having the specified properties.
             ";
 
             try
@@ -131,14 +147,12 @@ namespace ClassDemo.Data
             int startIndex = responseContent.IndexOf('[');
             int endIndex = responseContent.LastIndexOf(']');
 
-            if (startIndex != -1 && endIndex != -1 && endIndex > startIndex)
+            if (startIndex == -1 || endIndex == -1)
             {
-                return responseContent.Substring(startIndex, endIndex - startIndex + 1);
+                throw new FormatException("JSON array not found in the response.");
             }
-            else
-            {
-                throw new Exception("Failed to find JSON array in the AI response.");
-            }
+
+            return responseContent.Substring(startIndex, endIndex - startIndex + 1);
         }
     }
 }

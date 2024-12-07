@@ -74,7 +74,7 @@ public class NutritionCalculator
     private static int EstimateCaloriesBurned(Exercise exercise, float weight)
     {
         // MET value for the exercise
-        double metValue = GetMetValue(exercise.Name);
+        double metValue = GetMetValue(exercise.Name ?? string.Empty);
         // Assume average duration per set is 5 minutes
         int durationMinutes = 5 * exercise.Reps;
         double caloriesBurned = (metValue * 3.5 * weight) / 200 * durationMinutes;

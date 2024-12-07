@@ -78,13 +78,50 @@ namespace Assignment3.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
+            modelBuilder.Entity("Assignment3.Models.Meal", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Carbs")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Fat")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NutritionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Protein")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NutritionId");
+
+                    b.ToTable("Meals");
+                });
+
+            modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BMR")
                         .HasColumnType("int");
@@ -98,7 +135,7 @@ namespace Assignment3.Migrations
                     b.Property<int>("FatPercentage")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProteinPercentage")
@@ -113,8 +150,7 @@ namespace Assignment3.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId")
-                        .IsUnique()
-                        .HasFilter("[PersonId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Nutrition");
                 });
@@ -408,11 +444,24 @@ namespace Assignment3.Migrations
                     b.Navigation("Routine");
                 });
 
+            modelBuilder.Entity("Assignment3.Models.Meal", b =>
+                {
+                    b.HasOne("Assignment3.Models.Nutrition", "Nutrition")
+                        .WithMany("Meals")
+                        .HasForeignKey("NutritionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Nutrition");
+                });
+
             modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
                 {
                     b.HasOne("Assignment3.Models.Person", "Person")
                         .WithOne("Nutrition")
-                        .HasForeignKey("Assignment3.Models.Nutrition", "PersonId");
+                        .HasForeignKey("Assignment3.Models.Nutrition", "PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });
@@ -486,6 +535,11 @@ namespace Assignment3.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
+                {
+                    b.Navigation("Meals");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Person", b =>

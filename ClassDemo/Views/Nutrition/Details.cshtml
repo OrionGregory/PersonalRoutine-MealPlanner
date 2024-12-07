@@ -1,6 +1,14 @@
 ﻿@model Assignment3.Models.Nutrition
 
-<h2>Daily Nutrition Details</h2>
+@{
+    ViewData["Title"] = "Nutrition Details";
+}
+
+<h2>Nutrition Details</h2>
+
+<div class="mb-3">
+    <a asp-action="GenerateNutritionPlan" asp-route-id="@Model.Id" class="btn btn-primary">Generate Meals</a>
+</div>
 
 <table class="table">
     <tr>
@@ -44,7 +52,37 @@
     </tr>
 </table>
 
-<div class="form-group">
-    <a asp-action="Index" asp-route-personId="@Model.PersonId" class="btn btn-secondary">Back</a>
-</div>
+<h3>AI Generated Meals</h3>
 
+@if (Model.Meals != null && Model.Meals.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Calories</th>
+                <th>Protein (g)</th>
+                <th>Carbs (g)</th>
+                <th>Fat (g)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meal in Model.Meals)
+            {
+                <tr>
+                    <td>@meal.Name</td>
+                    <td>@meal.Description</td>
+                    <td>@meal.Calories</td>
+                    <td>@meal.Protein</td>
+                    <td>@meal.Carbs</td>
+                    <td>@meal.Fat</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">No meals generated.</p>
+}

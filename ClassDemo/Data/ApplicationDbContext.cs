@@ -16,27 +16,39 @@ namespace Assignment3.Data
         public DbSet<Routine> Routines { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Nutrition> Nutrition { get; set; }
-
         public DbSet<CompletedExercise> CompletedExercises { get; set; }
+        public DbSet<Meal> Meals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure relationships if not using conventions
+            // Configure Identity table names if necessary
+            modelBuilder.Entity<IdentityUser>().ToTable("AspNetUsers");
+            modelBuilder.Entity<IdentityRole>().ToTable("AspNetRoles");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRoles");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("AspNetUserClaims");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens");
+
+            // Configure relationships
             modelBuilder.Entity<Routine>()
                 .HasOne(r => r.Person)
                 .WithMany(p => p.Routines)
                 .HasForeignKey(r => r.PersonId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Person -> Nutrition relationship
-    modelBuilder.Entity<Nutrition>()
-        .HasOne(n => n.Person)
-        .WithOne(p => p.Nutrition)
-        .HasForeignKey<Nutrition>(n => n.PersonId);
+            modelBuilder.Entity<Nutrition>()
+                .HasOne(n => n.Person)
+                .WithOne(p => p.Nutrition)
+                .HasForeignKey<Nutrition>(n => n.PersonId);
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Nutrition>()
+                .HasMany(n => n.Meals)
+                .WithOne(m => m.Nutrition)
+                .HasForeignKey(m => m.NutritionId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

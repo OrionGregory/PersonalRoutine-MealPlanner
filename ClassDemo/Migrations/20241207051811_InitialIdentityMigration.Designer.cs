@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241206023130_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241207051811_InitialIdentityMigration")]
+    partial class InitialIdentityMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,30 @@ namespace Assignment3.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Assignment3.Models.CompletedExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.ToTable("CompletedExercises");
+                });
 
             modelBuilder.Entity("Assignment3.Models.Exercise", b =>
                 {
@@ -57,6 +81,43 @@ namespace Assignment3.Migrations
                     b.ToTable("Exercises");
                 });
 
+            modelBuilder.Entity("Assignment3.Models.Meal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Carbs")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Fat")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NutritionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Protein")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NutritionId");
+
+                    b.ToTable("Meals");
+                });
+
             modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
                 {
                     b.Property<int>("Id")
@@ -81,6 +142,12 @@ namespace Assignment3.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProteinPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoutineCaloriesBurned")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalDailyCalories")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -360,6 +427,17 @@ namespace Assignment3.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Assignment3.Models.CompletedExercise", b =>
+                {
+                    b.HasOne("Assignment3.Models.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+                });
+
             modelBuilder.Entity("Assignment3.Models.Exercise", b =>
                 {
                     b.HasOne("Assignment3.Models.Routine", "Routine")
@@ -367,6 +445,17 @@ namespace Assignment3.Migrations
                         .HasForeignKey("RoutineId");
 
                     b.Navigation("Routine");
+                });
+
+            modelBuilder.Entity("Assignment3.Models.Meal", b =>
+                {
+                    b.HasOne("Assignment3.Models.Nutrition", "Nutrition")
+                        .WithMany("Meals")
+                        .HasForeignKey("NutritionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Nutrition");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
@@ -449,6 +538,11 @@ namespace Assignment3.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Assignment3.Models.Nutrition", b =>
+                {
+                    b.Navigation("Meals");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Person", b =>

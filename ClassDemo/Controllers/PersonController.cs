@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ClassDemo.Data;
 using Assignment3.Data;
-using System;
 
 namespace Assignment3.Controllers
 {

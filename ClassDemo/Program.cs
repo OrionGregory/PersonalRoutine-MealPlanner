@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
-using ClassDemo.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +13,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 builder.Services.AddHttpClient<AIAnalysisService>();
 
+builder.Services.AddScoped<AIAnalysisService>();
+builder.Services.AddScoped<MealGeneratorService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(); // Necessary for Identity UI
@@ -40,9 +41,12 @@ app.UseRouting();
 app.UseAuthentication(); // Must come before UseAuthorization
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.MapRazorPages(); // Necessary for Identity UI
 

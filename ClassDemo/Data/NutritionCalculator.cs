@@ -1,18 +1,47 @@
 // NutritionCalculator.cs
 using Assignment3.Models;
+using Microsoft.CodeAnalysis;
 using System.Linq;
 
 public class NutritionCalculator
 {
     public static int CalculateBMR(Person person)
     {
-        // Mifflin-St Jeor Formula
+        double bmr;
         float weight = person.Weight ?? 0;
+        // ADD HEIGHT LATER
+        float height;
+        height = 69;
         int age = person.Age;
         bool isMale = person.Sex?.ToLower() == "male";
 
-        double bmr = (10 * weight) + (6.25 * 170) - (5 * age);
-        bmr = isMale ? bmr + 5 : bmr - 161;
+        //Mifflin-St Jeor Equation
+        bmr = (10 * 0.453592 * weight)
+                + (6.25 * 2.54 * height)
+                - (5 * age);
+        if (isMale)
+        {
+            bmr += 5;
+        }
+        else
+        {
+            bmr -= 161;
+        }
+
+
+        // Harris-Benedict Equation:
+        //if (isMale)
+        //{
+        //    bmr = 88.362 + (13.397 * 0.453592 * weight) 
+        //        + (3.098 * 2.54 * height) 
+        //        - 5.677 * age);
+        //}
+        //else
+        //{
+        //    bmr = 447.593 + (9.247 * 0.453592 * weight)
+        //        + (3.098 * 2.54 * height)
+        //        - (4.330 * age);
+        //}
 
         return (int)bmr;
     }
@@ -74,9 +103,10 @@ public class NutritionCalculator
 
         float weightDifference = goalWeight - currentWeight;
         float weeklyChange = weightDifference / timeFrameWeeks;
+        float dailyChange = weeklyChange / 7;
 
         // Each pound (~0.45 kg) is approximately 3500 calories
-        int dailyCalorieChange = (int)(weeklyChange * 3500 / 7);
+        int dailyCalorieChange = (int)(dailyChange * 3500);
 
         return dailyCalorieChange;
     }
@@ -84,10 +114,10 @@ public class NutritionCalculator
     public static int GetTotalDailyCalories(Person person)
     {
         int bmr = CalculateBMR(person);
-        int averageRoutineCaloriesBurned = CalculateAverageRoutineCaloriesBurned(person) / 7;
         int dailyCalorieAdjustment = CalculateDailyCalorieAdjustment(person);
 
-        int totalDailyCalories = bmr +  + dailyCalorieAdjustment;
+        // 1.6 is activity multiplier - takes bmr to calculate actual calories burned per day
+        int totalDailyCalories = (int)(bmr * 1.6  + dailyCalorieAdjustment);
         return totalDailyCalories;
     }
 

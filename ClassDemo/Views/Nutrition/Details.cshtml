@@ -1,24 +1,35 @@
 ﻿@model Assignment3.Models.Nutrition
 
-<h2>Nutrition Details</h2>
+<h2>Daily Nutrition Details</h2>
 
 <table class="table">
     <tr>
+        <th>Calories In:</th>
+        <td></td>
+    </tr>
+    <tr>
+        <th>Daily Consumed Calories Target</th>
+        <td>@Model.TotalDailyCalories</td>
+    </tr>
+    
+    @* 
+        Commented out below information because it is unhelpful and muddys up page
+    <tr> 
         <th>BMR</th>
         <td>@Model.BMR</td>
     </tr>
     <tr>
-        <th>Average Routine Calories Burned</th>
+        <th>Calories Burned in Workout</th>
         <td>@Model.RoutineCaloriesBurned</td>
     </tr>
+    -->
+    *@
+
     <tr>
         <th>Daily Calorie Adjustment</th>
         <td>@Model.CalorieSurplusOrDeficit</td>
     </tr>
-    <tr>
-        <th>Total Daily Calories</th>
-        <td>@Model.TotalDailyCalories</td>
-    </tr>
+    
     <tr>
         <th>Protein Percentage</th>
         <td>@Model.ProteinPercentage%</td>
@@ -32,3 +43,8 @@
         <td>@Model.FatPercentage%</td>
     </tr>
 </table>
+
+<div class="form-group">
+    <a asp-action="Index" asp-route-personId="@Model.PersonId" class="btn btn-secondary">Back</a>
+</div>
+

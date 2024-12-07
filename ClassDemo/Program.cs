@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
-using ClassDemo.Data;
+//using ClassDemo.Data;
 using Assignment3.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -124,7 +124,7 @@ namespace Assignment3.Controllers
 
                     _context.Update(existingPerson);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details));
+                    return RedirectToAction(nameof(Index), "Home");
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -148,6 +148,7 @@ namespace Assignment3.Controllers
         {
             var userId = _userManager.GetUserId(User);
             person.UserId = userId;
+            person.User = await _userManager.GetUserAsync(User);
 
             if (ModelState.IsValid)
             {

@@ -28,14 +28,14 @@ namespace Assignment3.Controllers
             if (user == null)
             {
                 // Handle when user is not found
-                return View();
+                return View(user);
             }
 
             var person = await _context.People.FirstOrDefaultAsync(p => p.UserId == user.Id);  // Retrieve the Person record based on the user's ID
             if (person == null)
             {
                 // Handle case when person record is not found
-                return View();
+                return View(person);
             }
 
             // Pass the Person model to the view

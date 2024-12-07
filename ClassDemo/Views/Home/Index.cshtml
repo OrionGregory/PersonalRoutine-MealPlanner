@@ -42,7 +42,7 @@
                         else
                         {
                             <td style="background-color: palevioletred" colspan="2">
-                                <span style="color: darkred;">@decimal.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go lbs to go</span> <!-- Red if the goal is not reached -->
+                                <span style="color: darkred;">@decimal.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span> <!-- Red if the goal is not reached -->
                             </td>
                         }
                     </tr>
@@ -52,7 +52,10 @@
         <p>
             <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
             <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
-            <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
+            @if(@Model.isAdmin == true)
+            {
+                <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
+            }
         </p>
     </div>
 }

@@ -1,0 +1,47 @@
+﻿@model Assignment3.Models.Person
+
+@{
+    ViewData["Title"] = "Your Workout Plan";
+}
+<h2>Weight History</h2>
+<table id="WeightList" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Weights</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < @Model.weight_history.Count; i++)
+        {
+            var weight = @Model.weight_history[i];
+            <tr>
+                <td class="action-cell">
+                    <p>Index: @i, Weight: @weight</p>
+                    <div class="action-links align-content-center">
+                        <form method="post" asp-action="WeightDelete" asp-route-entry_id="@i" asp-route-person_id="@Model.Id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<style>
+    /* Initially hide the action links */
+    .action-links {
+        display: none;
+    }
+
+    /* Show the action links when hovering over the name cell */
+    tr:hover .action-cell .action-links {
+        display: block;
+    }
+
+    /* Optionally, add some styles for the action cell */
+    .action-cell {
+        position: relative;
+    }
+</style>

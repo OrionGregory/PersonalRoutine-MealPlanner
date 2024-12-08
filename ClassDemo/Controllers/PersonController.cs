@@ -37,6 +37,47 @@ namespace Assignment3.Controllers
 
             return View(person);
         }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var person = await _context.People.FindAsync(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return View(person);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> EditWeightHistory(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People
+                .Include(p => p.Routines)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (person == null)
+            {
+                _logger.LogWarning($"Edit GET: No Person found for UserId {userId}. Redirecting to Create.");
+                return RedirectToAction(nameof(Index), "Home");
+            }
+
+            return View(person);
+        }
+
+        // POST: Person/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var person = await _context.People.FindAsync(id);
+            if (person != null)
+            {
+                _context.People.Remove(person);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(AdminMenu));
+        }
 
         [HttpGet]
         public async Task<IActionResult> AdminMenu()

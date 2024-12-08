@@ -7,9 +7,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-8">Welcome to Your Wellness Dashboard!</h1>
-    <p class="lead">Achieve your fitness goals with a personalized workout plan.</p>
+<div class="text-center bg-dark">
+    <h1 class="display-8" style="color:ghostwhite;">Welcome to Your Wellness Dashboard!</h1>
+    <p class="lead" style="color:ghostwhite;">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
 @if (SignInManager.IsSignedIn(User))
@@ -17,7 +17,7 @@
     <div class="text-left">
         <h2>Hello, @Html.DisplayFor(model => model.Name)!</h2>
     </div>
-    <div class="text-center">
+    <div class="text-center" style="background-color:white;">
         
         <!-- Weight Progress Section -->
         <div class="row justify-content-left mb-4">
@@ -83,9 +83,10 @@
                 <!-- Chart -->
                
         </div>
-        <div class="row justify-content-right mb-4">
+        <div class="row mb-4">
                <!-- Today's Workouts Section -->
-              <div class="card mt-4">
+               <div class="col-md-12">
+                <div class="card mt-4">
                     <div class="card-header">
                         <h4>Today's Workouts - @DateTime.Now.ToString("dddd")</h4>
                     </div>
@@ -93,7 +94,7 @@
                         @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))
                         {
                             var todaysRoutines = Model.Routines.Where(r => r.DayOfWeek == DateTime.Now.ToString("dddd"));
-                            
+
                             @foreach (var routine in todaysRoutines)
                             {
                                 <h5>@routine.RoutineType</h5>
@@ -115,11 +116,11 @@
                                                 <td>@exercise.Reps</td>
                                                 <td>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" 
-                                                               class="custom-control-input exercise-checkbox" 
-                                                               id="check-@exercise.Id" 
+                                                        <input type="checkbox"
+                                                               class="custom-control-input exercise-checkbox"
+                                                               id="check-@exercise.Id"
                                                                data-exercise-id="@exercise.Id"
-                                                               @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "checked" : "")
+                                                        @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "checked" : "")
                                                                onchange="toggleExerciseCompletion(this)" />
                                                         <label class="custom-control-label" for="check-@exercise.Id">
                                                             Complete
@@ -142,6 +143,7 @@
                         }
                     </div>
                 </div>
+               </div>
 
         </div>
 

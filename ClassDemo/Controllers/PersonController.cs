@@ -312,6 +312,11 @@ public async Task<IActionResult> UpdateWeight(int id, float newWeight)
         return NotFound();
     }
 
+    if(person.weight_history == null)
+    {
+       person.weight_history = [];
+    }
+    person.weight_history.Add(newWeight);
     person.Weight = newWeight;
     _context.Update(person);
     await _context.SaveChangesAsync();

@@ -48,7 +48,15 @@
                         </tr>
                     </tbody>
                 </table>
-
+                <!-- Chart -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h4>Weight History</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="weightChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
                 <!-- Weigh In Form -->
                 <div class="card mt-4">
                     <div class="card-header">
@@ -173,6 +181,50 @@ else
                         row.classList.add('bg-success', 'text-white');
                     } else {
                         row.classList.remove('bg-success', 'text-white');
+                    }
+                }
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.onload = function () {
+            // Extract the weight history from the model and convert it to JavaScript arrays
+            var weightHistoryData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(@Model.weight_history));
+            console.log(weightHistoryData);
+            // Create the chart
+            var ctx = document.getElementById('weightChart').getContext('2d');
+            var labels = Array.from({ length: weightHistoryData.length }, (v, i) => i);
+            var weightChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Weight History (lbs)',
+                        data: weightHistoryData, // The weight data on the y-axis
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'category',
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: false,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Weight (lbs)'
+                            }
+                        }
                     }
                 }
             });

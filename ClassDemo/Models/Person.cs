@@ -7,6 +7,7 @@ namespace Assignment3.Models
     {
         public int Id { get; set; }
 
+        public List<float>? weight_history { get; set; }
         public bool? isAdmin { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]

@@ -62,8 +62,11 @@
                             <div class="form-group mx-2">
                                 <label class="mr-2">New Weight (lbs):</label>
                                 <input type="number" name="newWeight" class="form-control" step="0.1" required />
+
+                               
                             </div>
                             <button type="submit" class="btn btn-primary">Update Weight</button>
+                           <a asp-controller="Person" asp-action="EditWeightHistory" asp-route-id="@Model.Id" class="btn btn-primary">Edit History</a>
                         </form>
                     </div>
                </div>

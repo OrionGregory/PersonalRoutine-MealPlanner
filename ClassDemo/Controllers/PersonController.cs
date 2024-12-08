@@ -47,22 +47,47 @@ namespace Assignment3.Controllers
             return View(person);
         }
 
-
-        [HttpGet]
         public async Task<IActionResult> EditWeightHistory(int id)
         {
             var userId = _userManager.GetUserId(User);
             var person = await _context.People
-                .Include(p => p.Routines)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (person == null)
+            if (person == null || person.weight_history == null)
             {
                 _logger.LogWarning($"Edit GET: No Person found for UserId {userId}. Redirecting to Create.");
                 return RedirectToAction(nameof(Index), "Home");
             }
 
             return View(person);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> WeightDelete(int entry_id, int person_id)
+        {
+            // Load the person along with their weight history
+            var person = await _context.People
+                .FirstOrDefaultAsync(p => p.Id == person_id);
+
+            if (person != null && person.weight_history != null && person.weight_history.Count > 0)
+            {
+                // Validate the entry_id to ensure it's within valid bounds
+                if (entry_id >= 0 && entry_id < person.weight_history.Count)
+                {
+                    // Remove the entry from the weight_history list at the given index
+                    person.weight_history.RemoveAt(entry_id);
+                    _context.Update(person);  // Update the person entity in the context
+                    await _context.SaveChangesAsync();  // Save changes to the database
+                }
+                else
+                {
+                    // Handle invalid index (optional logging or error message)
+                    _logger.LogWarning($"Invalid entry_id {entry_id} for person with Id {person_id}. Index out of bounds.");
+                }
+            }
+
+            // Redirect back to the 'Home/Index' page after deletion
+            return RedirectToAction(nameof(Index), "Home");
         }
 
         // POST: Person/Delete/5
@@ -74,9 +99,10 @@ namespace Assignment3.Controllers
             if (person != null)
             {
                 _context.People.Remove(person);
+                _context.Update(person);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(AdminMenu));
+            return RedirectToAction(nameof(Index), "Home");
         }
 
         [HttpGet]

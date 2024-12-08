@@ -8,7 +8,7 @@
 
 <table class="table">
     <thead>
-        <tr>
+        <tr style="color:white;">
             <th>Person</th>
             <th>Calorie Target</th>
             <th>Calorie Surplus/Deficit</th>
@@ -20,7 +20,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr style="color:white;">
                 <td>@item.Person.Name</td>
                 <td>@item.TotalDailyCalories</td>
                 <td>@item.CalorieSurplusOrDeficit</td>
@@ -28,9 +28,9 @@
                 <td>@item.CarbPercentage%</td>
                 <td>@item.FatPercentage%</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
                 </td>
             </tr>
         }

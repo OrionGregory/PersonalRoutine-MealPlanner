@@ -21,6 +21,30 @@ namespace Assignment3.Controllers
             _userManager = userManager;
         }
 
+        // GET: Home/Index
+        public async Task<IActionResult> Index()
+        {
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People
+                    .Include(p => p.Routines)
+                    .ThenInclude(r => r.Exercises)
+                    .FirstOrDefaultAsync(p => p.UserId == userId);
+
+            if (person == null)
+            {
+                return RedirectToAction(nameof(Create));
+            }
+
+            var completedExercises = await _context.CompletedExercises
+                .Where(ce => ce.UserId == userId && ce.CompletedDate.Date == DateTime.Today)
+                .Select(ce => ce.ExerciseId)
+                .ToListAsync();
+
+            ViewBag.CompletedExercises = completedExercises;
+
+            return View(person);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
@@ -56,7 +80,7 @@ namespace Assignment3.Controllers
             if (person == null || person.weight_history == null)
             {
                 _logger.LogWarning($"Edit GET: No Person found for UserId {userId}. Redirecting to Create.");
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(person);
@@ -87,7 +111,7 @@ namespace Assignment3.Controllers
             }
 
             // Redirect back to the 'Home/Index' page after deletion
-            return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Person/Delete/5
@@ -102,7 +126,7 @@ namespace Assignment3.Controllers
                 _context.Update(person);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -191,7 +215,7 @@ namespace Assignment3.Controllers
 
                     _context.Update(existingPerson);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index), "Home");
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {

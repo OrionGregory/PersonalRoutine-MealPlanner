@@ -8,17 +8,17 @@
 }
 
 <div class="text-center bg-dark">
-    <h1 class="display-8" style="color:ghostwhite;">Welcome to Your Wellness Dashboard!</h1>
+    <h1 class="display-8" style="color:ghostwhite;">Welcome  @Html.DisplayFor(model => model.Name) to Your Wellness Dashboard!</h1>
     <p class="lead" style="color:ghostwhite;">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="text-left">
-        <h2>Hello, @Html.DisplayFor(model => model.Name)!</h2>
-    </div>
     <div class="text-center" style="background-color:white;">
-        
+        <!--Section Header -->
+        <div style="background-color:slategrey;">
+            <h2 style="color:white">Your Goal Progress</h2>
+        </div>
         <!-- Weight Progress Section -->
         <div class="row justify-content-left mb-4">
             <div class="col-md-6">
@@ -86,12 +86,15 @@
                 <!-- Chart -->
                
         </div>
+        <div style="background-color:slategrey;">
+            <h2 style="color:white">Today's Workouts</h2>
+        </div>
         <div class="row mb-4">
                <!-- Today's Workouts Section -->
                <div class="col-md-12">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <h4>Today's Workouts - @DateTime.Now.ToString("dddd")</h4>
+                        <h4>@DateTime.Now.ToString("dddd")</h4>
                     </div>
                     <div class="card-body">
                         @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))

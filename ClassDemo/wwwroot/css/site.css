@@ -45,3 +45,9 @@ body {
   from { opacity: 0.5; }
   to { opacity: 1; }
 }
+
+.white-text-with-border {
+    color: white;
+    font-size: 18px; /* Adjust the size as needed */
+    text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
+}

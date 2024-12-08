@@ -8,56 +8,50 @@
 }
 
 <div class="text-center">
-    <h1 class="display-8">Welcome to Your Workout Planner!</h1>
+    <h1 class="display-8">Welcome to Your Wellness Dashboard!</h1>
     <p class="lead">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
 @if (SignInManager.IsSignedIn(User))
 {
+    <div class="text-left">
+        <h2>Hello, @Html.DisplayFor(model => model.Name)!</h2>
+    </div>
     <div class="text-center">
-        <h2>Hello, @Html.DisplayFor(model => model.Name)</h2>
         
         <!-- Weight Progress Section -->
-        <div class="row justify-content-center mb-4">
+        <div class="row justify-content-left mb-4">
             <div class="col-md-6">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Goal Weight</th>
-                            <th>Current Weight</th>
-                        </tr>
-                    </thead>
-                    <tbody class="tbody-light">
-                        <tr>
-                            <td>@Html.DisplayFor(model => model.GoalWeight) lbs</td>
-                            <td>@Html.DisplayFor(model => model.Weight) lbs</td>
-                        </tr>
-                        <tr>
-                            @if (Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) <= 5)
-                            {
-                                <td style="background-color: palegreen" colspan="2">
-                                    <span style="color: darkgreen;">GOAL ACHIEVED!</span>
-                                </td>
-                            }
-                            else
-                            {
-                                <td style="background-color: palevioletred" colspan="2">
-                                    <span style="color: darkred;">@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
-                                </td>
-                            }
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Chart -->
-                <div class="card mt-4">
-                    <div class="card-header">
-                        <h4>Weight History</h4>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="weightChart" width="400" height="200"></canvas>
-                    </div>
-                </div>
-                <!-- Weigh In Form -->
+                <div class="table mt-4">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Goal Weight</th>
+                                <th>Current Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-light">
+                            <tr>
+                                <td>@Html.DisplayFor(model => model.GoalWeight) lbs</td>
+                                <td>@Html.DisplayFor(model => model.Weight) lbs</td>
+                            </tr>
+                            <tr>
+                                @if (Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) <= 5)
+                                {
+                                    <td style="background-color: palegreen" colspan="2">
+                                        <span style="color: darkgreen;">GOAL ACHIEVED!</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="background-color: palevioletred" colspan="2">
+                                        <span style="color: darkred;">@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>               
                 <div class="card mt-4">
                     <div class="card-header">
                         <h4>Weigh In</h4>
@@ -72,10 +66,26 @@
                             <button type="submit" class="btn btn-primary">Update Weight</button>
                         </form>
                     </div>
+               </div>
+            </div>
+            <div class="col-md-6">
+                <div class="justify-content-right">
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h4>Weight History</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="weightChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Today's Workouts Section -->
-                <div class="card mt-4">
+            </div>
+                <!-- Chart -->
+               
+        </div>
+        <div class="row justify-content-right mb-4">
+               <!-- Today's Workouts Section -->
+              <div class="card mt-4">
                     <div class="card-header">
                         <h4>Today's Workouts - @DateTime.Now.ToString("dddd")</h4>
                     </div>
@@ -132,7 +142,7 @@
                         }
                     </div>
                 </div>
-            </div>
+
         </div>
 
         <p>

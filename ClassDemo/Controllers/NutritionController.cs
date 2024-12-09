@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Assignment3.Controllers
 {
@@ -26,27 +25,25 @@ namespace Assignment3.Controllers
         // GET: Nutrition
         public async Task<IActionResult> Index()
         {
-            var userId = _userManager.GetUserId(User);
-            var nutritionList = await _context.Nutrition
-                .Include(n => n.Person)
-                .Where(n => n.Person.UserId == userId)
-                .ToListAsync();
+            var nutritionList = await _context.Nutrition.Include(n => n.Person).ToListAsync();
             return View(nutritionList);
         }
 
         // GET: Nutrition/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var userId = _userManager.GetUserId(User);
             var nutrition = await _context.Nutrition
                 .Include(n => n.Person)
                 .Include(n => n.Meals)
-                .FirstOrDefaultAsync(n => n.Id == id && n.Person.UserId == userId);
+                .FirstOrDefaultAsync(n => n.Id == id);
 
             if (nutrition == null)
             {
                 return NotFound();
             }
+
+            Console.WriteLine($"Nutrition Data: {nutrition}");
+            Console.WriteLine($"Meals Count: {nutrition.Meals?.Count}");
 
             return View(nutrition);
         }
@@ -54,13 +51,6 @@ namespace Assignment3.Controllers
         // GET: Nutrition/Create
         public IActionResult Create(int personId)
         {
-            var userId = _userManager.GetUserId(User);
-            var person = _context.People.FirstOrDefault(p => p.Id == personId && p.UserId == userId);
-            if (person == null)
-            {
-                return Unauthorized();
-            }
-
             var nutrition = new Nutrition { PersonId = personId };
             return View(nutrition);
         }
@@ -70,15 +60,16 @@ namespace Assignment3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Nutrition nutrition)
         {
-            var userId = _userManager.GetUserId(User);
-            var person = await _context.People.FirstOrDefaultAsync(p => p.Id == nutrition.PersonId && p.UserId == userId);
-            if (person == null)
-            {
-                return Unauthorized();
-            }
-
             if (ModelState.IsValid)
             {
+                // Ensure the PersonId exists
+                var person = await _context.People.FindAsync(nutrition.PersonId);
+                if (person == null)
+                {
+                    ModelState.AddModelError("", "Invalid PersonId.");
+                    return View(nutrition);
+                }
+
                 _context.Nutrition.Add(nutrition);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -89,11 +80,7 @@ namespace Assignment3.Controllers
         // GET: Nutrition/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var userId = _userManager.GetUserId(User);
-            var nutrition = await _context.Nutrition
-                .Include(n => n.Person)
-                .FirstOrDefaultAsync(n => n.Id == id && n.Person.UserId == userId);
-
+            var nutrition = await _context.Nutrition.FindAsync(id);
             if (nutrition == null)
             {
                 return NotFound();
@@ -106,13 +93,6 @@ namespace Assignment3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Nutrition nutrition)
         {
-            var userId = _userManager.GetUserId(User);
-            var person = await _context.People.FirstOrDefaultAsync(p => p.Id == nutrition.PersonId && p.UserId == userId);
-            if (person == null)
-            {
-                return Unauthorized();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -139,11 +119,7 @@ namespace Assignment3.Controllers
         // GET: Nutrition/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var userId = _userManager.GetUserId(User);
-            var nutrition = await _context.Nutrition
-                .Include(n => n.Person)
-                .FirstOrDefaultAsync(n => n.Id == id && n.Person.UserId == userId);
-
+            var nutrition = await _context.Nutrition.FindAsync(id);
             if (nutrition == null)
             {
                 return NotFound();
@@ -156,26 +132,29 @@ namespace Assignment3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = _userManager.GetUserId(User);
-            var nutrition = await _context.Nutrition
-                .Include(n => n.Person)
-                .FirstOrDefaultAsync(n => n.Id == id && n.Person.UserId == userId);
-
-            if (nutrition == null)
+            var nutrition = await _context.Nutrition.FindAsync(id);
+            if (nutrition != null)
             {
-                return NotFound();
+                _context.Nutrition.Remove(nutrition);
+                await _context.SaveChangesAsync();
             }
-
-            _context.Nutrition.Remove(nutrition);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         // GET: Nutrition/GenerateNutritionPlan/{id?}
+        // GET: Nutrition/GenerateNutritionPlan/{id?}
         [HttpGet("Nutrition/GenerateNutritionPlan")]
         public async Task<IActionResult> GenerateNutritionPlan()
         {
+            // Get the current logged-in user's ID
             var userId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in.");
+            }
+
+            // Find the associated Person object
             var person = await _context.People
                 .Include(p => p.Routines)
                     .ThenInclude(r => r.Exercises)
@@ -186,6 +165,7 @@ namespace Assignment3.Controllers
                 return NotFound("No Person object found for the current user.");
             }
 
+            // Check if a Nutrition object already exists for this Person
             var nutrition = await _context.Nutrition
                 .Include(n => n.Meals)
                 .FirstOrDefaultAsync(n => n.PersonId == person.Id);

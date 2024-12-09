@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
-using ClassDemo.Models;
 
 namespace Assignment3.Controllers
 {
@@ -23,25 +22,27 @@ namespace Assignment3.Controllers
 
         // GET: Home/Index
         public async Task<IActionResult> Index()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var userId = _userManager.GetUserId(User);
-                var person = await _context.People
-                        .Include(p => p.Routines)
-                        .ThenInclude(r => r.Exercises)
-                        .FirstOrDefaultAsync(p => p.UserId == userId);
+          {
+              var userId = _userManager.GetUserId(User);
+              var person = await _context.People
+                      .Include(p => p.Routines)
+                      .ThenInclude(r => r.Exercises)
+                      .FirstOrDefaultAsync(p => p.UserId == userId);
 
-                if (person == null)
-                {
-                    return RedirectToAction("Create", "Person");
-                }
+              if (person == null)
+              {
+                  return RedirectToAction("Create", "Person");
+              }
 
-                return RedirectToAction("Index", "Person");
-            }
+              var completedExercises = await _context.CompletedExercises
+                  .Where(ce => ce.UserId == userId && ce.CompletedDate.Date == DateTime.Today)
+                  .Select(ce => ce.ExerciseId)
+                  .ToListAsync();
 
-            return View();
-        }
+              ViewBag.CompletedExercises = completedExercises;
+
+              return View(person);
+          }
 
         // GET: Home/Privacy
         public IActionResult Privacy()
@@ -49,10 +50,12 @@ namespace Assignment3.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //// GET: Home/Error
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    var errorModel = new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier };
+        //    return View(errorModel);
+        //}
     }
 }

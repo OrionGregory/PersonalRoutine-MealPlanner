@@ -1,53 +1,18 @@
-﻿html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-.mt-5 {
-    color: blue;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  background: url('path/to/your/video.mp4') no-repeat center center fixed;
-  background-size: cover;
-  margin-bottom: 60px;
-}
-
-.exercise-row {
-  transition: background-color 0.3s ease;
-}
-
-.exercise-row.bg-success {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0.5; }
-  to { opacity: 1; }
-}
-
-.white-text-with-border {
+﻿h1 {
     color: white;
-    font-size: 18px; /* Adjust the size as needed */
-    text-shadow: 1px 1px 0px white, -1px -1px 0px white, 1px -1px 0px white, -1px 1px 0px white;
+}
+h2 {
+    color: white;
+}
+h3 {
+    color: white;
+}
+p {
+    color: white;
+}
+label.form-label[for="Input_RememberMe"] {
+    color: white;
+}
+.mb-0 {
+    color: black !important;
 }

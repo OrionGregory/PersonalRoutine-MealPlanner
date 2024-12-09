@@ -42,6 +42,9 @@ namespace Assignment3.Controllers
                 return NotFound();
             }
 
+            Console.WriteLine($"Nutrition Data: {nutrition}");
+            Console.WriteLine($"Meals Count: {nutrition.Meals?.Count}");
+
             return View(nutrition);
         }
 

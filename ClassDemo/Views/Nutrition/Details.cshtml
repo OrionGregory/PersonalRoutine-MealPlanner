@@ -10,7 +10,7 @@
     <a asp-action="GenerateNutritionPlan" asp-route-id="@Model.Id" class="btn btn-primary">Generate Meals</a>
 </div>
 
-<table class="table">
+<table class="table" style="color:white;">
     <tr>
         <th>Calories In:</th>
         <td></td>
@@ -56,7 +56,7 @@
 
 @if (Model.Meals != null && Model.Meals.Any())
 {
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="color:white;">
         <thead>
             <tr>
                 <th>Name</th>

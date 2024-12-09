@@ -142,66 +142,83 @@ namespace Assignment3.Controllers
         }
 
         // GET: Nutrition/GenerateNutritionPlan/{id?}
-// GET: Nutrition/GenerateNutritionPlan/{id?}
-[HttpGet("Nutrition/GenerateNutritionPlan/{id?}")]
-public async Task<IActionResult> GenerateNutritionPlan(int? id)
-{
-    if (!id.HasValue)
-    {
-        return BadRequest("Nutrition plan ID is required.");
-    }
+        // GET: Nutrition/GenerateNutritionPlan/{id?}
+        [HttpGet("Nutrition/GenerateNutritionPlan")]
+        public async Task<IActionResult> GenerateNutritionPlan()
+        {
+            // Get the current logged-in user's ID
+            var userId = _userManager.GetUserId(User);
 
-    var userId = _userManager.GetUserId(User);
-    var nutrition = await _context.Nutrition
-        .Include(n => n.Person)
-            .ThenInclude(p => p.Routines)
-                .ThenInclude(r => r.Exercises)
-        .Include(n => n.Meals)
-        .FirstOrDefaultAsync(n => n.Id == id.Value);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in.");
+            }
 
-    if (nutrition == null || nutrition.Person.UserId != userId)
-    {
-        return NotFound();
-    }
+            // Find the associated Person object
+            var person = await _context.People
+                .Include(p => p.Routines)
+                    .ThenInclude(r => r.Exercises)
+                .FirstOrDefaultAsync(p => p.UserId == userId);
 
-    var person = nutrition.Person;
+            if (person == null)
+            {
+                return NotFound("No Person object found for the current user.");
+            }
 
-    // Calculate nutrition values
-    var bmr = NutritionCalculator.CalculateBMR(person);
-    var averageRoutineCaloriesBurned = NutritionCalculator.CalculateAverageRoutineCaloriesBurned(person);
-    var dailyCalorieAdjustment = NutritionCalculator.CalculateDailyCalorieAdjustment(person);
-    var totalDailyCalories = NutritionCalculator.GetTotalDailyCalories(person);
-    var (proteinPct, carbsPct, fatPct) = NutritionCalculator.CalculateMacroPercentages(person);
+            // Check if a Nutrition object already exists for this Person
+            var nutrition = await _context.Nutrition
+                .Include(n => n.Meals)
+                .FirstOrDefaultAsync(n => n.PersonId == person.Id);
 
-    // Generate meals using AIAnalysisService
-    var generatedMeals = await _aiAnalysisService.GenerateMealsFromAI(totalDailyCalories, proteinPct, carbsPct, fatPct);
+            if (nutrition == null)
+            {
+                // Create a new Nutrition object and link it to the Person
+                nutrition = new Nutrition
+                {
+                    PersonId = person.Id,
+                    Meals = new List<Meal>() // Initialize meals list
+                };
+                _context.Nutrition.Add(nutrition);
+                await _context.SaveChangesAsync();
+            }
 
-    // Clear existing meals
-    _context.Meals.RemoveRange(nutrition.Meals);
+            // Calculate nutrition values
+            var bmr = NutritionCalculator.CalculateBMR(person);
+            var averageRoutineCaloriesBurned = NutritionCalculator.CalculateAverageRoutineCaloriesBurned(person);
+            var dailyCalorieAdjustment = NutritionCalculator.CalculateDailyCalorieAdjustment(person);
+            var totalDailyCalories = NutritionCalculator.GetTotalDailyCalories(person);
+            var (proteinPct, carbsPct, fatPct) = NutritionCalculator.CalculateMacroPercentages(person);
 
-    // Assign NutritionId to each generated meal
-    foreach (var meal in generatedMeals)
-    {
-        meal.NutritionId = nutrition.Id;
-    }
+            // Generate meals using AIAnalysisService
+            var generatedMeals = await _aiAnalysisService.GenerateMealsFromAI(totalDailyCalories, proteinPct, carbsPct, fatPct);
 
-    // Add generated meals
-    nutrition.Meals = generatedMeals;
+            // Clear existing meals if any
+            _context.Meals.RemoveRange(nutrition.Meals);
 
-    // Update nutrition plan
-    nutrition.BMR = bmr;
-    nutrition.RoutineCaloriesBurned = averageRoutineCaloriesBurned;
-    nutrition.CalorieSurplusOrDeficit = dailyCalorieAdjustment;
-    nutrition.TotalDailyCalories = totalDailyCalories;
-    nutrition.ProteinPercentage = proteinPct;
-    nutrition.CarbPercentage = carbsPct;
-    nutrition.FatPercentage = fatPct;
+            // Assign NutritionId to each generated meal
+            foreach (var meal in generatedMeals)
+            {
+                meal.NutritionId = nutrition.Id;
+            }
 
-    _context.Nutrition.Update(nutrition);
-    await _context.SaveChangesAsync();
+            // Add generated meals
+            nutrition.Meals = generatedMeals;
 
-    return RedirectToAction(nameof(Details), new { id = nutrition.Id });
-}
+            // Update nutrition plan
+            nutrition.BMR = bmr;
+            nutrition.RoutineCaloriesBurned = averageRoutineCaloriesBurned;
+            nutrition.CalorieSurplusOrDeficit = dailyCalorieAdjustment;
+            nutrition.TotalDailyCalories = totalDailyCalories;
+            nutrition.ProteinPercentage = proteinPct;
+            nutrition.CarbPercentage = carbsPct;
+            nutrition.FatPercentage = fatPct;
+
+            _context.Nutrition.Update(nutrition);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = nutrition.Id });
+        }
+
         private bool NutritionExists(int id)
         {
             return _context.Nutrition.Any(e => e.Id == id);

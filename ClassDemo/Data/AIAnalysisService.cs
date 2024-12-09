@@ -117,7 +117,7 @@ namespace Assignment3.Data
         public async Task<List<Exercise>> GenerateExercisesFromAI(string routineType, float currentWeight, float goalWeight, int timeFrame)
         {
             string prompt = $@"
-                Generate a list of exercises for a {routineType} routine based on the following parameters:
+                Generate a list of exercises for a {routineType} routine based on the following parameters, consider the time frame, and difference between current weight and goal weight when deciding the intensity (number of exercises) of each routine:
                 - Current Weight: {currentWeight} lbs
                 - Goal Weight: {goalWeight} lbs
                 - Time Frame: {timeFrame} weeks

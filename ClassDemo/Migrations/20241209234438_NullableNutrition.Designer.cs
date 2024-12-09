@@ -4,6 +4,7 @@ using Assignment3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209234438_NullableNutrition")]
+    partial class NullableNutrition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,10 +145,10 @@ namespace Assignment3.Migrations
                     b.Property<int>("ProteinPercentage")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoutineCaloriesBurned")
+                    b.Property<int>("RoutineCaloriesBurned")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TotalDailyCalories")
+                    b.Property<int>("TotalDailyCalories")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

@@ -19,18 +19,18 @@ namespace Assignment3.Models
 
         public int ProteinPercentage { get; set; }
 
-        public int RoutineCaloriesBurned { get; set; }
+        public int? RoutineCaloriesBurned { get; set; }
 
-        public int TotalDailyCalories { get; set; }
+        public int? TotalDailyCalories { get; set; }
 
         // Foreign key to Person
-        public int PersonId { get; set; }
+        public int? PersonId { get; set; }
 
         [Required]
-        public Person Person { get; set; }
+        public Person? Person { get; set; }
 
         [Required]
-        public ICollection<Meal> Meals { get; set; } = new List<Meal>();
+        public ICollection<Meal>? Meals { get; set; } = new List<Meal>();
     }
 
 }

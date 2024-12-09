@@ -212,6 +212,7 @@ namespace Assignment3.Controllers
                     existingPerson.Weight = person.Weight;
                     existingPerson.GoalWeight = person.GoalWeight;
                     existingPerson.Time = person.Time;
+                    existingPerson.Height = person.Height;
 
                     _context.Update(existingPerson);
                     await _context.SaveChangesAsync();

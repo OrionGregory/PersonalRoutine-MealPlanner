@@ -22,6 +22,9 @@ namespace Assignment3.Models
         [Required(ErrorMessage = "Weight is required.")]
         public float? Weight { get; set; }
 
+        [Required(ErrorMessage = "Height is required.")]
+        public float? Height { get; set; }
+
         [Required(ErrorMessage = "Goal is required.")]
         public float? GoalWeight { get; set; }
 

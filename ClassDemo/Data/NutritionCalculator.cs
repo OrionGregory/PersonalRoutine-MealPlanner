@@ -9,13 +9,11 @@ public class NutritionCalculator
     {
         double bmr;
         float weight = person.Weight ?? 0;
-        // ADD HEIGHT LATER
-        float height;
-        height = 69;
+        float height = person.Height ?? 0;
         int age = person.Age;
         bool isMale = person.Sex?.ToLower() == "male";
 
-        //Mifflin-St Jeor Equation
+        // Mifflin-St Jeor Equation
         bmr = (10 * 0.453592 * weight)
                 + (6.25 * 2.54 * height)
                 - (5 * age);
@@ -27,21 +25,6 @@ public class NutritionCalculator
         {
             bmr -= 161;
         }
-
-
-        // Harris-Benedict Equation:
-        //if (isMale)
-        //{
-        //    bmr = 88.362 + (13.397 * 0.453592 * weight) 
-        //        + (3.098 * 2.54 * height) 
-        //        - 5.677 * age);
-        //}
-        //else
-        //{
-        //    bmr = 447.593 + (9.247 * 0.453592 * weight)
-        //        + (3.098 * 2.54 * height)
-        //        - (4.330 * age);
-        //}
 
         return (int)bmr;
     }
@@ -117,7 +100,7 @@ public class NutritionCalculator
         int dailyCalorieAdjustment = CalculateDailyCalorieAdjustment(person);
 
         // 1.6 is activity multiplier - takes bmr to calculate actual calories burned per day
-        int totalDailyCalories = (int)(bmr * 1.6  + dailyCalorieAdjustment);
+        int totalDailyCalories = (int)(bmr * 1.6 + dailyCalorieAdjustment);
         return totalDailyCalories;
     }
 
@@ -133,5 +116,14 @@ public class NutritionCalculator
         {
             return (protein: 40, carbs: 30, fat: 30); // High protein for cutting
         }
+    }
+
+    public static (int breakfastCalories, int lunchCalories, int dinnerCalories) CalculateMealCalories(int totalDailyCalories)
+    {
+        int breakfastCalories = (int)(totalDailyCalories * 0.25);
+        int lunchCalories = (int)(totalDailyCalories * 0.30);
+        int dinnerCalories = (int)(totalDailyCalories * 0.45);
+
+        return (breakfastCalories, lunchCalories, dinnerCalories);
     }
 }

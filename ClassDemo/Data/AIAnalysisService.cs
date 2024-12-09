@@ -85,7 +85,7 @@ namespace Assignment3.Data
         public async Task<List<Meal>> GenerateMealsFromAI(int totalDailyCalories, int proteinPercentage, int carbPercentage, int fatPercentage)
         {
             string prompt = $@"
-                Generate a list of 3 balanced meals for a day based on the following nutritional requirements. Categorize each meal as breakfast, lunch, or dinner, Breakfast should be a lighter meal, but not as light as lunch, Dinner should be the heaviest meal of all, Focus on the accuracy of the amount of calories, and the protien, carbohydrate, and fat content:
+                Generate a list of 3 meals for a day to fulfill the following nutritional requirements. Categorize each meal as breakfast, lunch, or dinner:
                 - Total Daily Calories: {totalDailyCalories} kcal
                 - Protein: {proteinPercentage}%
                 - Carbohydrates: {carbPercentage}%

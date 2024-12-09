@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Assignment3.Models;
 using Assignment3.Data;
-using Assignment3.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assignment3.Controllers
 {
-    [Authorize] // Ensures only authenticated users can access these actions
+    [Authorize]
     public class RoutineController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -29,7 +32,7 @@ namespace Assignment3.Controllers
             var routines = _context.Routines
                                    .Include(r => r.Person)
                                    .Include(r => r.Exercises)
-                                   .Where(r => r.Person != null && r.Person.UserId == userId); // Filter by logged-in user
+                                   .Where(r => r.Person != null && r.Person.UserId == userId);
             return View(await routines.ToListAsync());
         }
 
@@ -60,7 +63,6 @@ namespace Assignment3.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            // Optionally, pass any necessary data to the view, e.g., list of persons
             ViewBag.Persons = _context.People.ToList();
             return View();
         }
@@ -75,14 +77,27 @@ namespace Assignment3.Controllers
                 _context.Add(routine);
                 await _context.SaveChangesAsync();
 
-                // Pre-populate exercises based on RoutineType
-                if (!string.IsNullOrEmpty(routine.RoutineType))
+                // Generate and populate workouts
+                var person = await _context.People.FindAsync(routine.PersonId);
+                if (person != null)
                 {
-                    var predefinedExercises = GetPredefinedExercises(routine.RoutineType, routine.Id);
-                    if (predefinedExercises != null && predefinedExercises.Any())
+                    var routines = GenerateRoutine(person);
+                    foreach (var generatedRoutine in routines)
                     {
-                        _context.Exercises.AddRange(predefinedExercises);
+                        generatedRoutine.PersonId = person.Id;
+                        _context.Routines.Add(generatedRoutine);
                         await _context.SaveChangesAsync();
+
+                        // Pre-populate exercises based on RoutineType
+                        if (!string.IsNullOrEmpty(generatedRoutine.RoutineType))
+                        {
+                            var predefinedExercises = GetPredefinedExercises(generatedRoutine.RoutineType, generatedRoutine.Id);
+                            if (predefinedExercises != null && predefinedExercises.Any())
+                            {
+                                _context.Exercises.AddRange(predefinedExercises);
+                                await _context.SaveChangesAsync();
+                            }
+                        }
                     }
                 }
 
@@ -308,6 +323,22 @@ public async Task<IActionResult> EditExercise(int id, [Bind("Id,Description,Reps
         private bool ExerciseExists(int id)
         {
             return _context.Exercises.Any(e => e.Id == id);
+        }
+
+        private List<Routine> GenerateRoutine(Person person)
+        {
+            var routines = new List<Routine>();
+
+            // Example for gaining weight
+            routines.Add(new Routine { DayOfWeek = "Monday", RoutineType = "Push" });
+            routines.Add(new Routine { DayOfWeek = "Tuesday", RoutineType = "Pull" });
+            routines.Add(new Routine { DayOfWeek = "Wednesday", RoutineType = "Legs" });
+            routines.Add(new Routine { DayOfWeek = "Thursday", RoutineType = "Rest" });
+            routines.Add(new Routine { DayOfWeek = "Friday", RoutineType = "Full Body" });
+            routines.Add(new Routine { DayOfWeek = "Saturday", RoutineType = "Cardio and Core" });
+            routines.Add(new Routine { DayOfWeek = "Sunday", RoutineType = "Rest" });
+
+            return routines;
         }
 
         private List<Exercise> GetPredefinedExercises(string routineType, int routineId)

@@ -116,7 +116,7 @@
                                     <tbody>
                                         @foreach (var exercise in routine.Exercises ?? Enumerable.Empty<Exercise>())
                                         {
-                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")">
+                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")" onclick="toggleExerciseCompletionRow(this)">
                                                 <td>@exercise.Name</td>
                                                 <td>@exercise.Sets</td>
                                                 <td>@exercise.Reps</td>
@@ -202,6 +202,12 @@ else
                     }
                 }
             });
+        }
+
+        function toggleExerciseCompletionRow(row) {
+            const checkbox = row.querySelector('.exercise-checkbox');
+            checkbox.checked = !checkbox.checked;
+            toggleExerciseCompletion(checkbox);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

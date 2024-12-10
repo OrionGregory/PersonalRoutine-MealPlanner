@@ -14,9 +14,7 @@ public class NutritionCalculator
         bool isMale = person.Sex?.ToLower() == "male";
 
         // Mifflin-St Jeor Equation
-        bmr = (10 * 0.453592 * weight)
-                + (6.25 * 2.54 * height)
-                - (5 * age);
+        bmr = (10 * 0.453592 * weight) + (6.25 * 2.54 * height) - (5 * age);
         if (isMale)
         {
             bmr += 5;
@@ -89,9 +87,9 @@ public class NutritionCalculator
         float dailyChange = weeklyChange / 7;
 
         // Each pound (~0.45 kg) is approximately 3500 calories
-        int dailyCalorieChange = (int)(dailyChange * 3500);
+        int dailyCalorieAdjustment = (int)(dailyChange * 3500);
 
-        return dailyCalorieChange;
+        return dailyCalorieAdjustment;
     }
 
     public static int GetTotalDailyCalories(Person person)
@@ -100,7 +98,7 @@ public class NutritionCalculator
         int dailyCalorieAdjustment = CalculateDailyCalorieAdjustment(person);
 
         // 1.6 is activity multiplier - takes bmr to calculate actual calories burned per day
-        int totalDailyCalories = (int)(bmr * 1.6 + dailyCalorieAdjustment);
+        int totalDailyCalories = (int)((bmr * 1.6) + dailyCalorieAdjustment);
         return totalDailyCalories;
     }
 

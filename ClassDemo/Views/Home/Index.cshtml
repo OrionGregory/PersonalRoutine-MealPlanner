@@ -14,11 +14,15 @@
 <div class=container>
     @if (SignInManager.IsSignedIn(User))
     {
-        <div class="text-center" style="background-color:white;">
+        <script>
+        @* // Redirect authenticated users to the Person/Index page *@
+        window.location.href = '@Url.Action("Index", "Person")';
+        </script>
+        @* <div class="text-center" style="background-color:white;">
                   <p> Hompage </p>
                   <a asp-controller="Person" asp-action="Index" class="btn btn-primary">Go to Profile</a>
 
-        </div>
+        </div> *@
     }
     else
     {

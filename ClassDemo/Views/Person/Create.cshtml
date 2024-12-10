@@ -10,47 +10,55 @@
     <div class="col-md-6">
         <form asp-action="Create" method="post" style="color:white;">
             <div asp-validation-summary="All" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" placeholder="Enter your name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" type="number" />
+                <label asp-for="Age" class="control-label">Age (years old)</label>
+                <input asp-for="Age" class="form-control" type="number" placeholder="" />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Sex" class="control-label"></label>
                 <select asp-for="Sex" class="form-control">
                     <option value="">Select Sex</option>
                     <option>Male</option>
                     <option>Female</option>
-                    <option>Other</option>
                 </select>
                 <span asp-validation-for="Sex" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Weight" class="control-label"></label>
-                <input asp-for="Weight" class="form-control" type="number" step="0.1" />
-                <span asp-validation-for="Weight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" class="form-control" type="number" step="0.1" />
+                <label asp-for="Height" class="control-label">Height in inches</label>
+                <input asp-for="Height" class="form-control" type="number" step="0.1" placeholder="Enter your height in inches e.g. 64" />
                 <span asp-validation-for="Height" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="GoalWeight" class="control-label"></label>
-                <input asp-for="GoalWeight" class="form-control" type="number" step="0.1" />
+                <label asp-for="Weight" class="control-label">Weight in pounds</label>
+                <input asp-for="Weight" class="form-control" type="number" step="0.1" placeholder="Enter your weight in lbs e.g. 125"  />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GoalWeight" class="control-label">Goal weight in pounds</label>
+                <input asp-for="GoalWeight" class="form-control" type="number" step="0.1" placeholder="Enter a number of lbs e.g. 125" />
                 <span asp-validation-for="GoalWeight" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Time" class="control-label"></label>
-                <input asp-for="Time" class="form-control" type="number" />
+                <label asp-for="Time" class="control-label">Timeframe to meet weight goal in weeks</label>
+                <input asp-for="Time" class="form-control" type="number" placeholder="e.g. 12" />
                 <span asp-validation-for="Time" class="text-danger"></span>
             </div>
+
             <br />
+
             <div class="form-group">
                 <input type="submit" value="Create Profile" class="btn btn-primary" />
             </div>

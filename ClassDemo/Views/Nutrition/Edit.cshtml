@@ -2,36 +2,36 @@
 
 <h2>Edit Nutrition Plan</h2>
 
-<form asp-action="Edit" style="color:white;">
+<form asp-action="Edit" method="post" style="color:white;">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="PersonId" />
 
     <div class="form-group">
-        <label asp-for="BMR"></label>
-        <input asp-for="BMR" class="form-control" />
-        <span asp-validation-for="BMR" class="text-danger"></span>
+        <label asp-for="TotalDailyCalories"> Daily Calorie Target </label>
+        <input asp-for="TotalDailyCalories" class="form-control" />
+        <span asp-validation-for="TotalDailyCalories" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="CalorieSurplusOrDeficit"></label>
+        <label asp-for="CalorieSurplusOrDeficit"> Daily Calorie Adjustment</label>
         <input asp-for="CalorieSurplusOrDeficit" class="form-control" />
         <span asp-validation-for="CalorieSurplusOrDeficit" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="ProteinPercentage"></label>
+        <label asp-for="ProteinPercentage"> Protein Percentage </label>
         <input asp-for="ProteinPercentage" class="form-control" />
         <span asp-validation-for="ProteinPercentage" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="CarbPercentage"></label>
+        <label asp-for="CarbPercentage"> Carb Percentage </label>
         <input asp-for="CarbPercentage" class="form-control" />
         <span asp-validation-for="CarbPercentage" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="FatPercentage"></label>
+        <label asp-for="FatPercentage"> Fat Percentage</label>
         <input asp-for="FatPercentage" class="form-control" />
         <span asp-validation-for="FatPercentage" class="text-danger"></span>
     </div>

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Assignment3.Models // Add the correct namespace for Exercise
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @model Assignment3.Models.Person
@@ -36,7 +37,7 @@
                                 <td>@Html.DisplayFor(model => model.Weight) lbs</td>
                             </tr>
                             <tr>
-                                @if ((Math.Abs((double)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) <= 0.6))
+                                @if (Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) <= 1)
                                 {
                                     <td style="background-color: palegreen" colspan="2">
                                         <span style="color: darkgreen;">GOAL ACHIEVED!</span>
@@ -44,8 +45,8 @@
                                 }
                                 else
                                 {
-                                    <td style="background-color: lightblue" colspan="2">
-                                        <span style="color: black;">@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
+                                    <td style="background-color: palevioletred" colspan="2">
+                                        <span style="color: darkred;">@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
                                     </td>
                                 }
                             </tr>
@@ -116,7 +117,7 @@
                                     <tbody>
                                         @foreach (var exercise in routine.Exercises ?? Enumerable.Empty<Exercise>())
                                         {
-                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")" onclick="toggleExerciseCompletionRow(this)">
+                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")">
                                                 <td>@exercise.Name</td>
                                                 <td>@exercise.Sets</td>
                                                 <td>@exercise.Reps</td>
@@ -202,12 +203,6 @@ else
                     }
                 }
             });
-        }
-
-        function toggleExerciseCompletionRow(row) {
-            const checkbox = row.querySelector('.exercise-checkbox');
-            checkbox.checked = !checkbox.checked;
-            toggleExerciseCompletion(checkbox);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

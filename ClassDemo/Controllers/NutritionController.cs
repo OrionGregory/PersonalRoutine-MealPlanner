@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -15,12 +16,14 @@ namespace Assignment3.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AIAnalysisService _aiAnalysisService;
+        private readonly ILogger<NutritionController> _logger;
 
-        public NutritionController(ApplicationDbContext context, UserManager<IdentityUser> userManager, AIAnalysisService aiAnalysisService)
+        public NutritionController(ApplicationDbContext context, UserManager<IdentityUser> userManager, AIAnalysisService aiAnalysisService, ILogger<NutritionController> logger)
         {
             _context = context;
             _userManager = userManager;
             _aiAnalysisService = aiAnalysisService;
+            _logger = logger;
         }
 
         // GET: Nutrition
@@ -93,6 +96,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Nutrition/Edit/5
+        [HttpGet("Nutrition/Edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var userId = _userManager.GetUserId(User);
@@ -105,6 +109,7 @@ namespace Assignment3.Controllers
 
             if (nutrition == null)
             {
+                _logger.LogWarning("Nutrition plan with ID {NutritionId} not found for user {UserId}", id, userId);
                 return NotFound();
             }
             return View(nutrition);
@@ -113,38 +118,68 @@ namespace Assignment3.Controllers
         // POST: Nutrition/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Nutrition nutrition)
+        public async Task<IActionResult> Edit(int id, Nutrition nutrition)
         {
+            if (id != nutrition.Id)
+            {
+                _logger.LogWarning("Nutrition ID mismatch: {NutritionId} does not match {ProvidedId}", nutrition.Id, id);
+                return BadRequest();
+            }
+
             var userId = _userManager.GetUserId(User);
             var user = await _userManager.FindByIdAsync(userId);
             var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-            var person = await _context.People.FirstOrDefaultAsync(p => p.Id == nutrition.PersonId && (isAdmin || p.UserId == userId));
-            if (person == null)
+            var existingNutrition = await _context.Nutrition
+                .Include(n => n.Person)
+                .FirstOrDefaultAsync(n => n.Id == id && (isAdmin || n.Person.UserId == userId));
+
+            if (existingNutrition == null)
             {
-                return Unauthorized();
+                _logger.LogWarning("Nutrition plan with ID {NutritionId} not found for user {UserId}", id, userId);
+                return NotFound();
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(nutrition);
+                    // Update the properties of the existing nutrition plan
+                    existingNutrition.BMR = nutrition.BMR;
+                    existingNutrition.CalorieSurplusOrDeficit = nutrition.CalorieSurplusOrDeficit;
+                    existingNutrition.CarbPercentage = nutrition.CarbPercentage;
+                    existingNutrition.FatPercentage = nutrition.FatPercentage;
+                    existingNutrition.ProteinPercentage = nutrition.ProteinPercentage;
+                    existingNutrition.RoutineCaloriesBurned = nutrition.RoutineCaloriesBurned;
+                    existingNutrition.TotalDailyCalories = nutrition.TotalDailyCalories;
+
+                    _context.Update(existingNutrition);
                     await _context.SaveChangesAsync();
+                    _logger.LogInformation("Nutrition plan with ID {NutritionId} updated successfully for user {UserId}", id, userId);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!NutritionExists(nutrition.Id))
                     {
+                        _logger.LogWarning("Nutrition plan with ID {NutritionId} no longer exists", nutrition.Id);
                         return NotFound();
                     }
                     else
                     {
+                        _logger.LogError(ex, "Concurrency error occurred while updating nutrition plan with ID {NutritionId} for user {UserId}", id, userId);
                         throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            // Log model state errors
+            foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            {
+                _logger.LogWarning("Model state error: {ErrorMessage}", error.ErrorMessage);
+            }
+
+            _logger.LogWarning("Model state is invalid for nutrition plan with ID {NutritionId} for user {UserId}", id, userId);
             return View(nutrition);
         }
 

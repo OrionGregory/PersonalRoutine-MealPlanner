@@ -4,6 +4,7 @@ using Assignment3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Assignment3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209234940_NullableNutrition1")]
+    partial class NullableNutrition1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,6 +139,7 @@ namespace Assignment3.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("PersonId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("ProteinPercentage")
@@ -150,8 +154,7 @@ namespace Assignment3.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId")
-                        .IsUnique()
-                        .HasFilter("[PersonId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Nutrition");
                 });
@@ -467,7 +470,9 @@ namespace Assignment3.Migrations
                 {
                     b.HasOne("Assignment3.Models.Person", "Person")
                         .WithOne("Nutrition")
-                        .HasForeignKey("Assignment3.Models.Nutrition", "PersonId");
+                        .HasForeignKey("Assignment3.Models.Nutrition", "PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });

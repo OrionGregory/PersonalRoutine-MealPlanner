@@ -1,12 +1,4 @@
-﻿body {
-    background-image: url('/images/background.jpg');
-    background-size: cover; /* Ensures the image covers the entire background */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    background-attachment: fixed; /* Keeps the background image fixed during scrolling */
-    background-position: center; /* Centers the background image */
-    color: white; /* Ensures text color is readable on the background */
-}
-h1 {
+﻿h1 {
     color: white;
 }
 h2 {
@@ -14,9 +6,6 @@ h2 {
 }
 h3 {
     color: white;
-}
-h4 {
-    color: grey;
 }
 p {
     color: white;
@@ -26,41 +15,4 @@ label.form-label[for="Input_RememberMe"] {
 }
 .mb-0 {
     color: black !important;
-}
-
-/* Initially hide the action links */
-.action-links {
-    display: none;
-}
-
-/* Show the action links when hovering over the name cell */
-tr:hover .action-cell .action-links {
-    display: block;
-}
-
-/* Optionally, add some styles for the action cell */
-.action-cell {
-    position: relative;
-}
-
-/* Add rounded corners to the div */
-.rounded-corners {
-    border-radius: 15px; /* Adjust the value as needed */
-    padding: 20px; /* Add some padding for better appearance */
-    margin-bottom: 20px; /* Add some margin to separate the boxes */
-    background-color: white; /* Set background color to white */
-    color: black; /* Set text color to black for better readability */
-}
-
-.custom-width {
-    max-width: 80%; /* Adjust the width as needed */
-    margin: 0 auto; /* Center align the div */
-}
-
-.bg-white {
-    background-color: white;
-}
-
-.p-3 {
-    padding: 1rem;
 }

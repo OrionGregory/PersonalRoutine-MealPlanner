@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using Assignment3.Models
+@using Assignment3.Models // Add the correct namespace for Exercise
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @model Assignment3.Models.Person
@@ -15,7 +15,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="text-center rounded-corners custom-width mb-5">
+    <div class="text-center" style="background-color:white;">
         <!--Section Header -->
         <div style="background-color:slategrey;">
             <h2 style="color:white">Your Goal Progress</h2>
@@ -61,8 +61,10 @@
                         <form asp-controller="Person" asp-action="UpdateWeight" method="post" class="form-inline justify-content-center">
                             <input type="hidden" asp-for="Id" />
                             <div class="form-group mx-2">
-                                <label class="mr-2" style="color:grey">New Weight (lbs):</label>
+                                <label class="mr-2">New Weight (lbs):</label>
                                 <input type="number" name="newWeight" class="form-control" step="0.1" required />
+
+
                             </div>
                             <button type="submit" class="btn btn-primary">Update Weight</button>
                             <a asp-controller="Person" asp-action="EditWeightHistory" asp-route-id="@Model.Id" class="btn btn-primary">Edit History</a>
@@ -83,10 +85,8 @@
                 </div>
             </div>
             <!-- Chart -->
-        </div>
-    </div>
 
-    <div class="text-center rounded-corners custom-width mb-2">
+        </div>
         <div style="background-color:slategrey;">
             <h2 style="color:white">Today's Workouts</h2>
         </div>
@@ -104,7 +104,7 @@
 
                             @foreach (var routine in todaysRoutines)
                             {
-                                <h5 style="color:grey">@routine.RoutineType</h5>
+                                <h5>@routine.RoutineType</h5>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
@@ -117,11 +117,23 @@
                                     <tbody>
                                         @foreach (var exercise in routine.Exercises ?? Enumerable.Empty<Exercise>())
                                         {
-                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")" onclick="toggleExerciseCompletionRow(this)">
+                                            <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")">
                                                 <td>@exercise.Name</td>
                                                 <td>@exercise.Sets</td>
                                                 <td>@exercise.Reps</td>
-                                                <td class="status">@((ViewBag.CompletedExercises?.Contains(exercise.Id) == true) ? "Complete" : "Incomplete")</td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                               class="custom-control-input exercise-checkbox"
+                                                               id="check-@exercise.Id"
+                                                               data-exercise-id="@exercise.Id"
+                                                        @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "checked" : "")
+                                                               onchange="toggleExerciseCompletion(this)" />
+                                                        <label class="custom-control-label" for="check-@exercise.Id">
+                                                            Complete
+                                                        </label>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         }
                                     </tbody>
@@ -130,6 +142,7 @@
                         }
                         else
                         {
+
                             <td style="background-color: palevioletred" colspan="2">
                                 <span style="color: darkred;">@decimal.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span> <!-- Red if the goal is not reached -->
                             </td>
@@ -138,17 +151,18 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <p>
-        <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
-        <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
-        @if (@Model.isAdmin == true)
-        {
-            <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
-        }
-    </p>
+        </div>
+
+        <p>
+            <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
+            <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
+            @if (@Model.isAdmin == true)
+            {
+                <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
+            }
+        </p>
+    </div>
 }
 else
 {
@@ -164,7 +178,8 @@ else
 
 @section Scripts {
     <script>
-        function toggleExerciseCompletion(exerciseId, completed) {
+        function toggleExerciseCompletion(checkbox) {
+            const exerciseId = checkbox.dataset.exerciseId;
             const row = document.getElementById(`exercise-${exerciseId}`);
 
             fetch('/Person/ToggleExerciseCompletion', {
@@ -175,29 +190,19 @@ else
                 },
                 body: JSON.stringify({
                     exerciseId: exerciseId,
-                    completed: completed
+                    completed: checkbox.checked
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const statusCell = row.querySelector('.status');
-                    if (completed) {
+                    if (checkbox.checked) {
                         row.classList.add('bg-success', 'text-white');
-                        statusCell.textContent = 'Complete';
                     } else {
                         row.classList.remove('bg-success', 'text-white');
-                        statusCell.textContent = 'Incomplete';
                     }
                 }
             });
-        }
-
-        function toggleExerciseCompletionRow(exerciseId) {
-            const row = document.getElementById(`exercise-${exerciseId}`);
-            const statusCell = row.querySelector('.status');
-            const isComplete = statusCell.textContent === 'Complete';
-            toggleExerciseCompletion(exerciseId, !isComplete);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

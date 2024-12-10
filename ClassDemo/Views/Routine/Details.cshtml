@@ -1,70 +1,70 @@
-﻿@model Assignment3.Models.Routine
+﻿@model Assignment3.Models.Person
 
 @{
-    ViewData["Title"] = "Routine Details";
+    ViewData["Title"] = "Your Workout Plan";
 }
 
-@if (ViewData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @ViewData["ErrorMessage"]
-    </div>
-}
-@if (ViewData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @ViewData["SuccessMessage"]
-    </div>
-}
+<h1>Your Workout Plan</h1>
 
-<h1>@Model.RoutineType Routine Details</h1>
+<h2>Weekly Workout Routine</h2>
+<div class="rounded-corners custom-width bg-white p-3">
+    <table id="routineTable" class="table table-bordered table-hover custom-table">
+        <thead class="thead-light">
+            <tr style="color:black;">
+                <th>Day</th>
+                <th>Routines</th>
+            </tr>
+        </thead>
+        <tbody class="tbody-light">
+            @foreach (var day in Enum.GetNames(typeof(DayOfWeek)))
+            {
+                var routinesForDay = Model.Routines?
+                .Where(r => r.DayOfWeek != null && r.DayOfWeek.Equals(day, StringComparison.OrdinalIgnoreCase))
+                .ToList() ?? new List<Assignment3.Models.Routine>();
 
-<div class="card mb-4">
-    <div class="card-header">
-        <h4>@Model.RoutineType for @Model.DayOfWeek</h4>
-        <p class="mb-0"><strong>Person:</strong> @(Model.Person?.Name ?? "N/A")</p>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Exercises</h5>
-        @if (Model.Exercises != null && Model.Exercises.Any())
-        {
-            <ul class="list-group list-group-flush">
-                @foreach (var exercise in Model.Exercises)
-                {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h6 class="mb-1">@exercise.Name</h6>
-                                <p class="mb-1 text-muted">@exercise.Description</p>
-                                <small>@exercise.Sets sets of @exercise.Reps reps</small>
-                            </div>
-                            <div class="col-md-4 text-end">
-                                <a asp-action="EditExercise" asp-route-id="@exercise.Id" class="btn btn-sm btn-outline-warning">Edit</a>
-                                <form asp-action="DeleteExercise" asp-route-id="@exercise.Id" method="post" class="d-inline" ;">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <p class="text-muted" id="no-exercises">No exercises assigned to this routine.</p>
-        }
-    </div>
+                <tr data-day="@day" class="droppable" style="color:black;">
+                    <td>@day</td>
+                    <td>
+                        @if (routinesForDay.Any())
+                        {
+                            @foreach (var routine in routinesForDay)
+                            {
+                                <div class="d-flex justify-content-between align-items-center mb-2 draggable"
+                                     draggable="true"
+                                     data-routine-id="@routine.Id">
+                                    <span>@routine.RoutineType</span>
+                                    <a asp-controller="Routine" asp-action="Details" asp-route-id="@routine.Id" class="btn btn-sm btn-primary">
+                                        Details
+                                    </a>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">No routines available.</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+<!-- Add Regenerate Workout Plan Button -->
+<form asp-action="RegenerateRoutine" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-warning">Regenerate Workout Plan</button>
+</form>
+
+<a asp-action="Edit" class="btn btn-secondary mt-3">Edit Profile</a>
 
 <div class="d-flex flex-wrap gap-2 mt-3">
     <a asp-action="CreateExercise" asp-route-routineId="@Model.Id" class="btn btn-primary">Create Exercise</a>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-controller="Person" asp-action="Details" class="btn btn-secondary">Back to List</a>
     <form asp-action="RegenerateRoutine" asp-route-id="@Model.Id" method="post" class="d-inline-block">
         @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-warning";">
-            Regenerate Routine
-        </button>
+        <button type="submit" class="btn btn-warning">Regenerate Routine</button>
     </form>
     <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
         @Html.AntiForgeryToken()
@@ -74,28 +74,48 @@
     </form>
 </div>
 
-@* Script to make exercises autogenerate if there are none in the set *@
 @section Scripts {
     <script>
-        // Automatically regenerate routine if no exercises exist
-        window.onload = function () {
-            const noExercisesElement = document.getElementById('no-exercises');
-            if (noExercisesElement) {
-                fetch('@Url.Action("RegenerateRoutine", "Routine", new { id = Model.Id })', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload(); // Reload the page to display newly generated exercises
+        document.addEventListener('DOMContentLoaded', function () {
+            const draggables = document.querySelectorAll('.draggable');
+            const droppables = document.querySelectorAll('.droppable');
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', () => {
+                    draggable.classList.add('dragging');
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            droppables.forEach(droppable => {
+                droppable.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    const afterElement = getDragAfterElement(droppable, e.clientY);
+                    const dragging = document.querySelector('.dragging');
+                    if (afterElement == null) {
+                        droppable.appendChild(dragging);
                     } else {
-                        console.error('Failed to regenerate routine.');
+                        droppable.insertBefore(dragging, afterElement);
                     }
                 });
+            });
+
+            function getDragAfterElement(container, y) {
+                const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+
+                return draggableElements.reduce((closest, child) => {
+                    const box = child.getBoundingClientRect();
+                    const offset = y - box.top - box.height / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        return { offset: offset, element: child };
+                    } else {
+                        return closest;
+                    }
+                }, { offset: Number.NEGATIVE_INFINITY }).element;
             }
-        };
+        });
     </script>
-} 
+}

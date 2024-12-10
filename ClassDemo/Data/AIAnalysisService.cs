@@ -85,7 +85,7 @@ namespace Assignment3.Data
         public async Task<List<Meal>> GenerateMealsFromAI(int totalDailyCalories, int proteinPercentage, int carbPercentage, int fatPercentage)
         {
             string prompt = $@"
-                Generate a list of 3 meals for a day to fulfill the following nutritional requirements. Categorize each meal as breakfast, lunch, or dinner:
+                You are a nutrition coach who is focused on accuracy, Generate a list of 3 meals for a day to fulfill the following nutritional requirements. Categorize each meal as breakfast, lunch, or dinner:
                 - Total Daily Calories: {totalDailyCalories} kcal
                 - Protein: {proteinPercentage}%
                 - Carbohydrates: {carbPercentage}%
@@ -117,7 +117,7 @@ namespace Assignment3.Data
         public async Task<List<Exercise>> GenerateExercisesFromAI(string routineType, float currentWeight, float goalWeight, int timeFrame)
         {
             string prompt = $@"
-                Generate a list of exercises for a {routineType} routine based on the following parameters, consider the time frame, and difference between current weight and goal weight when deciding the intensity (number of exercises) of each routine:
+                Generate a list of exercises (5-7 exercises) for a {routineType} routine based on the following parameters:
                 - Current Weight: {currentWeight} lbs
                 - Goal Weight: {goalWeight} lbs
                 - Time Frame: {timeFrame} weeks

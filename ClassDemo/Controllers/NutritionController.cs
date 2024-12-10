@@ -96,6 +96,7 @@ namespace Assignment3.Controllers
         }
 
         // GET: Nutrition/Edit/5
+        [HttpGet("Nutrition/Edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var userId = _userManager.GetUserId(User);

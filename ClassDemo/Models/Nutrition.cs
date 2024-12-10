@@ -26,7 +26,6 @@ namespace Assignment3.Models
         // Foreign key to Person
         public int? PersonId { get; set; }
 
-        [Required]
         public Person? Person { get; set; }
 
         [Required]

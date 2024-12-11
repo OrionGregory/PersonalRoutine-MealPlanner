@@ -46,7 +46,7 @@
                                 else
                                 {
                                     <td style="background-color: palevioletred" colspan="2">
-                                        <span style="color: darkred;">@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) lbs to go</span>
+                                        <span style="color: darkred;">@Math.Round(@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())), 1) lbs to go</span>
                                     </td>
                                 }
                             </tr>
@@ -66,8 +66,8 @@
 
 
                             </div>
-                            <button type="submit" class="btn btn-primary">Update Weight</button>
-                            <a asp-controller="Person" asp-action="EditWeightHistory" asp-route-id="@Model.Id" class="btn btn-primary">Edit History</a>
+                            <button type="submit" class="btn btn-secondary">Update Weight</button>
+                            <a asp-controller="Person" asp-action="EditWeightHistory" asp-route-id="@Model.Id" class="btn btn-secondary">Edit History</a>
                         </form>
                     </div>
                 </div>
@@ -159,17 +159,16 @@
                 </div>
             </div>
         </div>
+        <p>
+            <a asp-controller="Person" asp-action="Details" class="btn btn-secondary">Profile and Workout Plan</a>
+            <a asp-controller="Person" asp-action="Edit" class="btn btn-secondary">Edit Goal or Profile</a>
+            @if (@Model.isAdmin == true)
+            {
+                <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-secondary"> Admin Menu</a>
+            }
+        </p>
     </div>
 </div>
-
-    <p>
-        <a asp-controller="Person" asp-action="Details" class="btn btn-primary">Profile and Workout Plan</a>
-        <a asp-controller="Person" asp-action="Edit" class="btn btn-primary">Edit Goal or Profile</a>
-        @if (@Model.isAdmin == true)
-        {
-            <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-primary"> Admin Menu</a>
-        }
-    </p>
 }
 else
 {
@@ -230,6 +229,7 @@ else
                         data: weightHistoryData, // The weight data on the y-axis
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 2,
+                        display: false,
                         fill: false,
                     }]
                 },

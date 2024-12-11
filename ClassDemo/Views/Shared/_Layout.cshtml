@@ -18,7 +18,7 @@
 </head>
 <body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#1C252C;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid d-flex justify-content-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex justify-content-left align-items-center">
                     <img style="max-width: 150px; height: auto;" src="/images/Logo/GymPalLogo.jpg" alt="GymPal" />
@@ -27,33 +27,35 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-                    <span id="weather-info" style="color:white; margin-left: 10px;">-- °F</span>
+                    <div>
+                        <span id="weather-info">-- °F</span>
+                    </div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Person" asp-action="Index">My Profile</a>
+                            <a class="nav-link" asp-controller="Person" asp-action="Index">My Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Person" asp-action="Details">Routines</a>
+                            <a class="nav-link" asp-controller="Person" asp-action="Details">Routines</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
+                            <a class="nav-link" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
                             </li>
                         }
                     </ul>

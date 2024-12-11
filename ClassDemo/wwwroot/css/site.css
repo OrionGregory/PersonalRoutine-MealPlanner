@@ -97,3 +97,16 @@ label.form-label[for="Input_RememberMe"] {
 #routineTable tr {
     background-color: transparent !important;
 }
+
+.navbar {
+    background-color: #1C252C;
+}
+
+#weather-info {
+    color: white;
+    margin-left: 10px;
+}
+
+.nav-link {
+    color: white;
+}

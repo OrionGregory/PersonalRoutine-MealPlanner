@@ -28,6 +28,8 @@ namespace Assignment3.Controllers
             var person = await _context.People
                     .Include(p => p.Routines)
                     .ThenInclude(r => r.Exercises)
+                    .Include(p => p.Nutrition)  // Include Nutrition (only one per person)
+                    .ThenInclude(n => n.Meals) // Include Meals related to Nutrition
                     .FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (person == null)

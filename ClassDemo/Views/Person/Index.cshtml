@@ -183,6 +183,49 @@ else
     </div>
 }
 
+@if (Model.Nutrition != null && Model.Nutrition.Meals != null)
+{
+
+
+    <div style="background-color:slategrey; border-radius: 10px 10px 0 0;">
+        <h2 style="color:white; text-align: center; margin: 0;">Today's Meals</h2>
+    </div>
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered mx-auto" style="background-color:white; padding: 0; margin: 0;" >
+                <thead>
+                    <tr>
+                        <th>Meal</th>
+                        <th>Calories</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fat (g)</th>
+                        
+                    </tr>
+                </thead>
+                @foreach (var meal in Model.Nutrition.Meals)
+                {
+                    <tbody>
+
+                    <tr>
+                        <td>@meal.Name</td>
+                        <td>@meal.Calories</td>
+                        <td>@meal.Protein</td>
+                        <td>@meal.Carbs</td>
+                        <td>@meal.Fat</td>
+                    </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    }
+}
+else
+{
+    <p></p>
+}
+
+
 @section Scripts {
     <script>
         function toggleExerciseCompletion(checkbox) {

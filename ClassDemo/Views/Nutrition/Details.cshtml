@@ -6,10 +6,6 @@
 
 <h2>Nutrition Details</h2>
 
-<div class="mb-3">
-    <a asp-action="GenerateNutritionPlan" asp-route-id="@Model.Id" class="btn btn-primary">Generate Meals</a>
-</div>
-
 <table class="table" style="color:white;">
     <tr>
         <th>Calories In:</th>
@@ -91,4 +87,7 @@ else
 
 <div class="form-group">
     <a asp-action="Index" class="btn btn-secondary">Back</a>
+</div>
+<div class="mb-3">
+    <a asp-action="GenerateNutritionPlan" asp-route-id="@Model.Id" class="btn btn-primary">Generate Meals</a>
 </div>

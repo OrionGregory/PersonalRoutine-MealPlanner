@@ -25,9 +25,11 @@ namespace Assignment3.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var person = await _context.People
-                    .Include(p => p.Routines)
+                .Include(p => p.Routines)
                     .ThenInclude(r => r.Exercises)
-                    .FirstOrDefaultAsync(p => p.UserId == userId);
+                .Include(p => p.Nutrition)  // Include Nutrition (only one per person)
+                    .ThenInclude(n => n.Meals) // Include Meals related to Nutrition
+                .FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (person == null)
             {
@@ -41,8 +43,10 @@ namespace Assignment3.Controllers
 
             ViewBag.CompletedExercises = completedExercises;
 
-            return View(person);
+            return View(person);  // Return the person model with Nutrition and Meals
         }
+
+
 
         // GET: Home/Privacy
         public IActionResult Privacy()

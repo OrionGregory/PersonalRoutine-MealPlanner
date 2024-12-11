@@ -132,7 +132,20 @@ namespace Assignment3.Controllers
         [HttpGet]
         public async Task<IActionResult> AdminMenu()
         {
-            return View(await _context.People.ToListAsync());
+            var peopleWithUsers = await (from p in _context.People
+                                         join u in _context.AspNetUsers
+                                         on p.UserId equals u.Id
+                                         select new
+                                         {
+                                             Person = p,
+                                             AspUser = u
+                                         }).ToListAsync();
+
+            // You can create a view model to send to the view if needed.
+            // For example, if you're using a strongly-typed view, you could map the result to a custom object
+            // such as a view model that contains both People and AspUsers data.
+
+            return View(peopleWithUsers);
         }
         [HttpGet]
         public async Task<IActionResult> AdminEdit(int id)
@@ -170,6 +183,7 @@ namespace Assignment3.Controllers
                     existingPerson.Weight = person.Weight;
                     existingPerson.GoalWeight = person.GoalWeight;
                     existingPerson.Time = person.Time;
+                    existingPerson.Height = existingPerson.Height;
                     existingPerson.isAdmin = person.isAdmin ?? false;
 
                     _context.Update(existingPerson);
@@ -448,7 +462,12 @@ public async Task<IActionResult> ToggleExerciseCompletion([FromBody] ExerciseCom
     return Json(new { success = true });
 }
 
-public class ExerciseCompletionModel
+    public class PersonWithUserViewModel
+        {
+            public Person Person { get; set; }
+            public IdentityUser AspUser { get; set; }
+       }
+        public class ExerciseCompletionModel
 {
     public int exerciseId { get; set; }
     public bool completed { get; set; }

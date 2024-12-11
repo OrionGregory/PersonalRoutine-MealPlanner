@@ -18,6 +18,7 @@ namespace Assignment3.Data
         public DbSet<Nutrition> Nutrition { get; set; }
         public DbSet<CompletedExercise> CompletedExercises { get; set; }
         public DbSet<Meal> Meals { get; set; }
+        public DbSet<IdentityUser> AspNetUsers { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

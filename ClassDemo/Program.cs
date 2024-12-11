@@ -22,6 +22,12 @@ builder.Services.AddScoped<MealGeneratorService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages(); // Necessary for Identity UI
 
+builder.Services.AddHttpClient<WeatherService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.openweathermap.org/");
+});
+builder.Services.AddSingleton(new WeatherService(new HttpClient(), "49b06b83bb8bed0d2db478fab16c0a3f"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

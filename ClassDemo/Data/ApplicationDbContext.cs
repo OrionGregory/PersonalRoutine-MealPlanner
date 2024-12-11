@@ -22,6 +22,12 @@ namespace Assignment3.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Routine>()
+                .HasOne(r => r.Person)
+                .WithMany(p => p.Routines)
+                .HasForeignKey(r => r.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
 
             // Configure Identity table names if necessary
@@ -49,6 +55,12 @@ namespace Assignment3.Data
                 .HasMany(n => n.Meals)
                 .WithOne(m => m.Nutrition)
                 .HasForeignKey(m => m.NutritionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Exercise>()
+                .HasOne(e => e.Routine)
+                .WithMany(r => r.Exercises)
+                .HasForeignKey(e => e.RoutineId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Assignment3</title>
+    <title>@ViewData["Title"] - My ASP.NET Application</title>
 
     <!-- Add your stylesheets -->
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,12 +18,12 @@
 </head>
 <body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light" style="background-color:#1B2429">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid d-flex justify-content-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex justify-content-left align-items-center">
                     <img style="max-width: 150px; height: auto;" src="/images/Logo/GymPalLogo.jpg" alt="GymPal" />
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
@@ -32,7 +32,7 @@
                             <a class="nav-link" style="color:white;" asp-controller="Person" asp-action="Index">My Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Person" asp-action="Details">Routines</a>
+                            <a class="nav-link" style="color:white;" asp-controller="Routine" asp-action="Index">Routines</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" style="color:white;" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
@@ -56,29 +56,32 @@
                             </li>
                         }
                     </ul>
+                    <form id="weather-form" class="d-flex">
+                        <input id="zip-code" class="form-control form-control-sm me-2" type="text" placeholder="Zip Code" aria-label="Zip Code">
+                        <button class="btn btn-outline-success btn-sm" type="button" onclick="getWeather()">Get Weather</button>
+                    </form>
+                    <span id="weather-info" style="color:white; margin-left: 10px;">-- °F</span>
                 </div>
             </div>
         </nav>
     </header>
-
-    <div class="container mt-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container body-content">
+        @RenderBody()
     </div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2024 GymPal - All rights reserved.
+            <p class="text-muted">&copy; 2023 - My ASP.NET Application</p>
         </div>
     </footer>
-
-    <!-- Render the Scripts section if defined -->
     @RenderSection("Scripts", required: false)
-
-    <!-- Add common scripts -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
+    <script>
+        async function getWeather() {
+            const zipCode = document.getElementById('zip-code').value;
+            const response = await fetch(`/Home/GetTemperature?zipCode=${zipCode}`);
+            const data = await response.json();
+            const weatherInfo = document.getElementById('weather-info');
+            weatherInfo.textContent = `${data.city}: ${data.temperature} °F`;
+        }
+    </script>
 </body>
 </html>

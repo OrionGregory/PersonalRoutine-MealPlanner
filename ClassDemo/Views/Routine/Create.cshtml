@@ -24,9 +24,6 @@
         <input asp-for="RoutineType" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="PersonId" class="control-label">Person</label>
-        <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonList"></select>
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

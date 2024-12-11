@@ -29,7 +29,6 @@ label.form-label[for="Input_RememberMe"] {
 .routine:hover .routine-exercises {
     display: block;
 }
-<<<<<<< HEAD
 
 .welcome-text {
     color: ghostwhite;
@@ -111,5 +110,3 @@ label.form-label[for="Input_RememberMe"] {
 .nav-link {
     color: white;
 }
-=======
->>>>>>> parent of 9388ebb (Refactor forms and tables to use CSS classes for styling consistency)

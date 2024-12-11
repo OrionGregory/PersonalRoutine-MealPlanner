@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
+using System.Threading.Tasks;
 
 namespace Assignment3.Controllers
 {
@@ -12,12 +13,14 @@ namespace Assignment3.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
+        private readonly WeatherService _weatherService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, ApplicationDbContext context, WeatherService weatherService)
         {
             _logger = logger;
             _userManager = userManager;
             _context = context;
+            _weatherService = weatherService;
         }
 
         // GET: Home/Index
@@ -48,6 +51,13 @@ namespace Assignment3.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTemperature(string zipCode)
+        {
+            var (temperature, city) = await _weatherService.GetTemperatureAsync(zipCode);
+            return Json(new { temperature, city });
         }
     }
 }

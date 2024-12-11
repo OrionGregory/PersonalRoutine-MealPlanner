@@ -9,16 +9,16 @@
 }
 
 <div class="text-center bg-dark">
-    <h1 class="display-8 welcome-text">Welcome  @Html.DisplayFor(model => model.Name) to Your Wellness Dashboard!</h1>
-    <p class="lead welcome-text">Achieve your fitness goals with a personalized workout plan.</p>
+    <h1 class="display-8" style="color:ghostwhite;">Welcome  @Html.DisplayFor(model => model.Name) to Your Wellness Dashboard!</h1>
+    <p class="lead" style="color:ghostwhite;">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="text-center white-bg rounded mb-20">
+    <div class="text-center" style="background-color:white; margin-bottom: 20px; border-radius: 10px;">
         <!--Section Header -->
-        <div class="slategrey-bg rounded-top">
-            <h2 class="white-text">Your Goal Progress</h2>
+        <div style="background-color:slategrey; border-radius: 10px 10px 0 0;">
+            <h2 style="color:white">Your Goal Progress</h2>
         </div>
         <!-- Weight Progress Section -->
         <div class="row justify-content-left mb-4">
@@ -39,14 +39,14 @@
                             <tr>
                                 @if (Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())) <= 1)
                                 {
-                                    <td class="goal-achieved" colspan="2">
-                                        <span class="darkgreen-text">GOAL ACHIEVED!</span>
+                                    <td style="background-color: palegreen" colspan="2">
+                                        <span style="color: darkgreen;">GOAL ACHIEVED!</span>
                                     </td>
                                 }
                                 else
                                 {
-                                    <td class="goal-not-achieved" colspan="2">
-                                        <span class="darkred-text">@Math.Round(@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())), 1) lbs to go</span>
+                                    <td style="background-color: palevioletred" colspan="2">
+                                        <span style="color: darkred;">@Math.Round(@Math.Abs((decimal)(Model.Weight.GetValueOrDefault() - Model.GoalWeight.GetValueOrDefault())), 1) lbs to go</span>
                                     </td>
                                 }
                             </tr>
@@ -63,6 +63,8 @@
                             <div class="form-group mx-2">
                                 <label class="mr-2">New Weight (lbs):</label>
                                 <input type="number" name="newWeight" class="form-control" step="0.1" required />
+
+
                             </div>
                             <button type="submit" class="btn btn-secondary">Update Weight</button>
                             <a asp-controller="Person" asp-action="EditWeightHistory" asp-route-id="@Model.Id" class="btn btn-secondary">Edit History</a>
@@ -83,89 +85,90 @@
                 </div>
             </div>
             <!-- Chart -->
+
         </div>
     </div>
 
-    <div class="text-center white-bg rounded mb-20">
-        <!--Section Header -->
-        <div class="slategrey-bg rounded-top">
-            <h2 class="white-text">Today's Workout</h2>
-        </div>
-        <!-- Workout Content Section -->
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-8">
-                <!-- Your workout content goes here -->
-                <div class="row mb-4">
-                    <!-- Today's Workouts Section -->
-                    <div class="col-md-12">
-                        <div class="card mt-4 rounded">
-                            <div class="card-header rounded-top">
-                                <h4>@DateTime.Now.ToString("dddd")</h4>
-                            </div>
-                            <div class="card-body">
-                                @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))
-                                {
-                                    var todaysRoutines = Model.Routines.Where(r => r.DayOfWeek == DateTime.Now.ToString("dddd"));
+    <div class="text-center" style="background-color:white; border-radius: 10px; margin-bottom: 20px;">
+    <!--Section Header -->
+    <div style="background-color:slategrey; border-radius: 10px 10px 0 0;">
+        <h2 style="color:white">Today's Workout</h2>
+    </div>
+    <!-- Workout Content Section -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <!-- Your workout content goes here -->
+            <div class="row mb-4">
+                <!-- Today's Workouts Section -->
+                <div class="col-md-12">
+                    <div class="card mt-4" style="border-radius: 10px;">
+                        <div class="card-header" style="border-radius: 10px 10px 0 0;">
+                            <h4>@DateTime.Now.ToString("dddd")</h4>
+                        </div>
+                        <div class="card-body">
+                            @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))
+                            {
+                                var todaysRoutines = Model.Routines.Where(r => r.DayOfWeek == DateTime.Now.ToString("dddd"));
 
-                                    @foreach (var routine in todaysRoutines)
-                                    {
-                                        <h5>@routine.RoutineType</h5>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered mx-auto auto-width">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Exercise</th>
-                                                        <th>Sets</th>
-                                                        <th>Reps</th>
-                                                        <th>Status</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var exercise in routine.Exercises ?? Enumerable.Empty<Exercise>())
-                                                    {
-                                                        <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")">
-                                                            <td>@exercise.Name</td>
-                                                            <td>@exercise.Sets</td>
-                                                            <td>@exercise.Reps</td>
-                                                            <td>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox"
-                                                                           class="custom-control-input exercise-checkbox"
-                                                                           id="check-@exercise.Id"
-                                                                           data-exercise-id="@exercise.Id"
-                                                                    @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "checked" : "")
-                                                                           onchange="toggleExerciseCompletion(this)" />
-                                                                    <label class="custom-control-label" for="check-@exercise.Id">
-                                                                        Complete
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    }
-                                }
-                                else
+                                @foreach (var routine in todaysRoutines)
                                 {
-                                    <p class="text-muted">No workouts scheduled for today.</p>
+                                    <h5>@routine.RoutineType</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mx-auto" style="width: auto;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Exercise</th>
+                                                    <th>Sets</th>
+                                                    <th>Reps</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var exercise in routine.Exercises ?? Enumerable.Empty<Exercise>())
+                                                {
+                                                    <tr id="exercise-@exercise.Id" class="exercise-row @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "bg-success text-white" : "")">
+                                                        <td>@exercise.Name</td>
+                                                        <td>@exercise.Sets</td>
+                                                        <td>@exercise.Reps</td>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox"
+                                                                       class="custom-control-input exercise-checkbox"
+                                                                       id="check-@exercise.Id"
+                                                                       data-exercise-id="@exercise.Id"
+                                                                @(ViewBag.CompletedExercises?.Contains(exercise.Id) == true ? "checked" : "")
+                                                                       onchange="toggleExerciseCompletion(this)" />
+                                                                <label class="custom-control-label" for="check-@exercise.Id">
+                                                                    Complete
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 }
-                            </div>
+                            }
+                            else
+                            {
+                                <p class="text-muted">No workouts scheduled for today.</p>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-            <p>
-                <a asp-controller="Person" asp-action="Details" class="btn btn-secondary">Profile and Workout Plan</a>
-                <a asp-controller="Person" asp-action="Edit" class="btn btn-secondary">Edit Goal or Profile</a>
-                @if (@Model.isAdmin == true)
-                {
-                    <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-secondary"> Admin Menu</a>
-                }
-            </p>
         </div>
+        <p>
+            <a asp-controller="Person" asp-action="Details" class="btn btn-secondary">Profile and Workout Plan</a>
+            <a asp-controller="Person" asp-action="Edit" class="btn btn-secondary">Edit Goal or Profile</a>
+            @if (@Model.isAdmin == true)
+            {
+                <a asp-controller="Person" asp-action="AdminMenu" class="btn btn-secondary"> Admin Menu</a>
+            }
+        </p>
     </div>
+</div>
 }
 else
 {

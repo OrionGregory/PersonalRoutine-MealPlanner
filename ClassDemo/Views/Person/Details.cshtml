@@ -9,7 +9,7 @@
 <h2>Weekly Workout Routine</h2>
 <table id="routineTable" class="table table-bordered table-striped">
     <thead>
-        <tr class="white-text">
+        <tr style="color:white;">
             <th>Day</th>
             <th>Routines</th>
             <th>Exercises</th>
@@ -23,7 +23,7 @@
             .Where(r => r.DayOfWeek != null && r.DayOfWeek.Equals(day, StringComparison.OrdinalIgnoreCase))
             .ToList() ?? new List<Assignment3.Models.Routine>();
 
-            <tr data-day="@day" class="droppable white-text">
+            <tr data-day="@day" class="droppable" style="color:white;">
                 <td>@day</td>
                 <td>
                     @if (routinesForDay.Any())

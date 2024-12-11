@@ -8,7 +8,7 @@
 
 <table class="table">
     <thead>
-        <tr class="white-text">
+        <tr style="color:white;">
             <th>Person</th>
             <th>Calorie Target</th>
             <th>Calorie Surplus/Deficit</th>
@@ -20,7 +20,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr class="white-text">
+            <tr style="color:white;">
                 <td>@item.Person.Name</td>
                 <td>@item.TotalDailyCalories</td>
                 <td>@item.CalorieSurplusOrDeficit</td>

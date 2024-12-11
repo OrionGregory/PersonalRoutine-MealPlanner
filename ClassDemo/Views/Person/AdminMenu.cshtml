@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Assignment3.Models.Person>
-
+﻿@model dynamic
 @{
     ViewData["Title"] = "Your Workout Plan";
 }
@@ -7,11 +6,11 @@
 <h1>Admin Menu</h1>
 
 <h2>Weekly Workout Routine</h2>
-<table id="ProfileList" class="table table-bordered table-striped" style="color:white;">
+<table id="ProfileList" class="table table-bordered table-striped white-text">
     <thead>
         <tr>
             <td colspan="2">
-                <a asp-action="Create">Create New Profile</a>
+                <a asp-action="Create" class="btn btn-secondary">Create New Profile</a>
             </td>
         </tr>
         <tr>
@@ -19,17 +18,16 @@
         </tr>
     </thead>
     <tbody>      
-            @foreach (var person in Model)
+            @foreach (var item in Model)
             {
                 <tr>
-
                     <td class="action-cell">
-                        <p>@person.Name </p>
-                        <p>AccountID: @person.UserId | ProfileID: @person.Id</p>
+                        <p>@item.Person.Name </p>
+                        <p>Email: @item.AspUser.UserName | ProfileID: @item.Person.Id</p>
                         <div class="action-links align-content-center">
-                            <a asp-action="AdminEdit" asp-route-id="@person.Id" class="btn btn-primary">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@person.Id" class="btn btn-primary">Delete</a>
-                            <a asp-action="Details" asp-route-id="@person.Id" class="btn btn-primary">Details</a>
+                            <a asp-action="AdminEdit" asp-route-id="@item.Person.Id" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Person.Id" class="btn btn-primary">Delete</a>
+                            <a asp-action="Details" asp-route-id="@item.Person.Id" class="btn btn-primary">Details</a>
                         </div>
                     </td>
                 </tr>
@@ -37,20 +35,3 @@
         
     </tbody>
 </table>
-
-<style>
-    /* Initially hide the action links */
-    .action-links {
-        display: none;
-    }
-
-    /* Show the action links when hovering over the name cell */
-    tr:hover .action-cell .action-links {
-        display: block;
-    }
-
-    /* Optionally, add some styles for the action cell */
-    .action-cell {
-        position: relative;
-    }
-</style>

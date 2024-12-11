@@ -8,8 +8,8 @@
 }
 
 <div class="text-center bg-dark">
-    <h1 class="display-8" style="color:ghostwhite;">Welcome  @Html.DisplayFor(model => model.Name) to Your Wellness Dashboard!</h1>
-    <p class="lead" style="color:ghostwhite;">Achieve your fitness goals with a personalized workout plan.</p>
+    <h1 class="display-8 welcome-text">Welcome  @Html.DisplayFor(model => model.Name) to Your Wellness Dashboard!</h1>
+    <p class="lead welcome-text">Achieve your fitness goals with a personalized workout plan.</p>
 </div>
 <div class=container>
     @if (SignInManager.IsSignedIn(User))
@@ -29,7 +29,7 @@
         <div class="mt-5">
             <h2>Get Started</h2>
             <p>
-                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Log In</a>
+                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-secondary">Log In</a>
                 or
                 <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-secondary">Register</a>
             </p>

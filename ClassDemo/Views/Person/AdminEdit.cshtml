@@ -7,8 +7,8 @@
 <h1>Edit @Model.Name's Profile</h1>
 
 <div class="row">
-    <div class="col-md-6" >
-        <form asp-action="AdminEdit" method="post" style="color:white;">
+    <div class="col-md-6">
+        <form asp-action="AdminEdit" method="post" class="white-text">
             <input type="hidden" asp-for="UserId"/>
             <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -46,6 +46,11 @@
                 <label asp-for="Time" class="control-label">Weeks to goal</label>
                 <input asp-for="Time" class="form-control" type="number" />
                 <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height" class="control-label">Height (Inches) </label>
+                <input asp-for="Height" class="form-control" type="number" />
+                <span asp-validation-for="Height" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="isAdmin" class="control-label">Is Admin?</label>

@@ -16,3 +16,97 @@ label.form-label[for="Input_RememberMe"] {
 .mb-0 {
     color: black !important;
 }
+
+.weather-center {
+    text-align: center;
+    width: 100%;
+}
+
+.routine-exercises {
+    display: none;
+}
+
+.routine:hover .routine-exercises {
+    display: block;
+}
+
+.welcome-text {
+    color: ghostwhite;
+}
+
+.routine-cell {
+    color: white;
+    vertical-align: middle;
+}
+
+.white-bg {
+    background-color: white;
+}
+
+.rounded {
+    border-radius: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.slategrey-bg {
+    background-color: slategrey;
+}
+
+.rounded-top {
+    border-radius: 10px 10px 0 0;
+}
+
+.white-text {
+    color: white;
+}
+
+.goal-achieved {
+    background-color: palegreen;
+}
+
+.darkgreen-text {
+    color: darkgreen;
+}
+
+.goal-not-achieved {
+    background-color: palevioletred;
+}
+
+.darkred-text {
+    color: darkred;
+}
+
+.auto-width {
+    width: auto;
+}
+
+.nutrition-form {
+    color: white;
+}
+
+/* Ensure all text within the routines table is white */
+#routineTable th,
+#routineTable td {
+    color: white !important;
+}
+
+/* Optional: Ensure the background color of the table rows is consistent */
+#routineTable tr {
+    background-color: transparent !important;
+}
+
+.navbar {
+    background-color: #1C252C;
+}
+
+#weather-info {
+    color: white;
+    margin-left: 10px;
+}
+
+.nav-link {
+    color: white;
+}

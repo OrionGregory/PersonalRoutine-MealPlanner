@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Assignment3</title>
+    <title>@ViewData["Title"] - My ASP.NET Application</title>
 
     <!-- Add your stylesheets -->
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -18,41 +18,44 @@
 </head>
 <body class="bg-dark">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light" style="background-color:#1B2429">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid d-flex justify-content-between">
                 <a asp-controller="Home" asp-action="Index" class="d-flex justify-content-left align-items-center">
                     <img style="max-width: 150px; height: auto;" src="/images/Logo/GymPalLogo.jpg" alt="GymPal" />
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+                    <div>
+                        <span id="weather-info">-- °F</span>
+                    </div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Person" asp-action="Index">My Profile</a>
+                            <a class="nav-link" asp-controller="Person" asp-action="Index">My Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Routine" asp-action="Index">Routines</a>
+                            <a class="nav-link" asp-controller="Person" asp-action="Details">Routines</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white;" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
+                            <a class="nav-link" asp-controller="Nutrition" asp-action="Index">Nutrition</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">Account</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="color:white;" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -60,25 +63,29 @@
             </div>
         </nav>
     </header>
-
-    <div class="container mt-4">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container body-content">
+        @RenderBody()
     </div>
-
-    <footer class="border-top footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2024 GymPal - All rights reserved.
+            <p class="text-muted">&copy; 2023 - My ASP.NET Application</p>
         </div>
     </footer>
-
-    <!-- Render the Scripts section if defined -->
     @RenderSection("Scripts", required: false)
+    <script>
+        async function getWeather() {
+            const zipCode = '35401'; // Fixed zip code
+            const response = await fetch(`/Home/GetTemperature?zipCode=${zipCode}`);
+            const data = await response.json();
+            const weatherInfo = document.getElementById('weather-info');
+            weatherInfo.textContent = `${data.city}: ${data.temperature} °F`;
+        }
 
-    <!-- Add common scripts -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
+        // Initial call to get the weather
+        getWeather();
+
+        // Set up interval to call getWeather every 30 minutes (1800000 milliseconds)
+        setInterval(getWeather, 1800000);
+    </script>
 </body>
 </html>

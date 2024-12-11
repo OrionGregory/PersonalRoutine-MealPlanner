@@ -59,49 +59,45 @@ namespace Assignment3.Controllers
 
         // GET: Routine/Create
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Persons = _context.People.ToList();
-            return View();
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People.FirstOrDefaultAsync(p => p.UserId == userId);
+
+            if (person == null)
+            {
+                return NotFound("Person not found for the logged-in user.");
+            }
+
+            var routine = new Routine
+            {
+                PersonId = person.Id
+            };
+
+            return View(routine);
         }
 
         // POST: Routine/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DayOfWeek,RoutineType,PersonId")] Routine routine)
+        public async Task<IActionResult> Create(Routine routine)
         {
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People.FirstOrDefaultAsync(p => p.UserId == userId);
+
+            if (person == null)
+            {
+                return NotFound("Person not found for the logged-in user.");
+            }
+
             if (ModelState.IsValid)
             {
+                routine.PersonId = person.Id;
                 _context.Add(routine);
                 await _context.SaveChangesAsync();
-
-                // Generate and populate workouts
-                var person = await _context.People.FindAsync(routine.PersonId);
-                if (person != null)
-                {
-                    var routines = GenerateRoutine(person);
-                    foreach (var generatedRoutine in routines)
-                    {
-                        generatedRoutine.PersonId = person.Id;
-                        _context.Routines.Add(generatedRoutine);
-                        await _context.SaveChangesAsync();
-
-                        // Pre-populate exercises based on RoutineType
-                        if (!string.IsNullOrEmpty(generatedRoutine.RoutineType))
-                        {
-                            var predefinedExercises = GetPredefinedExercises(generatedRoutine.RoutineType, generatedRoutine.Id);
-                            if (predefinedExercises != null && predefinedExercises.Any())
-                            {
-                                _context.Exercises.AddRange(predefinedExercises);
-                                await _context.SaveChangesAsync();
-                            }
-                        }
-                    }
-                }
-
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Persons = _context.People.ToList();
+
             return View(routine);
         }
 

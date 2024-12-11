@@ -22,40 +22,32 @@ namespace Assignment3.Controllers
 
         // GET: Home/Index
         public async Task<IActionResult> Index()
-          {
-              var userId = _userManager.GetUserId(User);
-              var person = await _context.People
-                      .Include(p => p.Routines)
-                      .ThenInclude(r => r.Exercises)
-                      .FirstOrDefaultAsync(p => p.UserId == userId);
+        {
+            var userId = _userManager.GetUserId(User);
+            var person = await _context.People
+                    .Include(p => p.Routines)
+                    .ThenInclude(r => r.Exercises)
+                    .FirstOrDefaultAsync(p => p.UserId == userId);
 
-              if (person == null)
-              {
-                  return RedirectToAction("Create", "Person");
-              }
+            if (person == null)
+            {
+                return RedirectToAction("Create", "Person");
+            }
 
-              var completedExercises = await _context.CompletedExercises
-                  .Where(ce => ce.UserId == userId && ce.CompletedDate.Date == DateTime.Today)
-                  .Select(ce => ce.ExerciseId)
-                  .ToListAsync();
+            var completedExercises = await _context.CompletedExercises
+                .Where(ce => ce.UserId == userId && ce.CompletedDate.Date == DateTime.Today)
+                .Select(ce => ce.ExerciseId)
+                .ToListAsync();
 
-              ViewBag.CompletedExercises = completedExercises;
+            ViewBag.CompletedExercises = completedExercises;
 
-              return View(person);
-          }
+            return View(person);
+        }
 
         // GET: Home/Privacy
         public IActionResult Privacy()
         {
             return View();
         }
-
-        //// GET: Home/Error
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    var errorModel = new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier };
-        //    return View(errorModel);
-        //}
     }
 }

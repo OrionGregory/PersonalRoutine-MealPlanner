@@ -126,7 +126,8 @@ namespace Assignment3.Data
                 - Name (String)
                 - Description (String)
                 - Sets (Int)
-                - Reps (Int)
+                - Reps (Int) < If exercise is in minutes instead of reps, return 0 for reps>
+                
 
                 Format the response as a JSON array with each exercise having the specified properties.
             ";

@@ -101,10 +101,7 @@
             <div class="row mb-4">
                 <!-- Today's Workouts Section -->
                 <div class="col-md-12">
-                    <div class="card mt-4" style="border-radius: 10px;">
-                        <div class="card-header" style="border-radius: 10px 10px 0 0;">
-                            <h4>@DateTime.Now.ToString("dddd")</h4>
-                        </div>
+                    <div class="card mt-4">                        
                         <div class="card-body">
                             @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))
                             {
@@ -112,7 +109,11 @@
 
                                 @foreach (var routine in todaysRoutines)
                                 {
-                                    <h5>@routine.RoutineType</h5>
+                                    <div class="card-header" style="border-radius: 10px 10px 0 0;">
+                                        <h4>
+                                            @routine.RoutineType
+                                        </h4>
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered mx-auto" style="width: auto;">
                                             <thead>

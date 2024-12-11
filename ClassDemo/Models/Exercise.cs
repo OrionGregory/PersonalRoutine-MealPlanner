@@ -34,23 +34,23 @@ namespace Assignment3.Models
         {
             if (reader.TokenType == JsonTokenType.String)
             {
-                var stringValue = reader.GetString();
-                if (int.TryParse(stringValue, out int value))
-                {
-                    return value;
-                }
-                else if (string.IsNullOrEmpty(stringValue))
-                {
-                    return 0; // Default value for empty string
-                }
+            var stringValue = reader.GetString();
+            if (int.TryParse(stringValue, out int value))
+            {
+                return value;
+            }
+            else if (string.IsNullOrEmpty(stringValue))
+            {
+                return 0; // Default value for empty string
+            }
             }
             else if (reader.TokenType == JsonTokenType.Number)
             {
-                return reader.GetInt32();
+            return reader.GetInt32();
             }
-            throw new JsonException($"Unable to convert {reader.GetString()} to {typeToConvert}");
+            
+            return 0; // Default value for invalid token type
         }
-
         public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
         {
             writer.WriteNumberValue(value);

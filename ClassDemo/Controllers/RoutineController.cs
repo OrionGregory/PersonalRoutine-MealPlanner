@@ -28,12 +28,10 @@ namespace Assignment3.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userId = _userManager.GetUserId(User);
-            var routines = _context.Routines
-                                   .Include(r => r.Person)
-                                   .Include(r => r.Exercises)
-                                   .Where(r => r.Person != null && r.Person.UserId == userId);
-            return View(await routines.ToListAsync());
+            var routines = await _context.Routines
+                .Include(r => r.Exercises) // Include the Exercises property
+                .ToListAsync();
+            return View(routines);
         }
 
         // GET: Routine/Details/5

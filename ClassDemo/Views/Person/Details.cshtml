@@ -12,6 +12,8 @@
         <tr style="color:white;">
             <th>Day</th>
             <th>Routines</th>
+            <th>Exercises</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -32,15 +34,51 @@
                                  draggable="true"
                                  data-routine-id="@routine.Id">
                                 <span>@routine.RoutineType</span>
-                                <a asp-controller="Routine" asp-action="Details" asp-route-id="@routine.Id" class="btn btn-sm btn-primary">
-                                    Details
-                                </a>
                             </div>
                         }
                     }
                     else
                     {
                         <span class="text-muted">No routines available.</span>
+                    }
+                </td>
+                <td>
+                    @if (routinesForDay.Any())
+                    {
+                        @foreach (var routine in routinesForDay)
+                        {
+                            if (routine.Exercises != null && routine.Exercises.Any())
+                            {
+                                <ul>
+                                    @foreach (var exercise in routine.Exercises)
+                                    {
+                                        <li>
+                                            <strong>@exercise.Name</strong> - @exercise.Description<br />
+                                            <span>Sets: @exercise.Sets, Reps: @exercise.Reps</span>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No exercises assigned.</span>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">No exercises assigned.</span>
+                    }
+                </td>
+                <td>
+                    @if (routinesForDay.Any())
+                    {
+                        @foreach (var routine in routinesForDay)
+                        {
+                            <a asp-controller="Routine" asp-action="Details" asp-route-id="@routine.Id" class="btn btn-sm btn-primary">
+                                Details
+                            </a>
+                        }
                     }
                 </td>
             </tr>
@@ -56,7 +94,6 @@
 </form>
 
 <a asp-action="Edit" class="btn btn-secondary mt-3">Edit Profile</a>
-
 
 <!-- Include the JavaScript file -->
 <script src="~/js/routineSwap.js"></script>

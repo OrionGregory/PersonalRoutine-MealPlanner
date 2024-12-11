@@ -96,7 +96,16 @@
                 <div class="card mt-4">
                     <div class="card-header">
                         <h4>@DateTime.Now.ToString("dddd")</h4>
-                    </div>
+                    </div>  
+                    
+                    <form asp-controller="Routine" asp-action="RegenerateRoutine" asp-route-id="@Model.Routines.FirstOrDefault(r => r.DayOfWeek == DateTime.Now.ToString("dddd"))?.Id" method="post" class="d-inline-block">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-warning">
+                            Regenerate Routine
+                        </button>
+                    </form>
+
+
                     <div class="card-body">
                         @if (Model.Routines != null && Model.Routines.Any(r => r.DayOfWeek == DateTime.Now.ToString("dddd")))
                         {

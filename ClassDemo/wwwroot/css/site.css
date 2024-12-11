@@ -110,3 +110,7 @@ label.form-label[for="Input_RememberMe"] {
 .nav-link {
     color: white;
 }
+
+.navbar-custom {
+    background-color: #1C252C;
+}

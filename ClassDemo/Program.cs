@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Assignment3.Data;
-//using ClassDemo.Data;
 using Assignment3.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +25,10 @@ builder.Services.AddHttpClient<WeatherService>(client =>
 {
     client.BaseAddress = new Uri("https://api.openweathermap.org/");
 });
-builder.Services.AddSingleton(new WeatherService(new HttpClient(), "49b06b83bb8bed0d2db478fab16c0a3f"));
+
+// Retrieve the API key from user secrets
+var weatherApiKey = builder.Configuration["WeatherService:ApiKey"];
+builder.Services.AddSingleton(new WeatherService(new HttpClient(), "weatherApiKey"));
 
 var app = builder.Build();
 

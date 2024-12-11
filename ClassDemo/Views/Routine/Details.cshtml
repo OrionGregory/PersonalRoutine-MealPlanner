@@ -59,7 +59,7 @@
 
 <div class="d-flex flex-wrap gap-2 mt-3">
     <a asp-action="CreateExercise" asp-route-routineId="@Model.Id" class="btn btn-primary">Create Exercise</a>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-controller="Person" asp-action="Details" class="btn btn-secondary">Back to List</a>
     <form asp-action="RegenerateRoutine" asp-route-id="@Model.Id" method="post" class="d-inline-block">
         @Html.AntiForgeryToken()
         <button type="submit" class="btn btn-warning";">
